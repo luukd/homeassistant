@@ -1,0 +1,2 @@
+sensor.wasmachine_actueel_verbruik:
+  device_class: power

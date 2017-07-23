@@ -1,0 +1,233 @@
+- id: tv_scene_start
+  alias: "TV started"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.harmony_tv_activity
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.dark_outside
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.harmony_tv_activity
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.dark_outside
+        state: 'on'
+  action:
+    service: scene.turn_on
+    entity_id: scene.film
+ 
+- id: home_lights
+  alias: "Turn on lights when Luuk comes home"
+  trigger:
+    - platform: zone
+      entity_id: device_tracker.iphonese_iphonese
+      zone: zone.home
+      event: enter
+    - platform: state
+      entity_id: binary_sensor.dark_outside
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.harmony_tv_activity
+      to: 'off'
+  action:
+    service: scene.turn_on
+    entity_id: scene.thuis
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.dark_outside
+        state: 'on'
+      - condition: zone
+        entity_id: device_tracker.iphonese_iphonese
+        zone: zone.home
+      - condition: state
+        entity_id: binary_sensor.harmony_tv_activity
+        state: 'off'
+
+- alias: "Turn off lights when Luuk leaves home"
+  trigger:
+    - platform: zone
+      entity_id: device_tracker.iphonese_iphonese
+      zone: zone.home
+      event: leave
+    - platform: state
+      entity_id: binary_sensor.dark_outside
+      to: 'off'
+    - platform: state
+      entity_id: binary_sensor.harmony_tv_activity
+      to: 'off'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.niet_thuis
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: 'binary_sensor.dark_outside'
+        state: 'off'
+      - condition: template
+        value_template: '{% if states("device_tracker.iphonese_iphonese") != "home" %}true{% else %}false{% endif %}'
+
+- id: harmony_activity_airplay
+  alias: "Activate Harmony activity when playing AirPlay"
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: media_player.yamaha_receiver
+    to: 'playing'
+  condition:
+    - condition: template
+      value_template: '{{ states.remote.harmony_hub.attributes.current_activity != "AirPlay" }}'
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.source == "AirPlay" }}'
+  action:
+    - service: remote.turn_on
+      entity_id: remote.harmony_hub
+      data:
+        activity: AirPlay
+
+- id: harmony_activity_chromecast
+  alias: "Activate Chrome Cast activity when casting"
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: media_player.woonkamer
+    to: 'playing'
+  condition:
+    - condition: template
+      value_template: '{{ states.remote.harmony_hub.attributes.current_activity != "Watch Chromecast" }}'
+  action:
+    - service: remote.turn_on
+      entity_id: remote.harmony_hub
+      data:
+        activity: "Watch Chromecast"
+
+- id: vacuum_cleaner_schedule
+  alias: "Stofzuigen"
+  trigger:
+    platform: zone
+    entity_id: device_tracker.iphonese_iphonese
+    zone: zone.home
+    event: leave
+  condition:
+    - condition: time
+      after: "07:00:00"
+      before: "12:00:00"
+      weekday:
+        - mon
+        - fri
+  action:
+    - service: script.turn_on
+      entity_id: script.start_vacuum_cleaner
+    - service: notify.ios_iphone_van_luuk
+      data:
+        message: "Stofzuiger is gestart"
+
+- id: wasmachine_bezig
+  alias: "Wasmachine bezig"
+  hide_entity: True
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.wasmachine_actueel_verbruik
+      above: 100
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.wasmachine_bezig
+
+- id: wasmachine_klaar
+  alias: "Wasmachine klaar"
+  hide_entity: True
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.wasmachine_actueel_verbruik
+      below: 9
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.wasmachine_bezig
+
+- id: wasmachine_klaar_notification
+  alias: Wasmachine klaar notification
+  trigger:
+    - platform: state
+      entity_id: input_boolean.wasmachine_bezig
+      from: 'on'
+      to: 'off'
+      for:
+        minutes: 5
+  action:
+    - service: notify.ios_iphone_van_luuk
+      data:
+        title: "Wasmachine: "
+        message: "Ik ben klaar!"
+
+- alias: Lampen keuken aan
+  id: kitchen_lights_on
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bewegingssensor_keuken
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.lights_keuken
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.dark_outside
+        state: 'on'
+      - condition: zone
+        entity_id: device_tracker.iphonese_iphonese
+        zone: zone.home
+  action:
+    - service: light.turn_on
+      entity_id: group.lights_keuken
+
+- alias: Lampen keuken uit
+  id: kitchen_lights_off
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bewegingssensor_keuken
+      to: 'off'
+      for:
+        minutes: 3
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.lights_keuken
+        state: 'on'
+  action:
+    - service: light.turn_off
+      entity_id: group.lights_keuken
+
+- alias: Slapen
+  id: slapen
+  trigger:
+    - platform: state
+      entity_id: sensor.iphone_van_luuk_battery_state
+      from: 'Unplugged'
+      to: 'Charging'
+    - platform: state
+      entity_id: sensor.iphone_van_luuk_battery_state
+      from: 'Unplugged'
+      to: 'Full'
+  condition:
+    condition: and
+    conditions:
+      - condition: zone
+        entity_id: device_tracker.iphonese_iphonese
+        zone: zone.home
+      - condition: or
+        conditions:
+          - condition: time
+            after: "23:00:00"
+          - condition: time
+            before: "05:00:00"
+  action:
+    service: scene.turn_on
+    entity_id: scene.slapen

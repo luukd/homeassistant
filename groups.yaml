@@ -1,0 +1,65 @@
+home:
+  name: Home
+  view: true
+  icon: mdi:home 
+  entities:
+  - sun.sun
+  - sensor.solar_angle
+  - sensor.yweather_temperature
+  - group.woonkamer
+  - group.badkamer
+  - group.slaapkamer
+woonkamer:
+  name: Woonkamer
+  view: true
+  entities:
+  - group.lights_woonkamer
+  - group.lights_keuken
+  - group.climate_woonkamer
+  - automation.stofzuigen
+  - scene.thuis
+  - scene.film
+  - scene.slapen
+  - media_player.woonkamer
+  - media_player.yamaha_receiver
+  - binary_sensor.bewegingssensor_keuken
+badkamer:
+  name: Badkamer
+  view: true
+  entities:
+  - group.climate_badkamer
+slaapkamer:
+  name: Slaapkamer
+  view: true
+  entities:
+  - group.climate_slaapkamer
+lights_woonkamer:
+  name: Lampen woonkamer
+  entities:
+  - light.zithoek
+  - light.schemerlamp
+  - light.eettafel
+lights_keuken:
+  name: Lampen keuken
+  entities:
+  - light.keuken
+  - light.spotjes_keuken_links
+  - light.spotjes_keuken_rechts
+climate_woonkamer:
+  name: Climate
+  entities:
+  - climate.woonkamer
+  - sensor.woonkamer_humidity
+  - sensor.woonkamer_heating
+climate_badkamer:
+  name: Climate
+  entities:
+  - climate.badkamer
+  - sensor.badkamer_humidity
+  - sensor.badkamer_heating
+climate_slaapkamer:
+  name: Climate
+  entities:
+  - climate.slaapkamer
+  - sensor.slaapkamer_humidity
+  - sensor.slaapkamer_heating
