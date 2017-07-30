@@ -49,6 +49,10 @@ discovery:
   ignore:
     - harmony
 
+zwave:
+  usb_path: /dev/ttyACM0
+  network_key: !secret zwave_network_key
+
 # Allows you to issue voice commands from the frontend in enabled browsers
 #conversation:
 
