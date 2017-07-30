@@ -21,6 +21,7 @@
     light.keuken: off
     light.spotjes_keuken_links: off
     light.spotjes_keuken_rechts: off
+    remote.harmony_hub: off
 
 - name: Slapen
   entities:
@@ -30,6 +31,12 @@
     light.keuken: off
     light.spotjes_keuken_links: off
     light.spotjes_keuken_rechts: off
+    input_boolean.slapen: on
+    remote.harmony_hub: off
+
+- name: Opstaan
+  entities:
+    input_boolean.slapen: off
 
 - name: Film
   entities:
@@ -43,5 +50,5 @@
       color_temp: 365
     light.eettafel:
       state: on
-      brightness: 60
+      brightness: 100
       color_temp: 300

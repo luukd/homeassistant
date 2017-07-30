@@ -48,6 +48,9 @@
       - condition: state
         entity_id: binary_sensor.harmony_tv_activity
         state: 'off'
+      - condition: state
+        entity_id: input_boolean.slapen
+        state: 'off'
 
 - alias: "Turn off lights when Luuk leaves home"
   trigger:
@@ -183,6 +186,9 @@
       - condition: zone
         entity_id: device_tracker.iphonese_iphonese
         zone: zone.home
+      - condition: state
+        entity_id: input_boolean.slapen
+        state: 'off'
   action:
     - service: light.turn_on
       entity_id: group.lights_keuken
@@ -231,3 +237,11 @@
   action:
     service: scene.turn_on
     entity_id: scene.slapen
+
+- alias: Opstaan
+  trigger:
+    platform: time
+    at: "07:30:00"
+  action:
+    service: scene.turn_on
+    entity_id: scene.opstaan
