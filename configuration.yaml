@@ -86,7 +86,7 @@ binary_sensor:
       harmony_tv_activity:
         friendly_name: 'Harmony Hub TV activity'
         value_template: >-
-          {%- if states.remote.harmony_hub.attributes.current_activity == "Watch Chromecast" -%}
+          {%- if states.media_player.woonkamer.state == "playing" -%}
           True
           {%- else -%}
           False
@@ -102,6 +102,7 @@ binary_sensor:
 #           {%- endif %}
         entity_id:
           - remote.harmony_hub
+          - media_player.woonkamer
   - platform: mqtt
     name: "Bewegingssensor keuken"
     state_topic: "cmnd/sonoff_keuken_motion_sensor/POWER1"
