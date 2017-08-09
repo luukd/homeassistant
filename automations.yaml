@@ -161,7 +161,7 @@
       from: 'on'
       to: 'off'
       for:
-        minutes: 5
+        minutes: 8
   action:
     - service: notify.ios_iphone_van_luuk
       data:
@@ -200,7 +200,7 @@
       entity_id: binary_sensor.bewegingssensor_keuken
       to: 'off'
       for:
-        minutes: 3
+        minutes: 5
   condition:
     condition: and
     conditions:
