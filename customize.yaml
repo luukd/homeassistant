@@ -1,2 +1,57 @@
 sensor.wasmachine_actueel_verbruik:
   device_class: power
+cover.cover_kitchen_level:
+  device_class: window
+  friendly_name: "Zonnescherm keuken"
+cover.cover_kitchen_switch:
+  hidden: true
+sensor.cover_kitchen_energy:
+  hidden: true
+sensor.cover_kitchen_power:
+  hidden: true
+sensor.cover_kitchen_previous_reading:
+  hidden: true
+switch.cover_kitchen_switch:
+  hidden: true
+zwave.cover_kitchen:
+  hidden: true
+zwave.zwaveme_zme_uzb1_usb_stick:
+  hidden: true
+script.start_vacuum_cleaner:
+  hidden: true
+binary_sensor.bewegingssensor_keuken:
+  hidden: true
+sensor.badkamer_link:
+  hidden: true
+sensor.badkamer_overlay:
+  hidden: true
+sensor.badkamer_power:
+  hidden: true
+sensor.badkamer_tado_mode:
+  hidden: true
+sensor.badkamer_temperature:
+  hidden: true
+sensor.slaapkamer_link:
+  hidden: true
+sensor.slaapkamer_overlay:
+  hidden: true
+sensor.slaapkamer_power:
+  hidden: true
+sensor.slaapkamer_tado_mode:
+  hidden: true
+sensor.slaapkamer_temperature:
+  hidden: true
+sensor.woonkamer_link:
+  hidden: true
+sensor.woonkamer_overlay:
+  hidden: true
+sensor.woonkamer_power:
+  hidden: true
+sensor.woonkamer_tado_mode:
+  hidden: true
+sensor.woonkamer_temperature:
+  hidden: true
+sensor.luuks_woning_tado_bridge_status:
+  hidden: true
+binary_sensor.harmony_tv_activity:
+  hidden: true

@@ -68,8 +68,15 @@ history:
       - automation
       - updater
       - script
+      - group
 
 logbook:
+
+panel_iframe:
+  sonarr:
+    title: 'Sonarr'
+    icon: mdi:television
+    url: !secret sonarr_url
 
 sun:
 

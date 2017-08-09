@@ -3,12 +3,10 @@ home:
   view: true
   icon: mdi:home 
   entities:
-  - sun.sun
-  - sensor.solar_angle
-  - sensor.yweather_temperature
   - group.woonkamer
   - group.badkamer
   - group.slaapkamer
+  - group.weather
 woonkamer:
   name: Woonkamer
   view: true
@@ -22,7 +20,7 @@ woonkamer:
   - scene.slapen
   - media_player.woonkamer
   - media_player.yamaha_receiver
-  - binary_sensor.bewegingssensor_keuken
+  - cover.cover_kitchen_level
 badkamer:
   name: Badkamer
   view: true
@@ -63,3 +61,11 @@ climate_slaapkamer:
   - climate.slaapkamer
   - sensor.slaapkamer_humidity
   - sensor.slaapkamer_heating
+weather:
+  name: Weer
+  entities:
+  - sensor.br_temperature
+  - sensor.br_humidity
+  - sensor.br_wind_speed
+  - sensor.dark_sky_cloud_coverage
+  - sun.sun
