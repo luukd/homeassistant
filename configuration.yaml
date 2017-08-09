@@ -59,6 +59,9 @@ zwave:
 # Allows you to issue voice commands from the frontend in enabled browsers
 #conversation:
 
+recorder:
+  purge_days: 14
+
 history:
   exclude:
     domains:
