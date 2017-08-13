@@ -83,6 +83,18 @@ sun:
 binary_sensor:
   - platform: template
     sensors:
+      iemand_thuis:
+        friendly_name: "Iemand thuis"
+        value_template: >
+          {% if (is_state('device_tracker.iphone_luuk', 'home')) %}
+            true
+          {% else %} 
+            false
+          {% endif %}
+        entity_id:
+          - device_tracker.iphone_luuk
+  - platform: template
+    sensors:
       dark_outside:
         friendly_name: "Dark outside"
         value_template: >
@@ -164,8 +176,6 @@ switch:
 #   platform: google
 
 device_tracker:
-  - platform: owntracks
-    max_gps_accuracy: 200
   - platform: tado
     username: !secret tado_username
     password: !secret tado_password

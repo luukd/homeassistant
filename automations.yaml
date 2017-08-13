@@ -21,12 +21,11 @@
     entity_id: scene.film
  
 - id: home_lights
-  alias: "Turn on lights when Luuk comes home"
+  alias: "Turn on lights"
   trigger:
-    - platform: zone
-      entity_id: device_tracker.iphonese_iphonese
-      zone: zone.home
-      event: enter
+    - platform: state
+      entity_id: binary_sensor.iemand_thuis
+      to: 'on'
     - platform: state
       entity_id: binary_sensor.dark_outside
       to: 'on'
@@ -42,9 +41,9 @@
       - condition: state
         entity_id: binary_sensor.dark_outside
         state: 'on'
-      - condition: zone
-        entity_id: device_tracker.iphonese_iphonese
-        zone: zone.home
+      - condition: state
+        entity_id: binary_sensor.iemand_thuis
+        state: 'on'
       - condition: state
         entity_id: binary_sensor.harmony_tv_activity
         state: 'off'
@@ -52,12 +51,11 @@
         entity_id: input_boolean.slapen
         state: 'off'
 
-- alias: "Turn off lights when Luuk leaves home"
+- alias: "Turn off lights"
   trigger:
-    - platform: zone
-      entity_id: device_tracker.iphonese_iphonese
-      zone: zone.home
-      event: leave
+    - platform: state
+      entity_id: binary_sensor.iemand_thuis
+      to: 'off'
     - platform: state
       entity_id: binary_sensor.dark_outside
       to: 'off'
@@ -73,8 +71,9 @@
       - condition: state
         entity_id: 'binary_sensor.dark_outside'
         state: 'off'
-      - condition: template
-        value_template: '{% if states("device_tracker.iphonese_iphonese") != "home" %}true{% else %}false{% endif %}'
+      - condition: state
+        entity_id: 'binary_sensor.iemand_thuis'
+        state: 'off'
 
 - id: harmony_activity_airplay
   alias: "Activate Harmony activity when playing AirPlay"
@@ -113,10 +112,9 @@
 - id: vacuum_cleaner_schedule
   alias: "Stofzuigen"
   trigger:
-    platform: zone
-    entity_id: device_tracker.iphonese_iphonese
-    zone: zone.home
-    event: leave
+    platform: state
+    entity_id: binary_sensor.iemand_thuis
+    to: 'off'
   condition:
     - condition: time
       after: "07:00:00"
@@ -183,9 +181,9 @@
       - condition: state
         entity_id: binary_sensor.dark_outside
         state: 'on'
-      - condition: zone
-        entity_id: device_tracker.iphonese_iphonese
-        zone: zone.home
+      - condition: state
+        entity_id: binary_sensor.iemand_thuis
+        state: 'on'
       - condition: state
         entity_id: input_boolean.slapen
         state: 'off'
@@ -225,9 +223,9 @@
   condition:
     condition: and
     conditions:
-      - condition: zone
-        entity_id: device_tracker.iphonese_iphonese
-        zone: zone.home
+      - condition: state
+        entity_id: binary_sensor.iemand_thuis
+        state: 'on'
       - condition: or
         conditions:
           - condition: time
