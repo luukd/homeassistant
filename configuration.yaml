@@ -86,9 +86,9 @@ binary_sensor:
       dark_outside:
         friendly_name: "Dark outside"
         value_template: >
-          {% if (states.sun.sun.attributes.elevation | int < 30) %}true
-          {% elif ( (states.sun.sun.attributes.elevation | int < 40) and (states.sensor.dark_sky_cloud_coverage.state | int > 50)) %}true
-          {% elif (states.sensor.dark_sky_cloud_coverage.state | int > 90) %}true
+          {% if (states.sun.sun.attributes.elevation | int < 20) %}true
+          {% elif ( (states.sun.sun.attributes.elevation | int < 30) and (states.sensor.dark_sky_cloud_coverage.state | int > 70)) %}true
+          {% elif (states.sensor.dark_sky_cloud_coverage.state | int > 99) %}true
           {% else %}false
           {% endif %}
         entity_id:
@@ -125,12 +125,6 @@ binary_sensor:
     device_class: "motion"
 
 sensor:
-  - platform: template
-    sensors:
-      solar_angle:
-        value_template: '{{ "%+.1f"|format(states.sun.sun.attributes.elevation) }}'
-        friendly_name: 'Sun Angle'
-        unit_of_measurement: 'degrees'
   - platform: buienradar
     monitored_conditions:
       - humidity
@@ -150,6 +144,10 @@ sensor:
     state_topic: "tele/wasmachine/ENERGY"
     value_template: "{{ value_json.Power }}"
     unit_of_measurement: "W"
+  - platform: mqtt
+    name: "Lichtsterkte zolder"
+    state_topic: "actuator/60-01-94-0c-23-01/light"
+    unit_of_measurement: "lux"
 
 switch:
   - platform: mqtt
