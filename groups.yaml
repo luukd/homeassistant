@@ -7,6 +7,7 @@ home:
   - group.badkamer
   - group.slaapkamer
   - group.weather
+  - group.presence
 woonkamer:
   name: Woonkamer
   view: true
@@ -69,3 +70,11 @@ weather:
   - sensor.br_wind_speed
   - sensor.dark_sky_cloud_coverage
   - sun.sun
+presence:
+  name: Aanwezigheid
+  control: hidden
+  entities:
+  - binary_sensor.iemand_thuis
+  - device_tracker.iphone_luuk
+  - input_boolean.guest_mode
+  - input_boolean.force_not_home
