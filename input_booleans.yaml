@@ -5,3 +5,9 @@ wasmachine_bezig:
 slapen:
   name: Slapen
   icon: 'mdi:sleep'
+guest_mode:
+  name: "Gastmodus"
+  icon: mdi:account-multiple
+force_not_home:
+  name: "Forceer afwezigheid"
+  icon: mdi:account-off

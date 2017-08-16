@@ -90,13 +90,19 @@ binary_sensor:
       iemand_thuis:
         friendly_name: "Iemand thuis"
         value_template: >
-          {% if (is_state('device_tracker.iphone_luuk', 'home')) %}
+          {% if (is_state('input_boolean.force_not_home', 'on')) %}
+            false
+          {% elif (is_state('input_boolean.guest_mode', 'on')) %}
+            true
+          {% elif (is_state('device_tracker.iphone_luuk', 'home')) %}
             true
           {% else %} 
             false
           {% endif %}
         entity_id:
           - device_tracker.iphone_luuk
+          - input_boolean.guest_mode
+          - input_boolean.force_not_home
   - platform: template
     sensors:
       dark_outside:
