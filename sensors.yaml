@@ -1,0 +1,34 @@
+- platform: buienradar
+  monitored_conditions:
+    - humidity
+    - temperature
+    - windspeed
+- platform: darksky
+  api_key: !secret darksky_api_key
+  monitored_conditions:
+    - cloud_cover
+- platform: mqtt
+  name: "Wasmachine verbruik vandaag"
+  state_topic: "tele/wasmachine/ENERGY"
+  value_template: "{{ value_json.Today }}"
+  unit_of_measurement: "kWh"
+- platform: mqtt
+  name: "Wasmachine actueel verbruik"
+  state_topic: "tele/wasmachine/ENERGY"
+  value_template: "{{ value_json.Power }}"
+  unit_of_measurement: "W"
+- platform: mqtt
+  name: "Lichtsterkte zolder"
+  state_topic: "actuator/60-01-94-0c-23-01/light"
+  unit_of_measurement: "lux"
+- platform: miflora
+  mac: 'C4:7C:8D:63:75:0A'
+  name: Druivenstruik
+  force_update: false
+  median: 3
+  monitored_conditions:
+    - moisture
+    - light
+    - temperature
+    - conductivity
+    - battery

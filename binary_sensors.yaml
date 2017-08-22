@@ -1,0 +1,60 @@
+- platform: template
+  sensors:
+    iemand_thuis:
+      friendly_name: "Iemand thuis"
+      value_template: >
+        {% if (is_state('input_boolean.force_not_home', 'on')) %}
+          false
+        {% elif (is_state('input_boolean.guest_mode', 'on')) %}
+          true
+        {% elif (is_state('device_tracker.iphone_luuk', 'home')) %}
+          true
+        {% else %} 
+          false
+        {% endif %}
+      entity_id:
+        - device_tracker.iphone_luuk
+        - input_boolean.guest_mode
+        - input_boolean.force_not_home
+- platform: template
+  sensors:
+    dark_outside:
+      friendly_name: "Dark outside"
+      value_template: >
+        {% if (states.sun.sun.attributes.elevation | int < 20) %}true
+        {% elif ( (states.sun.sun.attributes.elevation | int < 30) and (states.sensor.dark_sky_cloud_coverage.state | int > 70)) %}true
+        {% elif (states.sensor.dark_sky_cloud_coverage.state | int > 99) %}true
+        {% else %}false
+        {% endif %}
+      entity_id:
+        - sun.sun
+        - sensor.dark_sky_cloud_coverage
+- platform: template
+  sensors:
+    harmony_tv_activity:
+      friendly_name: 'Harmony Hub TV activity'
+      value_template: >-
+        {%- if states.media_player.woonkamer.state == "playing" -%}
+        True
+        {%- else -%}
+        False
+        {%- endif %}
+#         value_template: >-
+#           {%- if states.remote.harmony_hub.attributes.current_activity == "Watch TV"
+#               or states.remote.harmony_hub.attributes.current_activity == "Watch Chromecast"
+#               or states.remote.harmony_hub.attributes.current_activity == "PlayStation"
+#               or states.remote.harmony_hub.attributes.current_activity == "Watch Smart TV" -%}
+#           True
+#           {%- else -%}
+#           False
+#           {%- endif %}
+      entity_id:
+        - remote.harmony_hub
+        - media_player.woonkamer
+- platform: mqtt
+  name: "Bewegingssensor keuken"
+  state_topic: "cmnd/sonoff_keuken_motion_sensor/POWER1"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  device_class: "motion"
