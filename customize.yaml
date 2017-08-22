@@ -55,3 +55,5 @@ sensor.luuks_woning_tado_bridge_status:
   hidden: true
 binary_sensor.harmony_tv_activity:
   hidden: true
+binary_sensor.spotify_playing_to_receiver:
+  hidden: true

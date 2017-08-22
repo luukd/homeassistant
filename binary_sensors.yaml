@@ -51,6 +51,19 @@
       entity_id:
         - remote.harmony_hub
         - media_player.woonkamer
+- platform: template
+  sensors:
+    spotify_playing_to_receiver:
+      friendly_name: 'Spotify playing to receiver'
+      value_template: >-
+        {%- if states.media_player.spotify.state == "playing"
+            and states.media_player.spotify.attributes.source == "Huiskamer" -%}
+        True
+        {%- else -%}
+        False
+        {%- endif %}
+      entity_id:
+        - media_player.spotify
 - platform: mqtt
   name: "Bewegingssensor keuken"
   state_topic: "cmnd/sonoff_keuken_motion_sensor/POWER1"
