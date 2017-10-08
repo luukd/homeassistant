@@ -89,16 +89,12 @@ sun:
 #   platform: google
 
 device_tracker:
-  - platform: tado
-    username: !secret tado_username
-    password: !secret tado_password
-    home_id: !secret tado_home_id
 
 zone:
   name: Home
   latitude: !secret ha_latitude
   longitude: !secret ha_longitude
-  radius: 50
+  radius: 80
   icon: mdi:home
 
 remote:

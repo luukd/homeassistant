@@ -1,3 +1,5 @@
+device_tracker.iphone_van_luuk:
+  friendly_name: "Luuk (iPhone)"
 sensor.wasmachine_actueel_verbruik:
   device_class: power
 cover.cover_kitchen_level:

@@ -7,13 +7,13 @@
           false
         {% elif (is_state('input_boolean.guest_mode', 'on')) %}
           true
-        {% elif (is_state('device_tracker.iphone_luuk', 'home')) %}
+        {% elif (is_state('device_tracker.iphone_van_luuk', 'home')) %}
           true
         {% else %} 
           false
         {% endif %}
       entity_id:
-        - device_tracker.iphone_luuk
+        - device_tracker.iphone_van_luuk
         - input_boolean.guest_mode
         - input_boolean.force_not_home
 - platform: template
