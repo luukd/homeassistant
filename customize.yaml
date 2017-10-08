@@ -5,7 +5,9 @@ group.lights_keuken:
 scene.slapen:
   homebridge_visible: true
 device_tracker.iphone_van_luuk:
-  friendly_name: "Luuk (iPhone)"
+  friendly_name: "Luuk"
+device_tracker.phone_hans:
+  friendly_name: "Hans"
 sensor.wasmachine_actueel_verbruik:
   device_class: power
 cover.cover_kitchen_level:

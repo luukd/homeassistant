@@ -1,0 +1,17 @@
+iphone_van_luuk:
+  hide_if_away: false
+  icon:
+  mac:
+  name: iphone van luuk
+  picture:
+  track: true
+  vendor:
+
+phone_hans:
+  hide_if_away: false
+  icon:
+  mac: 14:9a:10:58:29:e8
+  name: Windows Phone Hans
+  picture:
+  track: true
+  vendor: Microsoft

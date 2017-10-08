@@ -75,6 +75,7 @@ presence:
   control: hidden
   entities:
   - binary_sensor.iemand_thuis
-  - device_tracker.iphone_van_luuk
   - input_boolean.guest_mode
   - input_boolean.force_not_home
+  - device_tracker.iphone_van_luuk
+  - device_tracker.phone_hans

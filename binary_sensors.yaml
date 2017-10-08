@@ -9,6 +9,8 @@
           true
         {% elif (is_state('device_tracker.iphone_van_luuk', 'home')) %}
           true
+        {% elif (is_state('device_tracker.phone_hans', 'home')) %}
+          true
         {% else %} 
           false
         {% endif %}
