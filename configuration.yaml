@@ -43,7 +43,7 @@ config:
 
 http:
   api_password: !secret http_api_password
-  ip_ban_enabled: True
+  ip_ban_enabled: true
   login_attempts_threshold: !secret http_login_attempts_threshold
 
 updater:
@@ -57,7 +57,7 @@ zwave:
   network_key: !secret zwave_network_key
 
 # Allows you to issue voice commands from the frontend in enabled browsers
-#conversation:
+# conversation:
 
 recorder:
   purge_days: 14
