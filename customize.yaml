@@ -1,3 +1,9 @@
+group.lights_woonkamer:
+  homebridge_visible: true
+group.lights_keuken:
+  homebridge_visible: true
+scene.slapen:
+  homebridge_visible: true
 device_tracker.iphone_van_luuk:
   friendly_name: "Luuk (iPhone)"
 sensor.wasmachine_actueel_verbruik:
