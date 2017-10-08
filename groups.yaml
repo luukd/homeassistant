@@ -36,7 +36,7 @@ lights_woonkamer:
   name: Lampen woonkamer
   entities:
   - light.zithoek
-  - light.schemerlamp
+  - light.woonkamer_plant
   - light.eettafel
 lights_keuken:
   name: Lampen keuken

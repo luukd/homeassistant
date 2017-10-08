@@ -4,10 +4,10 @@
       state: on
       brightness: 255
       color_temp: 300
-    light.schemerlamp:
+    light.woonkamer_plant:
       state: on
-      brightness: 204
-      color_temp: 300
+      brightness: 45
+      color_temp: 360
     light.eettafel:
       state: on
       brightness: 204
@@ -15,22 +15,14 @@
 
 - name: Niet thuis
   entities:
-    light.zithoek: off
-    light.schemerlamp: off
-    light.eettafel: off
-    light.keuken: off
-    light.spotjes_keuken_links: off
-    light.spotjes_keuken_rechts: off
+    group.lights_woonkamer: off
+    group.lights_keuken: off
     remote.harmony_hub: off
 
 - name: Slapen
   entities:
-    light.zithoek: off
-    light.schemerlamp: off
-    light.eettafel: off
-    light.keuken: off
-    light.spotjes_keuken_links: off
-    light.spotjes_keuken_rechts: off
+    group.lights_woonkamer: off
+    group.lights_keuken: off
     input_boolean.slapen: on
     remote.harmony_hub: off
 
@@ -42,12 +34,12 @@
   entities:
     light.zithoek:
       state: on
-      brightness: 50
+      brightness: 100
       color_temp: 330
-    light.schemerlamp:
+    light.woonkamer_plant:
       state: on
-      brightness: 40
-      color_temp: 365
+      brightness: 2
+      rgb_color: [ 50,42,255]
     light.eettafel:
       state: on
       brightness: 100
