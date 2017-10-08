@@ -34,7 +34,13 @@
     harmony_tv_activity:
       friendly_name: 'Harmony Hub TV activity'
       value_template: >-
-        {%- if states.media_player.woonkamer.state == "playing" -%}
+        {%- if states.media_player.woonkamer.state == "playing"
+            and (
+              states.media_player.woonkamer.attributes.app_name == "DS video"
+              or states.media_player.woonkamer.attributes.media_content_type == "tvshow"
+              or states.media_player.woonkamer.attributes.media_content_type == "video"
+              or states.media_player.woonkamer.attributes.media_content_type == "episode"
+            )-%}
         True
         {%- else -%}
         False
