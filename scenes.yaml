@@ -13,6 +13,11 @@
       brightness: 204
       color_temp: 300
 
+- name: Lampen uit
+  entities:
+    group.lights_woonkamer: off
+    group.lights_keuken: off
+
 - name: Niet thuis
   entities:
     group.lights_woonkamer: off
