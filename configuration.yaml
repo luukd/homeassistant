@@ -6,6 +6,9 @@ homeassistant:
   unit_system: metric
   time_zone: Europe/Amsterdam
   customize: !include customize.yaml
+  customize_glob:
+    "sensor.miflora_*":
+      hidden: true
 
 mqtt:
   broker: !secret mqtt_broker
@@ -122,3 +125,4 @@ scene: !include scenes.yaml
 automation: !include automations.yaml
 group: !include groups.yaml
 script: !include scripts.yaml
+plant: !include plants.yaml
