@@ -56,6 +56,10 @@ zwave:
   usb_path: /dev/ttyACM0
   network_key: !secret zwave_network_key
 
+emulated_hue:
+  exposed_domains:
+    - light
+
 # Allows you to issue voice commands from the frontend in enabled browsers
 # conversation:
 

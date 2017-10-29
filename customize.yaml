@@ -1,7 +1,9 @@
 group.lights_woonkamer:
   homebridge_visible: true
+  emulated_hue_hidden: false
 group.lights_keuken:
   homebridge_visible: true
+  emulated_hue_hidden: false
 scene.slapen:
   homebridge_visible: true
 device_tracker.iphone_van_luuk:
