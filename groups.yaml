@@ -79,3 +79,4 @@ presence:
   - input_boolean.force_not_home
   - device_tracker.iphone_van_luuk
   - device_tracker.phone_hans
+  - device_tracker.iphonevanelly

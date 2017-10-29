@@ -10,8 +10,17 @@ iphone_van_luuk:
 phone_hans:
   hide_if_away: false
   icon:
-  mac: 14:9a:10:58:29:e8
+  mac: 14:9A:10:58:29:E8
   name: Windows Phone Hans
   picture:
   track: true
   vendor: Microsoft
+
+iphonevanelly:
+  hide_if_away: false
+  icon:
+  mac: 24:AB:81:7B:7D:93
+  name: iPhone-van-Elly
+  picture:
+  track: true
+  vendor: Apple, Inc.
