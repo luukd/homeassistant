@@ -1,3 +1,29 @@
+- id: doorbell_notification
+  alias: "Doorbell notification"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.doorbell
+      to: "on"
+  action:
+    - service: notify.ios_iphone_van_luuk
+      data:
+        title: "Deurbel: "
+        message: "Er wordt aangebeld!"
+
+- id: doorbell_reset
+  alias: "Set doorbell to off 10 seconds after ringing"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.doorbell
+      to: "on"
+      for:
+        seconds: 10
+  action:
+    service: mqtt.publish
+    data:
+      topic: "home/RF2toMQTT/CODE_8318190/UNIT_0/GROUP_1/PERIOD_253"
+      payload: "0"
+
 - id: tv_scene_start
   alias: "TV started"
   trigger:

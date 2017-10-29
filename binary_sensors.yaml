@@ -81,3 +81,11 @@
   payload_on: "ON"
   payload_off: "OFF"
   device_class: "motion"
+- platform: mqtt
+  name: "Doorbell"
+  state_topic: "home/RF2toMQTT/CODE_8318190/UNIT_0/GROUP_1/PERIOD_253"
+  payload_on: "1"
+  payload_off: "0"
+  availability_topic: "home/OpenMQTTGateway/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
