@@ -50,12 +50,14 @@ climate_woonkamer:
   - climate.woonkamer
   - sensor.woonkamer_humidity
   - sensor.woonkamer_heating
+  - input_number.ventilation
 climate_badkamer:
   name: Climate
   entities:
   - climate.badkamer
   - sensor.badkamer_humidity
   - sensor.badkamer_heating
+  - input_number.ventilation
 climate_slaapkamer:
   name: Climate
   entities:

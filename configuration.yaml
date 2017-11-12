@@ -9,6 +9,12 @@ homeassistant:
   customize_glob:
     "sensor.miflora_*":
       hidden: true
+    "automation.ventilation_slider_*":
+      hidden: true
+    "switch.qubino_zmnhbdx_flush_2_relays_*":
+      hidden: true
+    "sensor.qubino_zmnhbdx_flush_2_relays_*":
+      hidden: true
 
 mqtt:
   broker: !secret mqtt_broker
@@ -25,8 +31,6 @@ mqtt:
     payload: "Offline"
     qos: 1
     retain: true
-
-input_boolean: !include input_booleans.yaml
 
 tado:
   username: !secret tado_username
@@ -117,6 +121,8 @@ remote:
     host: 10.0.0.71
     scan_interval: 10
 
+input_boolean: !include input_booleans.yaml
+input_number: !include input_numbers.yaml
 switch: !include switches.yaml
 binary_sensor: !include binary_sensors.yaml
 sensor: !include sensors.yaml

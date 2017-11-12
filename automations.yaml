@@ -1,3 +1,50 @@
+- id: update_ventilation_slider
+  alias: Ventilatie slider bijwerken
+  trigger:
+    platform: state
+    entity_id: sensor.ventilation_current_mode
+  action:
+     service: input_number.set_value
+     data_template:
+      entity_id: input_number.ventilation
+      value: "{{ states.sensor.ventilation_current_mode.state }}"
+
+- id: ventilation_slider_1
+  alias: Ventilatie slider 1
+  trigger:
+    - platform: state
+      entity_id: input_number.ventilation
+      to: "1.0"
+  action:
+    - service: switch.turn_off
+      entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
+    - service: switch.turn_off
+      entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3
+
+- id: ventilation_slider_2
+  alias: Ventilatie slider 2
+  trigger:
+    - platform: state
+      entity_id: input_number.ventilation
+      to: "2.0"
+  action:
+    - service: switch.turn_off
+      entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
+    - service: switch.turn_on
+      entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3
+
+- id: ventilation_slider_3
+  alias: Ventilatie slider 3
+  trigger:
+    - platform: state
+      entity_id: input_number.ventilation
+      to: "3.0"
+  action:
+    - service: switch.turn_off
+      entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3
+    - service: switch.turn_on
+      entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
+
 - id: doorbell_notification
   alias: "Doorbell notification"
   trigger:
