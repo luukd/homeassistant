@@ -44,7 +44,7 @@ media_player:
 
 frontend:
 
-ios:
+ios: !include ios.yaml
 
 config:
 

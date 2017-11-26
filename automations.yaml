@@ -371,3 +371,45 @@
   action:
     service: scene.turn_on
     entity_id: scene.opstaan
+- id: notify_start_heating
+  alias: Verwarming inschakelen notificatie
+  trigger:
+    - platform: time
+      at: "17:00:00"
+  condition:
+    condition: and
+    conditions:
+      - condition: numeric_state
+        entity_id: sensor.woonkamer_temperature
+        below: 17.5
+      - condition: state
+        entity_id: binary_sensor.iemand_thuis
+        state: 'off'
+      - condition: time
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+  action:
+    service: notify.ios_iphone_van_luuk
+    data:
+      title: "Alvast huis opwarmen?"
+      message: "Het is thuis {{ states('sensor.woonkamer_temperature') }}°C. Verwarming alvast aanzetten?"
+      data:
+        push:
+          category: "start_heating"
+
+- id: handle_notification_start_heating
+  alias: Verwarming inschakelen notificatie afhandelen
+  trigger:
+    platform: event
+    event_type: ios.notification_action_fired
+    event_data:
+      actionName: START_HEATING
+  action:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.woonkamer
+        temperature: 20

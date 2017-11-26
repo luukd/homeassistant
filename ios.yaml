@@ -1,0 +1,17 @@
+push:
+  categories:
+    - name: Verwarming inschakelen
+      identifier: start_heating
+      actions:
+        - identifier: 'START_HEATING'
+          title: 'Alvast verwarmen'
+          activationMode: 'background'
+          authenticationRequired: true
+          destructive: false
+          behavior: 'default'
+        - identifier: 'DONT_START_HEATING'
+          title: 'Niet verwarmen'
+          activationMode: 'background'
+          authenticationRequired: false
+          destructive: false
+          behavior: 'default'
