@@ -3,42 +3,54 @@
   trigger:
     platform: state
     entity_id: sensor.ventilation_current_mode
+  condition:
+    condition: template
+    value_template: '{{ states.input_number.ventilation.state != states.sensor.ventilation_current_mode.state }}'
   action:
-     service: input_number.set_value
-     data_template:
+    service: input_number.set_value
+    data_template:
       entity_id: input_number.ventilation
       value: "{{ states.sensor.ventilation_current_mode.state }}"
 
-- id: ventilation_slider_1
-  alias: Ventilatie slider 1
+- id: ventilation_switches_1
+  alias: Ventilatie switches 1
   trigger:
     - platform: state
       entity_id: input_number.ventilation
       to: "1.0"
+  condition:
+    condition: template
+    value_template: '{{ states.input_number.ventilation.state != states.sensor.ventilation_current_mode.state }}'
   action:
     - service: switch.turn_off
       entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
     - service: switch.turn_off
       entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3
 
-- id: ventilation_slider_2
-  alias: Ventilatie slider 2
+- id: ventilation_switches_2
+  alias: Ventilatie switches 2
   trigger:
     - platform: state
       entity_id: input_number.ventilation
       to: "2.0"
+  condition:
+    condition: template
+    value_template: '{{ states.input_number.ventilation.state != states.sensor.ventilation_current_mode.state }}'
   action:
     - service: switch.turn_off
       entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
     - service: switch.turn_on
       entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3
 
-- id: ventilation_slider_3
-  alias: Ventilatie slider 3
+- id: ventilation_switches_3
+  alias: Ventilatie switches 3
   trigger:
     - platform: state
       entity_id: input_number.ventilation
       to: "3.0"
+  condition:
+    condition: template
+    value_template: '{{ states.input_number.ventilation.state != states.sensor.ventilation_current_mode.state }}'
   action:
     - service: switch.turn_off
       entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3

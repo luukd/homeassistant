@@ -44,11 +44,11 @@
     ventilation_current_mode:
       value_template: >
         {% if (is_state('switch.qubino_zmnhbdx_flush_2_relays_switch_2', 'on')) %}
-          3
+          3.0
         {% elif (is_state('switch.qubino_zmnhbdx_flush_2_relays_switch_3', 'on')) %}
-          2
+          2.0
         {% else %} 
-          1
+          1.0
         {% endif %}
       entity_id:
         - switch.qubino_zmnhbdx_flush_2_relays_switch_3
