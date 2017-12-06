@@ -63,6 +63,11 @@ zwave:
   usb_path: /dev/ttyACM0
   network_key: !secret zwave_network_key
 
+xiaomi_aqara:
+  gateways:
+    - mac: !secret xiaomi_aqara_mac
+      key: !secret xiaomi_aqara_key
+
 emulated_hue:
   exposed_domains:
     - light
