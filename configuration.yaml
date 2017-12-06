@@ -124,6 +124,9 @@ remote:
     host: 10.0.0.71
     scan_interval: 10
 
+influxdb:
+  host: !secret influxdb_host
+
 input_boolean: !include input_booleans.yaml
 input_number: !include input_numbers.yaml
 switch: !include switches.yaml
