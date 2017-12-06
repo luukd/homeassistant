@@ -324,9 +324,6 @@
       - condition: state
         entity_id: binary_sensor.dark_outside
         state: 'on'
-      - condition: state
-        entity_id: binary_sensor.iemand_thuis
-        state: 'on'
   action:
     - service: light.turn_on
       entity_id: group.lights_keuken
