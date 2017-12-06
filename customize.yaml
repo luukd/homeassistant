@@ -41,6 +41,8 @@ binary_sensor.motion_sensor_158d0001ad6a52:
 binary_sensor.door_window_sensor_158d0001b147ce:
   friendly_name: "Sensor brievenbus"
   hidden: true
+light.gateway_light_34ce0091ead6:
+  hidden: true
 sensor.badkamer_link:
   hidden: true
 sensor.badkamer_overlay:

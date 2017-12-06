@@ -15,6 +15,10 @@ homeassistant:
       hidden: true
     "sensor.qubino_zmnhbdx_flush_2_relays_*":
       hidden: true
+    "sensor.ipad_air_2_*":
+      hidden: true
+    "sensor.iphone_*":
+      hidden: true
 
 mqtt:
   broker: !secret mqtt_broker
