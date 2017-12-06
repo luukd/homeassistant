@@ -53,8 +53,6 @@ http:
   ip_ban_enabled: true
   login_attempts_threshold: !secret http_login_attempts_threshold
 
-updater:
-
 discovery:
   ignore:
     - harmony
