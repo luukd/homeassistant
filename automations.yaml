@@ -345,6 +345,30 @@
   action:
     - service: light.turn_off
       entity_id: group.lights_keuken
+      
+- alias: Lampen hal aan
+  id: hall_lights_on
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001ad6a52
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.dark_outside
+      state: 'on'
+  action:
+    - service: light.turn_on
+      entity_id: light.lamp_hal_achter
+
+- alias: Lampen hal uit
+  id: hall_lights_off
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001ad6a52
+      to: 'off'
+  action:
+    - service: light.turn_off
+      entity_id: light.lamp_hal_achter
 
 - alias: Slapen
   id: slapen

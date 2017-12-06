@@ -24,3 +24,11 @@
   payload_on: "ON"
   payload_off: "OFF"
   retain: true
+- platform: mqtt
+  name: "Lamp hal achter"
+  state_topic: "stat/sonoff_hal_achter/POWER"
+  command_topic: "cmnd/sonoff_hal_achter/POWER"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: true

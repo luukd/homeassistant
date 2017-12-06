@@ -35,6 +35,9 @@ script.start_vacuum_cleaner:
   hidden: true
 binary_sensor.bewegingssensor_keuken:
   hidden: true
+binary_sensor.motion_sensor_158d0001ad6a52:
+  friendly_name: "Bewegingssensor hal achter"
+  hidden: true
 sensor.badkamer_link:
   hidden: true
 sensor.badkamer_overlay:
