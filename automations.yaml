@@ -360,9 +360,9 @@
       entity_id: binary_sensor.motion_sensor_158d0001ad6a52
       to: 'on'
   condition:
-    - condition: state
-      entity_id: binary_sensor.dark_outside
-      state: 'on'
+    - condition: numeric_state
+      entity_id: sensor.illumination_158d0001ad6a52
+      below: 35
   action:
     - service: light.turn_on
       entity_id: light.lamp_hal_achter
