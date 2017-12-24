@@ -47,6 +47,7 @@ media_player:
     client_secret: !secret spotify_client_secret
 
 frontend:
+  javascript_version: es5
 
 ios: !include ios.yaml
 
