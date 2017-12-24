@@ -70,13 +70,13 @@
         message: "Er wordt aangebeld!"
 
 - id: doorbell_reset
-  alias: "Set doorbell to off 10 seconds after ringing"
+  alias: "Set doorbell to off 30 seconds after ringing"
   trigger:
     - platform: state
       entity_id: binary_sensor.doorbell
       to: "on"
       for:
-        seconds: 10
+        seconds: 30
   action:
     service: mqtt.publish
     data:
