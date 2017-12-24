@@ -14,6 +14,7 @@
 
 - id: ventilation_switches_1
   alias: Ventilatie switches 1
+  hide_entity: True
   trigger:
     - platform: state
       entity_id: input_number.ventilation
@@ -29,6 +30,7 @@
 
 - id: ventilation_switches_2
   alias: Ventilatie switches 2
+  hide_entity: True
   trigger:
     - platform: state
       entity_id: input_number.ventilation
@@ -44,6 +46,7 @@
 
 - id: ventilation_switches_3
   alias: Ventilatie switches 3
+  hide_entity: True
   trigger:
     - platform: state
       entity_id: input_number.ventilation
@@ -222,6 +225,7 @@
 
 - id: harmony_activity_spotify_stop
   alias: "Stop Harmony activity when playing Spotify"
+  hide_entity: True
   trigger:
     - platform: state
       entity_id: binary_sensor.spotify_playing_to_receiver
@@ -311,6 +315,7 @@
 
 - alias: Lampen keuken aan
   id: kitchen_lights_on
+  hide_entity: True
   trigger:
     - platform: state
       entity_id: binary_sensor.bewegingssensor_keuken
@@ -330,6 +335,7 @@
 
 - alias: Lampen keuken uit
   id: kitchen_lights_off
+  hide_entity: True
   trigger:
     - platform: state
       entity_id: binary_sensor.bewegingssensor_keuken
@@ -348,6 +354,7 @@
       
 - alias: Lampen hal aan
   id: hall_lights_on
+  hide_entity: True
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001ad6a52
@@ -362,6 +369,7 @@
 
 - alias: Lampen hal uit
   id: hall_lights_off
+  hide_entity: True
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001ad6a52
@@ -436,6 +444,7 @@
 
 - id: handle_notification_start_heating
   alias: Verwarming inschakelen notificatie afhandelen
+  hide_entity: True
   trigger:
     platform: event
     event_type: ios.notification_action_fired
@@ -449,6 +458,7 @@
 
 - id: mailbox_notification
   alias: "Brievenbusnotificatie"
+  hide_entity: True
   trigger:
     - platform: state
       entity_id: binary_sensor.door_window_sensor_158d0001b147ce
