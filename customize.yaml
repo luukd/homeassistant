@@ -44,6 +44,9 @@ binary_sensor.motion_sensor_158d0001ab31bc:
 binary_sensor.door_window_sensor_158d0001b147ce:
   friendly_name: "Sensor brievenbus"
   hidden: true
+binary_sensor.switch_158d00016c22e6:
+  friendly_name: "Knop slaapkamer"
+  hidden: true
 sensor.humidity_158d0001b91ff4:
   friendly_name: "Luchtvochtigheid badkamer"
   icon: mdi:water-percent

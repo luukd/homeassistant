@@ -482,37 +482,35 @@
     - service: light.turn_off
       entity_id: light.overloop
 
-- alias: Slapen
-  id: slapen
+- alias: Activeer slapen met knop
+  id: slapen_switch
   trigger:
-    - platform: state
-      entity_id: sensor.iphone_van_luuk_battery_state
-      from: 'Unplugged'
-      to: 'Charging'
-    - platform: state
-      entity_id: sensor.iphone_van_luuk_battery_state
-      from: 'Unplugged'
-      to: 'Full'
+    platform: event
+    event_type: click
+    event_data:
+      entity_id: binary_sensor.switch_158d00016c22e6
+      click_type: single
   condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: binary_sensor.iemand_thuis
-        state: 'on'
-      - condition: or
-        conditions:
-          - condition: time
-            after: "23:00:00"
-          - condition: time
-            before: "05:00:00"
+    - condition: state
+      entity_id: input_boolean.slapen
+      state: 'off'
   action:
     service: scene.turn_on
     entity_id: scene.slapen
 
 - alias: Opstaan
   trigger:
-    platform: time
-    at: "07:30:00"
+    - platform: time
+      at: "07:30:00"
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d00016c22e6
+        click_type: single
+  condition:
+    - condition: state
+      entity_id: input_boolean.slapen
+      state: 'on'
   action:
     service: scene.turn_on
     entity_id: scene.opstaan
