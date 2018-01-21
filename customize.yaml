@@ -58,6 +58,18 @@ sensor.temperature_158d0001b91ff4:
   hidden: true
 light.gateway_light_34ce0091ead6:
   hidden: true
+climate.warm_water:
+  hidden: true
+sensor.warm_water_link:
+  hidden: true
+sensor.warm_water_overlay:
+  hidden: true
+sensor.warm_water_power:
+  hidden: true
+sensor.warm_water_tado_mode:
+  hidden: true
+sensor.badkamer_humidity:
+  hidden: true
 sensor.badkamer_link:
   hidden: true
 sensor.badkamer_overlay:
