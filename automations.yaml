@@ -570,6 +570,7 @@
       data:
         title: "Brievenbus:"
         message: "Er is (waarschijnlijk) post!"
+
 - id: battery_low_notification
   alias: "Batterij bijna leeg notificatie"
   hide_entity: True
@@ -596,3 +597,12 @@
       data:
         title: "Batterij bijna leeg"
         message: 'De batterij van {{ trigger.from_state.attributes.friendly_name }} is bijna leeg ({{ trigger.from_state.attributes.battery_level }})'
+
+- id: zwave_heal
+  alias: heal at 2:32am
+  hide_entity: True
+  trigger:
+    platform: time
+    at: '2:32:00'
+  action:
+    service: zwave.heal_network
