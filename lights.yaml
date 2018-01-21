@@ -4,10 +4,12 @@
       name: Zithoek
     10.0.0.72:
       name: Keuken
-    10.0.0.80:
+    10.0.0.242:
       name: Eettafel
     10.0.0.108:
       name: Woonkamer plant
+    10.0.0.80:
+      name: Woonkamer schemerlamp
 - platform: mqtt
   name: "Spotjes keuken links"
   state_topic: "stat/sonoff_keuken_spots_links/POWER"

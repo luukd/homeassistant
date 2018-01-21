@@ -2,16 +2,19 @@
   entities:
     light.zithoek:
       state: on
-      brightness: 255
-      color_temp: 300
+      profile: default
     light.woonkamer_plant:
+      state: on
+      brightness: 45
+      color_temp: 360
+    light.woonkamer_schemerlamp:
       state: on
       brightness: 45
       color_temp: 360
     light.eettafel:
       state: on
+      profile: default
       brightness: 204
-      color_temp: 300
 
 - name: Lampen uit
   entities:
@@ -39,13 +42,15 @@
   entities:
     light.zithoek:
       state: on
-      brightness: 100
-      color_temp: 330
+      brightness: 90
+      color_temp: 390
     light.woonkamer_plant:
       state: on
       brightness: 2
       rgb_color: [ 50,42,255]
-    light.eettafel:
+    light.woonkamer_schemerlamp:
       state: on
-      brightness: 100
-      color_temp: 300
+      brightness: 2
+      rgb_color: [ 50,42,255]
+    light.eettafel:
+      state: off
