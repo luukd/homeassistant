@@ -48,3 +48,10 @@
       entity_id:
         - switch.qubino_zmnhbdx_flush_2_relays_switch_3
         - switch.qubino_zmnhbdx_flush_2_relays_switch_2
+
+- platform: mold_indicator
+  name: mold_sensor_bathroom
+  indoor_temp_sensor: sensor.temperature_158d0001b91ff4
+  indoor_humidity_sensor: sensor.humidity_158d0001b91ff4
+  outdoor_temp_sensor: sensor.slaapkamer_temperature
+  calibration_factor: 3.0

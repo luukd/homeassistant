@@ -56,8 +56,9 @@ climate_badkamer:
   name: Climate
   entities:
   - climate.badkamer
-  - sensor.badkamer_humidity
   - sensor.badkamer_heating
+  - sensor.humidity_158d0001b91ff4
+  - sensor.mold_sensor_bathroom
   - input_number.ventilation
 climate_slaapkamer:
   name: Climate

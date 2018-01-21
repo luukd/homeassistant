@@ -60,6 +60,43 @@
     - service: switch.turn_on
       entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
 
+- id: ventilation_bathroom_high
+  alias: Ventileren badkamer (hoog)
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.mold_sensor_bathroom
+      above: 85
+  action:
+    service: input_number.set_value
+    data_template:
+      entity_id: input_number.ventilation
+      value: 3.0
+
+- id: ventilation_bathroom_medium
+  alias: Ventileren badkamer (middel)
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.mold_sensor_bathroom
+      below: 85
+      above: 75
+  action:
+    service: input_number.set_value
+    data_template:
+      entity_id: input_number.ventilation
+      value: 2.0
+
+- id: ventilation_bathroom_low
+  alias: Ventileren badkamer (laag)
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.mold_sensor_bathroom
+      below: 75
+  action:
+    service: input_number.set_value
+    data_template:
+      entity_id: input_number.ventilation
+      value: 1.0
+
 - id: doorbell_notification
   alias: "Doorbell notification"
   trigger:

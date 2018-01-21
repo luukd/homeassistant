@@ -41,6 +41,15 @@ binary_sensor.motion_sensor_158d0001ad6a52:
 binary_sensor.door_window_sensor_158d0001b147ce:
   friendly_name: "Sensor brievenbus"
   hidden: true
+sensor.humidity_158d0001b91ff4:
+  friendly_name: "Luchtvochtigheid badkamer"
+  icon: mdi:water-percent
+sensor.pressure_158d0001b91ff4:
+  friendly_name: "Luchtdruk badkamer"
+  hidden: true
+sensor.temperature_158d0001b91ff4:
+  friendly_name: "Temperatuur badkamer"
+  hidden: true
 light.gateway_light_34ce0091ead6:
   hidden: true
 sensor.badkamer_link:
@@ -75,6 +84,9 @@ sensor.woonkamer_temperature:
   hidden: true
 sensor.luuks_woning_tado_bridge_status:
   hidden: true
+sensor.mold_sensor_bathroom:
+  friendly_name: Schimmelkans badkamer
+  icon: mdi:water
 binary_sensor.harmony_tv_activity:
   hidden: true
 binary_sensor.spotify_playing_to_receiver:
