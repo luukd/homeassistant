@@ -570,3 +570,29 @@
       data:
         title: "Brievenbus:"
         message: "Er is (waarschijnlijk) post!"
+- id: battery_low_notification
+  alias: "Batterij bijna leeg notificatie"
+  hide_entity: True
+  trigger:
+    - platform: numeric_state
+      entity_id:
+      - binary_sensor.door_window_sensor_158d0001b147ce
+      - binary_sensor.motion_sensor_158d0001ab31bc
+      - binary_sensor.motion_sensor_158d0001ad6a52
+      - binary_sensor.motion_sensor_158d0001e470dc
+      - binary_sensor.switch_158d00016c22e6
+      - sensor.temperature_158d0001b91ff4
+      - sensor.temperature_158d0001b95352
+      value_template: '{{ state.attributes.battery_level }}'
+      below: 10
+      for:
+        hours: 1
+  action:
+    - service: notify.ios_iphone_van_luuk
+      data:
+        title: "Batterij bijna leeg"
+        message: 'De batterij van {{ trigger.from_state.attributes.friendly_name }} is bijna leeg ({{ trigger.from_state.attributes.battery_level }})'
+    - service: persistent_notification.create
+      data:
+        title: "Batterij bijna leeg"
+        message: 'De batterij van {{ trigger.from_state.attributes.friendly_name }} is bijna leeg ({{ trigger.from_state.attributes.battery_level }})'
