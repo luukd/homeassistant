@@ -45,9 +45,6 @@
         {% else %} 
           1.0
         {% endif %}
-      entity_id:
-        - switch.qubino_zmnhbdx_flush_2_relays_switch_3
-        - switch.qubino_zmnhbdx_flush_2_relays_switch_2
 
 - platform: mold_indicator
   name: mold_sensor_bathroom

@@ -16,10 +16,6 @@
         {% else %} 
           false
         {% endif %}
-      entity_id:
-        - device_tracker.iphone_van_luuk
-        - input_boolean.guest_mode
-        - input_boolean.force_not_home
 - platform: template
   sensors:
     dark_outside:
@@ -30,9 +26,6 @@
         {% elif (states.sensor.dark_sky_cloud_coverage.state | int > 99) %}true
         {% else %}false
         {% endif %}
-      entity_id:
-        - sun.sun
-        - sensor.dark_sky_cloud_coverage
 - platform: template
   sensors:
     harmony_tv_activity:
@@ -58,9 +51,6 @@
 #           {%- else -%}
 #           False
 #           {%- endif %}
-      entity_id:
-        - remote.harmony_hub
-        - media_player.woonkamer
 - platform: template
   sensors:
     spotify_playing_to_receiver:
@@ -72,8 +62,6 @@
         {%- else -%}
         False
         {%- endif %}
-      entity_id:
-        - media_player.spotify
 - platform: mqtt
   name: "Bewegingssensor keuken"
   state_topic: "cmnd/sonoff_keuken_motion_sensor/POWER1"
