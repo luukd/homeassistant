@@ -38,12 +38,18 @@ binary_sensor.bewegingssensor_keuken:
 binary_sensor.motion_sensor_158d0001ad6a52:
   friendly_name: "Bewegingssensor hal achter"
   hidden: true
-binary_sensor.motion_sensor_158d0001ab31bc:
+binary_sensor.motion_sensor_158d0001e470dc:
   friendly_name: "Bewegingssensor overloop"
   hidden: true
 binary_sensor.door_window_sensor_158d0001b147ce:
   friendly_name: "Sensor brievenbus"
   hidden: true
+binary_sensor.door_window_sensor_158d0001e48a17:
+  friendly_name: Badkamerraam
+  device_class: window
+binary_sensor.door_window_sensor_158d0001e481df:
+  friendly_name: Badkamerdeur
+  device_class: door
 binary_sensor.switch_158d00016c22e6:
   friendly_name: "Knop slaapkamer"
   hidden: true
@@ -57,6 +63,8 @@ sensor.temperature_158d0001b91ff4:
   friendly_name: "Temperatuur badkamer"
   hidden: true
 light.gateway_light_34ce0091ead6:
+  hidden: true
+sensor.illumination_34ce0091ead6:
   hidden: true
 climate.warm_water:
   hidden: true

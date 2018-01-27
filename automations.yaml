@@ -578,6 +578,8 @@
     - platform: numeric_state
       entity_id:
       - binary_sensor.door_window_sensor_158d0001b147ce
+      - binary_sensor.door_window_sensor_158d0001e48a17
+      - binary_sensor.door_window_sensor_158d0001e481df
       - binary_sensor.motion_sensor_158d0001ab31bc
       - binary_sensor.motion_sensor_158d0001ad6a52
       - binary_sensor.motion_sensor_158d0001e470dc

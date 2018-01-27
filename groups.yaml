@@ -60,6 +60,8 @@ climate_badkamer:
   - sensor.humidity_158d0001b91ff4
   - sensor.mold_sensor_bathroom
   - input_number.ventilation
+  - binary_sensor.door_window_sensor_158d0001e48a17
+  - binary_sensor.door_window_sensor_158d0001e481df
 climate_slaapkamer:
   name: Climate
   entities:
