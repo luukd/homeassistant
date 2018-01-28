@@ -225,6 +225,22 @@
         entity_id: 'binary_sensor.iemand_thuis'
         state: 'off'
 
+- alias: Woonkamer switch
+  id: woonkamer_switch
+  hide_entity: True
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.wall_switch_158d00015f2255
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.wall_switch_left_158d000183f47d
+  action:
+    service: light.toggle
+    entity_id: group.lights_woonkamer
+
 - id: harmony_activity_airplay
   alias: "Activate Harmony activity when playing AirPlay"
   hide_entity: True
@@ -350,7 +366,19 @@
         title: "Wasmachine: "
         message: "Ik ben klaar!"
 
-- alias: Lampen keuken aan
+- alias: Lampen keuken schakelaar
+  id: kitchen_lights_switch
+  hide_entity: True
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.wall_switch_right_158d000183f47d
+  action:
+    service: light.toggle
+    entity_id: group.lights_keuken
+
+- alias: Lampen keuken aan bij beweging
   id: kitchen_lights_on
   hide_entity: True
   trigger:
@@ -370,7 +398,7 @@
     - service: light.turn_on
       entity_id: group.lights_keuken
 
-- alias: Lampen keuken uit
+- alias: Lampen keuken uit bij geen beweging
   id: kitchen_lights_off
   hide_entity: True
   trigger:
@@ -584,6 +612,8 @@
       - binary_sensor.motion_sensor_158d0001ad6a52
       - binary_sensor.motion_sensor_158d0001e470dc
       - binary_sensor.switch_158d00016c22e6
+      - binary_sensor.wall_switch_158d00015f2255
+      - binary_sensor.wall_switch_both_158d000183f47d
       - sensor.temperature_158d0001b91ff4
       - sensor.temperature_158d0001b95352
       value_template: '{{ state.attributes.battery_level }}'
