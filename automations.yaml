@@ -241,6 +241,42 @@
     service: light.toggle
     entity_id: group.lights_woonkamer
 
+- alias: Spotify speaker wissel naar keuken
+  id: spotify_speaker_switch_to_kitchen
+  hide_entity: True
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.wall_switch_both_158d000183f47d
+  condition:
+    - condition: state
+      entity_id: binary_sensor.spotify_playing_to_receiver
+      state: "on"
+  action:
+    service: media_player.select_source
+    entity_id: media_player.spotify
+    data:
+      source: "Keuken"
+
+- alias: Spotify speaker wissel naar woonkamer
+  id: spotify_speaker_switch_to_living_room
+  hide_entity: True
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.wall_switch_both_158d000183f47d
+  condition:
+    - condition: state
+      entity_id: binary_sensor.spotify_playing_to_kitchen
+      state: "on"
+  action:
+    service: media_player.select_source
+    entity_id: media_player.spotify
+    data:
+      source: "Huiskamer"
+
 - id: harmony_activity_airplay
   alias: "Activate Harmony activity when playing AirPlay"
   hide_entity: True

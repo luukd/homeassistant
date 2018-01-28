@@ -62,6 +62,17 @@
         {%- else -%}
         False
         {%- endif %}
+- platform: template
+  sensors:
+    spotify_playing_to_kitchen:
+      friendly_name: 'Spotify playing in kitchen'
+      value_template: >-
+        {%- if states.media_player.spotify.state == "playing"
+            and states.media_player.spotify.attributes.source == "Keuken" -%}
+        True
+        {%- else -%}
+        False
+        {%- endif %}
 - platform: mqtt
   name: "Bewegingssensor keuken"
   state_topic: "cmnd/sonoff_keuken_motion_sensor/POWER1"
