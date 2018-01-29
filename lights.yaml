@@ -16,23 +16,32 @@
   name: "Spotjes keuken links"
   state_topic: "stat/sonoff_keuken_spots_links/POWER"
   command_topic: "cmnd/sonoff_keuken_spots_links/POWER"
+  availability_topic: "tele/sonoff_keuken_spots_links/LWT"
   qos: 1
   payload_on: "ON"
   payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
   retain: true
 - platform: mqtt
   name: "Spotjes keuken rechts"
   state_topic: "stat/sonoff_keuken_spots_rechts/POWER"
   command_topic: "cmnd/sonoff_keuken_spots_rechts/POWER"
+  availability_topic: "tele/sonoff_keuken_spots_rechts/LWT"
   qos: 1
   payload_on: "ON"
   payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
   retain: true
 - platform: mqtt
   name: "Lamp hal achter"
   state_topic: "stat/sonoff_hal_achter/POWER"
   command_topic: "cmnd/sonoff_hal_achter/POWER"
+  availability_topic: "tele/sonoff_hal_achter/LWT"
   qos: 1
   payload_on: "ON"
   payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
   retain: true

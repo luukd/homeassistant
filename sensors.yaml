@@ -12,14 +12,20 @@
 - platform: mqtt
   name: "Wasmachine verbruik vandaag"
   state_topic: "tele/wasmachine/ENERGY"
+  availability_topic: "tele/wasmachine/LWT"
   value_template: "{{ value_json.Today }}"
   unit_of_measurement: "kWh"
+  payload_available: "Online"
+  payload_not_available: "Offline"
 
 - platform: mqtt
   name: "Wasmachine actueel verbruik"
   state_topic: "tele/wasmachine/ENERGY"
+  availability_topic: "tele/wasmachine/LWT"
   value_template: "{{ value_json.Power }}"
   unit_of_measurement: "W"
+  payload_available: "Online"
+  payload_not_available: "Offline"
 
 - platform: miflora
   hidden: true
