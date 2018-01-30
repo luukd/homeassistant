@@ -86,3 +86,26 @@ presence:
   - device_tracker.iphone_van_luuk
   - device_tracker.phone_hans
   - device_tracker.iphonevanelly
+system:
+  name: Systeem
+  view: true
+  entities:
+  - group.system_group
+  - group.internet_group
+system_group:
+  name: Systeem
+  entities:
+  - sensor.cpu_used
+  - sensor.disk_used_
+  - sensor.disk_free_
+  - sensor.disk_used__2
+  - sensor.ram_used
+  - sensor.ram_available
+  - sensor.ram_used_2
+  - sensor.cpu_use
+internet_group:
+  name: Internet
+  entities:
+  - sensor.speedtest_download
+  - sensor.speedtest_upload
+  - sensor.speedtest_ping
