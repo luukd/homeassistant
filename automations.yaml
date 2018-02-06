@@ -452,7 +452,33 @@
   action:
     - service: light.turn_off
       entity_id: group.lights_keuken
-      
+
+- alias: Lamp hal voordeur aan
+  id: hall_front_door_lights_on
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001ab31bc
+      to: 'on'
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.illumination_158d0001ab31bc
+      below: 35
+  action:
+    - service: light.turn_on
+      entity_id: light.lamp_hal_voordeur
+
+- alias: Lampen hal voordeur uit
+  id: hall_front_door_lights_off
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001ab31bc
+      to: 'off'
+  action:
+    - service: light.turn_off
+      entity_id: light.lamp_hal_voordeur
+
 - alias: Lampen hal aan
   id: hall_lights_on
   hide_entity: True
@@ -475,6 +501,8 @@
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001ad6a52
       to: 'off'
+      for:
+        minutes: 1
   action:
     - service: light.turn_off
       entity_id: light.lamp_hal_achter
@@ -542,6 +570,8 @@
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001e470dc
       to: 'off'
+      for:
+        minutes: 1
   action:
     - service: light.turn_off
       entity_id: light.overloop
