@@ -14,6 +14,9 @@ device_tracker.iphonevanelly:
   friendly_name: "Elly"
 sensor.wasmachine_actueel_verbruik:
   device_class: power
+  hidden: true
+sensor.wasmachine_verbruik_vandaag:
+  hidden: true
 cover.cover_kitchen_level:
   device_class: window
   friendly_name: "Zonnescherm keuken"
@@ -79,6 +82,12 @@ light.gateway_light_34ce0091ead6:
   hidden: true
 sensor.illumination_34ce0091ead6:
   hidden: true
+sensor.illumination_158d0001ab31bc:
+  hidden: true
+sensor.illumination_158d0001ad6a52:
+  hidden: true
+sensor.illumination_158d0001e470dc:
+  hidden: true
 climate.warm_water:
   hidden: true
 sensor.warm_water_link:
@@ -135,4 +144,6 @@ binary_sensor.spotify_playing_to_kitchen:
 sensor.ventilation_current_mode:
   hidden: true
 zwave.qubino_zmnhbdx_flush_2_relays:
+  hidden: true
+remote.harmony_hub:
   hidden: true
