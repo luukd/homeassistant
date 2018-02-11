@@ -95,14 +95,13 @@ system:
 system_group:
   name: Systeem
   entities:
-  - sensor.cpu_used
-  - sensor.disk_used_
+  - sensor.processor_use
+  - sensor.disk_use_
   - sensor.disk_free_
-  - sensor.disk_used__2
-  - sensor.ram_used
-  - sensor.ram_available
-  - sensor.ram_used_2
-  - sensor.cpu_use
+  - sensor.disk_use_percent_
+  - sensor.memory_use
+  - sensor.memory_free
+  - sensor.memory_use_percent
 internet_group:
   name: Internet
   entities:
