@@ -97,6 +97,7 @@ system_group:
   name: Systeem
   entities:
   - sensor.processor_use
+  - sensor.cpu_temperature
   - sensor.disk_use_
   - sensor.disk_free_
   - sensor.disk_use_percent_
