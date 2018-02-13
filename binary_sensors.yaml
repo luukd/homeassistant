@@ -73,6 +73,17 @@
         {%- else -%}
         False
         {%- endif %}
+- platform: template
+  sensors:
+    doorbell_ringing:
+      friendly_name: "Deurbel"
+      value_template: "{{ is_state('input_boolean.doorbell_state', 'on') }}"
+      icon_template: >-
+        {%- if is_state('input_boolean.doorbell_state', 'on') -%}
+          mdi:bell-ring
+        {%- else -%}
+          mdi:bell
+        {%- endif %}
 - platform: mqtt
   name: "Bewegingssensor keuken"
   state_topic: "cmnd/sonoff_keuken_motion_sensor/POWER1"
@@ -84,10 +95,11 @@
   payload_not_available: "Offline"
   device_class: "motion"
 - platform: mqtt
-  name: "Doorbell"
+  name: "KAKU Doorbell"
   state_topic: "home/RF2toMQTT/CODE_8318190/UNIT_0/GROUP_1/#"
   payload_on: "1"
   payload_off: "0"
   availability_topic: "home/OpenMQTTGateway/LWT"
   payload_available: "Online"
   payload_not_available: "Offline"
+  

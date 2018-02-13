@@ -80,6 +80,7 @@ presence:
   name: Aanwezigheid
   control: hidden
   entities:
+  - binary_sensor.doorbell_ringing
   - binary_sensor.iemand_thuis
   - input_boolean.guest_mode
   - input_boolean.force_not_home

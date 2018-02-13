@@ -11,3 +11,5 @@ guest_mode:
 force_not_home:
   name: "Forceer afwezigheid"
   icon: mdi:account-off
+doorbell_state:
+  initial: off
