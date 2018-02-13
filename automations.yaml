@@ -633,6 +633,25 @@
   action:
     service: scene.turn_on
     entity_id: scene.opstaan
+
+- id: request_location_update
+  alias: Locatie update
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id:
+      - binary_sensor.motion_sensor_158d0001ad6a52
+      - binary_sensor.motion_sensor_158d0001ab31bc
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.iemand_thuis
+      state: 'off'
+  action:
+    service: notify.ios_iphone_van_luuk
+    data:
+      message: "request_location_update"
+
 - id: notify_start_heating
   alias: Verwarming inschakelen notificatie
   trigger:
