@@ -144,10 +144,6 @@ binary_sensor.spotify_playing_to_receiver:
   hidden: true
 binary_sensor.spotify_playing_to_kitchen:
   hidden: true
-sensor.ventilation_current_mode:
-  hidden: true
-zwave.qubino_zmnhbdx_flush_2_relays:
-  hidden: true
 remote.harmony_hub:
   hidden: true
 input_boolean.doorbell_state:

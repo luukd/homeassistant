@@ -40,18 +40,6 @@
     - conductivity
     - battery
 
-- platform: template
-  sensors:
-    ventilation_current_mode:
-      value_template: >
-        {% if (is_state('switch.qubino_zmnhbdx_flush_2_relays_switch_2', 'on')) %}
-          3.0
-        {% elif (is_state('switch.qubino_zmnhbdx_flush_2_relays_switch_3', 'on')) %}
-          2.0
-        {% else %} 
-          1.0
-        {% endif %}
-
 - platform: mold_indicator
   name: mold_sensor_bathroom
   indoor_temp_sensor: sensor.temperature_158d0001b91ff4

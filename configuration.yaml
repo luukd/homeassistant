@@ -5,15 +5,10 @@ homeassistant:
   elevation: 7
   unit_system: metric
   time_zone: Europe/Amsterdam
+  packages: !include_dir_named packages
   customize: !include customize.yaml
   customize_glob:
     "sensor.miflora_*":
-      hidden: true
-    "automation.ventilation_slider_*":
-      hidden: true
-    "switch.qubino_zmnhbdx_flush_2_relays_*":
-      hidden: true
-    "sensor.qubino_zmnhbdx_flush_2_relays_*":
       hidden: true
     "sensor.ipad_air_2_*":
       hidden: true
@@ -134,7 +129,6 @@ influxdb:
   host: !secret influxdb_host
 
 input_boolean: !include input_booleans.yaml
-input_number: !include input_numbers.yaml
 switch: !include switches.yaml
 binary_sensor: !include binary_sensors.yaml
 sensor: !include sensors.yaml
