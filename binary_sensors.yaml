@@ -56,7 +56,7 @@
     spotify_playing_to_receiver:
       friendly_name: 'Spotify playing to receiver'
       value_template: >-
-        {%- if states.media_player.spotify.state == "playing"
+        {%- if (states.media_player.spotify.state == "playing" or states.media_player.yamaha_receiver.state == "playing")
             and states.media_player.spotify.attributes.source == "Huiskamer" -%}
         True
         {%- else -%}
@@ -67,7 +67,7 @@
     spotify_playing_to_kitchen:
       friendly_name: 'Spotify playing in kitchen'
       value_template: >-
-        {%- if states.media_player.spotify.state == "playing"
+        {%- if (states.media_player.spotify.state == "playing" or states.media_player.keuken.state == "playing")
             and states.media_player.spotify.attributes.source == "Keuken" -%}
         True
         {%- else -%}
