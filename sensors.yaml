@@ -11,18 +11,18 @@
 
 - platform: mqtt
   name: "Wasmachine verbruik vandaag"
-  state_topic: "tele/wasmachine/ENERGY"
+  state_topic: "tele/wasmachine/SENSOR"
   availability_topic: "tele/wasmachine/LWT"
-  value_template: "{{ value_json.Today }}"
+  value_template: '{{ value_json["ENERGY"]["Today"] }}'
   unit_of_measurement: "kWh"
   payload_available: "Online"
   payload_not_available: "Offline"
 
 - platform: mqtt
   name: "Wasmachine actueel verbruik"
-  state_topic: "tele/wasmachine/ENERGY"
+  state_topic: "tele/wasmachine/SENSOR"
   availability_topic: "tele/wasmachine/LWT"
-  value_template: "{{ value_json.Power }}"
+  value_template: '{{ value_json["ENERGY"]["Power"] }}'
   unit_of_measurement: "W"
   payload_available: "Online"
   payload_not_available: "Offline"
