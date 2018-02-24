@@ -83,6 +83,8 @@
     - platform: state
       entity_id: binary_sensor.dark_outside
       to: 'on'
+      for:
+        minutes: 15
   condition:
     condition: and
     conditions:
@@ -105,6 +107,8 @@
     - platform: state
       entity_id: binary_sensor.dark_outside
       to: 'on'
+      for:
+        minutes: 15
     - platform: state
       entity_id: binary_sensor.harmony_tv_activity
       to: 'off'
@@ -135,6 +139,8 @@
     - platform: state
       entity_id: binary_sensor.dark_outside
       to: 'off'
+      for:
+        minutes: 15
     - platform: state
       entity_id: binary_sensor.harmony_tv_activity
       to: 'off'
@@ -455,7 +461,7 @@
         state: 'on'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0001e470dc
-        below: 35
+        below: 20
       - condition: state
         entity_id: input_boolean.slapen
         state: 'off'
@@ -483,7 +489,7 @@
         state: 'on'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0001e470dc
-        below: 35
+        below: 30
       - condition: state
         entity_id: input_boolean.slapen
         state: 'on'

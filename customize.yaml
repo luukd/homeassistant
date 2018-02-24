@@ -4,6 +4,10 @@ group.lights_woonkamer:
 group.lights_keuken:
   homebridge_visible: true
   emulated_hue_hidden: false
+light.lamp_hal_achter:
+  homebridge_visible: true
+light.lamp_hal_voordeur:
+  homebridge_visible: true
 scene.slapen:
   homebridge_visible: true
 binary_sensor.iemand_thuis:
@@ -97,10 +101,13 @@ light.gateway_light_34ce0091ead6:
 sensor.illumination_34ce0091ead6:
   hidden: true
 sensor.illumination_158d0001ab31bc:
+  friendly_name: "Lichtsterkte hal voordeur"
   hidden: true
 sensor.illumination_158d0001ad6a52:
+  friendly_name: "Lichtsterkte hal achter"
   hidden: true
 sensor.illumination_158d0001e470dc:
+  friendly_name: "Lichtsterkte overloop"
   hidden: true
 climate.warm_water:
   hidden: true
