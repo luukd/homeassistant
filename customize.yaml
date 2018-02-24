@@ -6,12 +6,20 @@ group.lights_keuken:
   emulated_hue_hidden: false
 scene.slapen:
   homebridge_visible: true
+binary_sensor.iemand_thuis:
+  icon: mdi:home
 device_tracker.iphone_van_luuk:
-  friendly_name: "Luuk"
+  friendly_name: "iPhone Luuk (app)"
+  hidden: true
+device_tracker.iphone_van_luuk_nmap:
+  friendly_name: "iPhone Luuk (nmap)"
+  hidden: true
 device_tracker.phone_hans:
   friendly_name: "Hans"
 device_tracker.iphonevanelly:
   friendly_name: "Elly"
+binary_sensor.luuk_home:
+  icon: mdi:account
 sensor.wasmachine_actueel_verbruik:
   device_class: power
   hidden: true

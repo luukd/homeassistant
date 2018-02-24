@@ -84,7 +84,7 @@ presence:
   - binary_sensor.iemand_thuis
   - input_boolean.guest_mode
   - input_boolean.force_not_home
-  - device_tracker.iphone_van_luuk
+  - binary_sensor.luuk_home
   - device_tracker.phone_hans
   - device_tracker.iphonevanelly
 system:

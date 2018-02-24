@@ -6,6 +6,15 @@ iphone_van_luuk:
   picture:
   track: true
   vendor:
+  
+iphone_van_luuk_nmap:
+  hide_if_away: false
+  icon:
+  mac: 2C:F0:A2:7B:A9:A5
+  name: iPhone-van-Luuk
+  picture:
+  track: true
+  vendor: Apple, Inc.
 
 phone_hans:
   hide_if_away: false
