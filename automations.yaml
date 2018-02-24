@@ -656,3 +656,22 @@
     at: '2:32:00'
   action:
     service: zwave.heal_network
+
+- id: ssl_certificate_expiry_warning
+  alias: "SSL certificaat notificatie"
+  hide_entity: True
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ssl_certificate_expiry
+    below: 15
+    for:
+      hours: 18
+  action:
+    - service: notify.ios_iphone_van_luuk
+      data:
+        title: "SSL certificaten verlopen binnenkort"
+        message: "De LetsEncrypt SSL certificaten verlopen binnen {{ states('sensor.ssl_certificate_expiry') }} dagen."
+    - service: persistent_notification.create
+      data:
+        title: "SSL certificaten verlopen binnenkort"
+        message: "De LetsEncrypt SSL certificaten verlopen binnen {{ states('sensor.ssl_certificate_expiry') }} dagen."

@@ -60,6 +60,9 @@
     - type: memory_use
     - type: memory_free
 
+- platform: cert_expiry
+  host: !secret ha_hostname
+    
 - platform: command_line
   name: CPU Temperature
   command: "cat /sys/class/thermal/thermal_zone0/temp"
