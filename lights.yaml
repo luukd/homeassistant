@@ -12,6 +12,8 @@
       name: Woonkamer schemerlamp
     10.0.0.59:
       name: Overloop
+    10.0.0.120:
+      name: Slaapkamer
 - platform: mqtt
   name: "Spotjes keuken links"
   state_topic: "stat/sonoff_keuken_spots_links/POWER"

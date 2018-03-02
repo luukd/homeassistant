@@ -71,6 +71,9 @@ binary_sensor.door_window_sensor_158d0001e481df:
 binary_sensor.switch_158d00016c22e6:
   friendly_name: "Knop slaapkamer"
   hidden: true
+binary_sensor.wall_switch_158d000157670b:
+  friendly_name: "Schakelaar slaapkamer"
+  hidden: true
 binary_sensor.wall_switch_158d00015f2255:
   friendly_name: "Schakelaar woonkamer achter"
   hidden: true
