@@ -250,43 +250,6 @@
       data:
         message: "Stofzuiger is gestart"
 
-- id: wasmachine_bezig
-  alias: "Wasmachine bezig"
-  hide_entity: True
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.wasmachine_actueel_verbruik
-      above: 100
-  action:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.wasmachine_bezig
-
-- id: wasmachine_klaar
-  alias: "Wasmachine klaar"
-  hide_entity: True
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.wasmachine_actueel_verbruik
-      below: 9
-  action:
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.wasmachine_bezig
-
-- id: wasmachine_klaar_notification
-  alias: Wasmachine klaar notification
-  trigger:
-    - platform: state
-      entity_id: input_boolean.wasmachine_bezig
-      from: 'on'
-      to: 'off'
-      for:
-        minutes: 8
-  action:
-    - service: notify.ios_iphone_van_luuk
-      data:
-        title: "Wasmachine: "
-        message: "Ik ben klaar!"
-
 - alias: Lampen keuken schakelaar
   id: kitchen_lights_switch
   hide_entity: True

@@ -1,7 +1,3 @@
-wasmachine_bezig:
-  name: Wasmachine bezig
-  initial: off
-  icon: "mdi:washing-machine"
 slapen:
   name: Slapen
   icon: 'mdi:sleep'

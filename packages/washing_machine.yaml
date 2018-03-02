@@ -1,0 +1,83 @@
+homeassistant:
+  customize:
+    sensor.wasmachine_actueel_verbruik:
+      device_class: power
+      hidden: true
+    sensor.wasmachine_verbruik_vandaag:
+      hidden: true
+
+input_boolean:
+  wasmachine_bezig:
+    name: Wasmachine bezig
+    initial: off
+    icon: "mdi:washing-machine"
+
+switch:
+  - platform: mqtt
+    name: "Wasmachine"
+    state_topic: "stat/wasmachine/POWER"
+    command_topic: "cmnd/wasmachine/POWER"
+    availability_topic: "tele/wasmachine/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: true
+
+sensor:
+  - platform: mqtt
+    name: "Wasmachine verbruik vandaag"
+    state_topic: "tele/wasmachine/SENSOR"
+    availability_topic: "tele/wasmachine/LWT"
+    value_template: '{{ value_json["ENERGY"]["Today"] }}'
+    unit_of_measurement: "kWh"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  
+  - platform: mqtt
+    name: "Wasmachine actueel verbruik"
+    state_topic: "tele/wasmachine/SENSOR"
+    availability_topic: "tele/wasmachine/LWT"
+    value_template: '{{ value_json["ENERGY"]["Power"] }}'
+    unit_of_measurement: "W"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+automation:
+  - id: wasmachine_bezig
+    alias: "Wasmachine bezig"
+    hide_entity: True
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.wasmachine_actueel_verbruik
+        above: 100
+    action:
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.wasmachine_bezig
+  
+  - id: wasmachine_klaar
+    alias: "Wasmachine klaar"
+    hide_entity: True
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.wasmachine_actueel_verbruik
+        below: 9
+    action:
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.wasmachine_bezig
+  
+  - id: wasmachine_klaar_notification
+    alias: Wasmachine klaar notification
+    trigger:
+      - platform: state
+        entity_id: input_boolean.wasmachine_bezig
+        from: 'on'
+        to: 'off'
+        for:
+          minutes: 8
+    action:
+      - service: notify.ios_iphone_van_luuk
+        data:
+          title: "Wasmachine: "
+          message: "Ik ben klaar!"

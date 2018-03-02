@@ -129,7 +129,6 @@ influxdb:
   host: !secret influxdb_host
 
 input_boolean: !include input_booleans.yaml
-switch: !include switches.yaml
 binary_sensor: !include binary_sensors.yaml
 sensor: !include sensors.yaml
 light: !include lights.yaml

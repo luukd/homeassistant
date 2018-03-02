@@ -24,11 +24,6 @@ device_tracker.iphonevanelly:
   friendly_name: "Elly"
 binary_sensor.luuk_home:
   icon: mdi:account
-sensor.wasmachine_actueel_verbruik:
-  device_class: power
-  hidden: true
-sensor.wasmachine_verbruik_vandaag:
-  hidden: true
 cover.cover_kitchen_level:
   device_class: window
   friendly_name: "Zonnescherm keuken"
