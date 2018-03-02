@@ -37,6 +37,7 @@ binary_sensor:
 automation:
   - id: doorbell_state_on
     alias: Deurbel ingedrukt
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: binary_sensor.kaku_doorbell
@@ -51,6 +52,7 @@ automation:
   
   - id: doorbell_state_reset
     alias: Deurbel reset
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: input_boolean.doorbell_state
@@ -67,6 +69,7 @@ automation:
   
   - id: doorbell_notification
     alias: "Doorbell notification"
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: input_boolean.doorbell_state
@@ -79,6 +82,7 @@ automation:
   
   - id: doorbell_ring
     alias: Deurbel geluid
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: input_boolean.doorbell_state
