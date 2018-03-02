@@ -345,10 +345,13 @@
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001ab31bc
       to: 'on'
+    - platform: state
+      entity_id: binary_sensor.doorbell_ringing
+      to: 'on'
   condition:
     - condition: numeric_state
       entity_id: sensor.illumination_158d0001ab31bc
-      below: 35
+      below: 20
   action:
     - service: light.turn_on
       entity_id: light.lamp_hal_voordeur
@@ -360,6 +363,15 @@
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001ab31bc
       to: 'off'
+    - platform: state
+      entity_id: binary_sensor.doorbell_ringing
+      to: 'off'
+      for:
+        minutes: 2
+  condition:
+    - condition: state
+      entity_id: binary_sensor.motion_sensor_158d0001ab31bc
+      state: 'off'
   action:
     - service: light.turn_off
       entity_id: light.lamp_hal_voordeur
