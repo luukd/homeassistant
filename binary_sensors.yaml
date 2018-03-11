@@ -86,14 +86,4 @@
         {%- else -%}
         False
         {%- endif %}
-- platform: mqtt
-  name: "Bewegingssensor keuken"
-  state_topic: "cmnd/sonoff_keuken_motion_sensor/POWER1"
-  availability_topic: "tele/sonoff_keuken_spots_links/LWT"
-  qos: 1
-  payload_on: "ON"
-  payload_off: "OFF"
-  payload_available: "Online"
-  payload_not_available: "Offline"
-  device_class: "motion"
   

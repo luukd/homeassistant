@@ -43,7 +43,8 @@ zwave.zwaveme_zme_uzb1_usb_stick:
   hidden: true
 script.start_vacuum_cleaner:
   hidden: true
-binary_sensor.bewegingssensor_keuken:
+binary_sensor.motion_sensor_158d000224fbf6:
+  friendly_name: "Bewegingssensor keuken"
   hidden: true
 binary_sensor.motion_sensor_158d0001ad6a52:
   friendly_name: "Bewegingssensor hal achter"
