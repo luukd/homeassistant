@@ -135,6 +135,7 @@ influxdb:
 input_boolean: !include input_booleans.yaml
 binary_sensor: !include binary_sensors.yaml
 sensor: !include sensors.yaml
+switch: !include switches.yaml
 light: !include lights.yaml
 scene: !include scenes.yaml
 automation: !include automations.yaml

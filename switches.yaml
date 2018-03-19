@@ -1,0 +1,11 @@
+- platform: mqtt
+  name: "TV slaapkamer"
+  state_topic: "stat/tv_bedroom/POWER"
+  command_topic: "cmnd/tv_bedroom/POWER"
+  availability_topic: "tele/tv_bedroom/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true

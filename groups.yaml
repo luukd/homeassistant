@@ -31,7 +31,15 @@ slaapkamer:
   name: Slaapkamer
   view: true
   entities:
+  - light.slaapkamer
+  - group.tv_slaapkamer
   - group.climate_slaapkamer
+tv_slaapkamer:
+  name: TV slaapkamer
+  control: hidden
+  entities:
+  - switch.tv_slaapkamer
+  - media_player.slaapkamer
 lights_woonkamer:
   name: Lampen woonkamer
   entities:

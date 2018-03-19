@@ -623,3 +623,39 @@
       data:
         title: "SSL certificaten verlopen binnenkort"
         message: "De LetsEncrypt SSL certificaten verlopen binnen {{ states('sensor.ssl_certificate_expiry') }} dagen."
+
+- id: tv_bedroom_on
+  alias: "TV slaapkamer inschakelen"
+  trigger:
+    - platform: state
+      entity_id: media_player.slaapkamer
+      from: 'off'
+      to: 'idle'
+    - platform: state
+      entity_id: media_player.slaapkamer
+      to: 'playing'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.tv_slaapkamer
+      
+- id: tv_bedroom_off
+  alias: "TV slaapkamer uitschakelen"
+  trigger:
+    - platform: state
+      entity_id: media_player.slaapkamer
+      to: 'idle'
+      for:
+        minutes: 1
+    - platform: state
+      entity_id: media_player.slaapkamer
+      to: 'paused'
+      for:
+        minutes: 5
+    - platform: state
+      entity_id: media_player.slaapkamer
+      to: 'off'
+      for:
+        minutes: 1
+  action:
+    - service: switch.turn_off
+      entity_id: switch.tv_slaapkamer
