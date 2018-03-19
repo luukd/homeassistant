@@ -25,7 +25,9 @@
   entities:
     group.lights_woonkamer: off
     group.lights_keuken: off
+    light.slaapkamer: off
     remote.harmony_hub: off
+    switch.tv_slaapkamer: off
 
 - name: Slapen
   entities:

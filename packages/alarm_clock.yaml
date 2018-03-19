@@ -1,0 +1,144 @@
+homeassistant:
+  customize:
+    sensor.light_fade_time:
+      hidden: true
+    sensor.light_fade_time_hour:
+      hidden: true
+    sensor.light_fade_time_minute:
+      hidden: true
+    sensor.time:
+      hidden: true
+    sensor.laatste_journaal:
+      hidden: true
+
+input_boolean:
+  alarm_clock_status:
+    name: Wekker
+    icon: mdi:alarm
+  alarm_clock_play_news:
+    name: Journaal afspelen
+    icon: mdi:television
+
+input_datetime:
+  alarm_clock_time:
+    name: Tijd
+    has_date: false
+    has_time: true
+
+input_number:
+  morning_lights_fadein:
+    name: "Wake-up light duur"
+    icon: mdi:lightbulb-on-outline
+    min: 0
+    max: 30
+    step: 1
+    mode: slider
+    unit_of_measurement: minuten
+
+sensor:
+  - platform: time_date
+    display_options:
+      - time
+  - platform: template
+    sensors:
+      light_fade_time_hour:
+        friendly_name: "Light fade-in time hour"
+        value_template: >-
+          {%- if (states.input_datetime.alarm_clock_time.attributes.minute- states.input_number.morning_lights_fadein.state|int) >= 0 -%}
+            {{ states.input_datetime.alarm_clock_time.attributes.hour }}
+          {%- elif states.input_datetime.alarm_clock_time.attributes.hour < 1 -%}
+            23
+          {%- else -%}
+            {{ states.input_datetime.alarm_clock_time.attributes.hour|int - 1 }}
+          {%- endif -%}
+      light_fade_time_minute:
+        friendly_name: "Light fade-in time minutes"
+        value_template: >-
+          {%- if (states.input_datetime.alarm_clock_time.attributes.minute - states.input_number.morning_lights_fadein.state|int) >= 0 -%}
+            {{ states.input_datetime.alarm_clock_time.attributes.minute - states.input_number.morning_lights_fadein.state|int }}
+          {%- else -%}
+            {{ 60 - ((states.input_datetime.alarm_clock_time.attributes.minute - states.input_number.morning_lights_fadein.state|int) * -1) }}
+          {%- endif -%}
+      light_fade_time:
+        friendly_name: "Light fade-in time"
+        value_template: >-
+          {%- if states.sensor.light_fade_time_hour.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.light_fade_time_hour.state }}:
+          {%- if states.sensor.light_fade_time_minute.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.light_fade_time_minute.state }}
+  - platform: scrape
+    name: Laatste journaal
+    resource: https://nos.nl/uitzending/nos-journaal.html
+    select: 'video source[data-label*="720p"]'
+    attribute: src
+
+group:
+  alarm_clock:
+    name: Wekker
+    icon: mdi:alarm
+    control: hidden
+    entities:
+      - input_boolean.alarm_clock_status
+      - input_datetime.alarm_clock_time
+      - input_boolean.alarm_clock_play_news
+      - input_number.morning_lights_fadein
+
+automation:
+  - id: alarm_clock_start_light_fade_in
+    alias: Alarm Clock start fade-in
+    initial_state: 'on'
+    hide_entity: False
+    trigger:
+    - platform: template
+      value_template: '{{ states.sensor.time.state == states.sensor.light_fade_time.state }}'
+    condition:
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: input_boolean.alarm_clock_status
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.luuk_home
+        state: 'on'
+    action:
+    - service: light.turn_on
+      data_template:
+        entity_id: light.slaapkamer
+        profile: "default"
+        transition: "{{ states.input_number.morning_lights_fadein.state|int * 60 }}"
+        brightness: 255
+
+  - id: alarm_clock_activated
+    alias: Alarm Clock Activated
+    initial_state: 'on'
+    hide_entity: false
+    trigger:
+    - platform: template
+      value_template: "{{ states.sensor.time.state == (states.input_datetime.alarm_clock_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+    condition:
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: input_boolean.alarm_clock_status
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.luuk_home
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.alarm_clock_play_news
+        state: 'on'
+    action:
+    - service: switch.turn_on
+      entity_id: switch.tv_slaapkamer
+    - service: media_player.turn_on
+      entity_id: media_player.slaapkamer
+    - delay: "00:00:10"
+    - service: media_player.play_media
+      data_template:
+        entity_id: media_player.slaapkamer
+        media_content_id: "{{ states.sensor.laatste_journaal.state }}"
+        media_content_type: "video/mp4"

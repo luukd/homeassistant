@@ -32,6 +32,7 @@ slaapkamer:
   view: true
   entities:
   - light.slaapkamer
+  - group.alarm_clock
   - group.tv_slaapkamer
   - group.climate_slaapkamer
 tv_slaapkamer:
