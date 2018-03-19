@@ -42,10 +42,11 @@ automation:
       condition: template
       value_template: '{{ states.input_number.ventilation.state != states.sensor.ventilation_current_mode.state }}'
     action:
-      service: input_number.set_value
-      data_template:
-        entity_id: input_number.ventilation
-        value: "{{ states.sensor.ventilation_current_mode.state }}"
+      - delay: '00:00:03'
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.ventilation
+          value: "{{ states.sensor.ventilation_current_mode.state }}"
 
   - id: ventilation_switches_1
     alias: Ventilatie switches 1
