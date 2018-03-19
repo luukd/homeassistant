@@ -5,12 +5,9 @@ homeassistant:
       hidden: true
     sensor.wasmachine_verbruik_vandaag:
       hidden: true
+    binary_sensor.washing_machine_running:
+      icon: mdi:washing-machine
 
-input_boolean:
-  wasmachine_bezig:
-    name: Wasmachine bezig
-    initial: off
-    icon: "mdi:washing-machine"
 
 switch:
   - platform: mqtt
@@ -44,38 +41,26 @@ sensor:
     payload_available: "Online"
     payload_not_available: "Offline"
 
+binary_sensor:
+  - platform: template
+    sensors:
+      washing_machine_running:
+        friendly_name: "Wasmachine bezig"
+        delay_on:
+          minutes: 5
+        delay_off:
+          minutes: 5
+        value_template: >-
+          {{ states('sensor.wasmachine_actueel_verbruik')|float > 10 }}
+
 automation:
-  - id: wasmachine_bezig
-    alias: "Wasmachine bezig"
-    hide_entity: True
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.wasmachine_actueel_verbruik
-        above: 100
-    action:
-      - service: input_boolean.turn_on
-        entity_id: input_boolean.wasmachine_bezig
-  
-  - id: wasmachine_klaar
-    alias: "Wasmachine klaar"
-    hide_entity: True
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.wasmachine_actueel_verbruik
-        below: 9
-    action:
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.wasmachine_bezig
-  
   - id: wasmachine_klaar_notification
     alias: Wasmachine klaar notification
     trigger:
       - platform: state
-        entity_id: input_boolean.wasmachine_bezig
+        entity_id: binary_sensor.washing_machine_running
         from: 'on'
         to: 'off'
-        for:
-          minutes: 8
     action:
       - service: notify.ios_iphone_van_luuk
         data:
