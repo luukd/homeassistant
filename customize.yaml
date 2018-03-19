@@ -18,6 +18,9 @@ device_tracker.iphone_van_luuk:
 device_tracker.iphone_van_luuk_nmap:
   friendly_name: "iPhone Luuk (nmap)"
   hidden: true
+device_tracker.iphone_luuk_tado:
+  friendly_name: "iPhone Luuk (tado)"
+  hidden: true
 device_tracker.phone_hans:
   friendly_name: "Hans"
 device_tracker.iphonevanelly:

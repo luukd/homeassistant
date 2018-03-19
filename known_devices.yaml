@@ -16,6 +16,15 @@ iphone_van_luuk_nmap:
   track: true
   vendor: Apple, Inc.
 
+iphone_luuk_tado:
+  hide_if_away: false
+  icon:
+  mac: '362341'
+  name: iPhone Luuk (tado)
+  picture:
+  track: true
+  vendor: unknown
+
 phone_hans:
   hide_if_away: false
   icon:

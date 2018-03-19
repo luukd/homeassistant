@@ -22,6 +22,8 @@
       value_template: >
         {% if (is_state('device_tracker.iphone_van_luuk', 'home')) %}
           True
+        {% elif (is_state('device_tracker.iphone_luuk_tado', 'home')) %}
+          True
         {% elif (is_state('device_tracker.iphone_van_luuk_nmap', 'home')) %}
           True
         {% else %} 

@@ -111,6 +111,10 @@ device_tracker:
     interval_seconds: 30
     home_interval: 5
     consider_home: 300
+  - platform: tado
+    username: !secret tado_username
+    password: !secret tado_password
+    home_id: !secret tado_home_id
 
 zone:
   name: Home
