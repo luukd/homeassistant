@@ -3,11 +3,10 @@ home:
   view: true
   icon: mdi:home 
   entities:
-  - group.woonkamer
-  - group.badkamer
-  - group.slaapkamer
-  - group.weather
   - group.presence
+  - group.lights_home
+  - group.climate_home
+  - group.weather
 woonkamer:
   name: Woonkamer
   view: true
@@ -54,6 +53,15 @@ lights_keuken:
   - light.keuken
   - light.spotjes_keuken_links
   - light.spotjes_keuken_rechts
+lights_home:
+  name: Lampen
+  entities:
+  - group.lights_woonkamer
+  - group.lights_keuken
+  - light.lamp_hal_achter
+  - light.lamp_hal_voordeur
+  - light.overloop
+  - light.slaapkamer
 climate_woonkamer:
   name: Climate
   entities:
@@ -77,6 +85,21 @@ climate_slaapkamer:
   - climate.slaapkamer
   - sensor.slaapkamer_humidity
   - sensor.slaapkamer_heating
+climate_werkkamer:
+  name: Climate
+  entities:
+  - climate.werkkamer
+  - sensor.werkkamer_humidity
+  - sensor.werkkamer_heating
+climate_home:
+  name: Climate
+  entities:
+  - climate.woonkamer
+  - climate.badkamer
+  - climate.slaapkamer
+  - climate.werkkamer
+  - climate.warm_water
+  - input_number.ventilation
 weather:
   name: Weer
   entities:

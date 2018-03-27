@@ -140,6 +140,16 @@ sensor.slaapkamer_tado_mode:
   hidden: true
 sensor.slaapkamer_temperature:
   hidden: true
+sensor.werkkamer_link:
+  hidden: true
+sensor.werkkamer_overlay:
+  hidden: true
+sensor.werkkamer_power:
+  hidden: true
+sensor.werkkamer_tado_mode:
+  hidden: true
+sensor.werkkamer_temperature:
+  hidden: true
 sensor.woonkamer_link:
   hidden: true
 sensor.woonkamer_overlay:
