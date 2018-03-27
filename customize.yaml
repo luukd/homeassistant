@@ -95,9 +95,20 @@ sensor.pressure_158d0001b91ff4:
 sensor.temperature_158d0001b91ff4:
   friendly_name: "Temperatuur badkamer"
   hidden: true
+sensor.humidity_158d0001b95352:
+  friendly_name: "Luchtvochtigheid overloop"
+  hidden: true
+sensor.pressure_158d0001b95352:
+  friendly_name: "Luchtdruk overloop"
+  hidden: true
+sensor.temperature_158d0001b95352:
+  friendly_name: "Temperatuur overloop"
+  hidden: true
 light.gateway_light_34ce0091ead6:
   hidden: true
 sensor.illumination_34ce0091ead6:
+  hidden: true
+sensor.illumination_158d000224fbf6:
   hidden: true
 sensor.illumination_158d0001ab31bc:
   friendly_name: "Lichtsterkte hal voordeur"

@@ -26,7 +26,7 @@
   name: mold_sensor_bathroom
   indoor_temp_sensor: sensor.temperature_158d0001b91ff4
   indoor_humidity_sensor: sensor.humidity_158d0001b91ff4
-  outdoor_temp_sensor: sensor.slaapkamer_temperature
+  outdoor_temp_sensor: sensor.temperature_158d0001b95352
   calibration_factor: 3.0
 
 - platform: systemmonitor
