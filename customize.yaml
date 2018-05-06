@@ -40,10 +40,6 @@ sensor.cover_kitchen_previous_reading:
   hidden: true
 switch.cover_kitchen_switch:
   hidden: true
-zwave.cover_kitchen:
-  hidden: true
-zwave.zwaveme_zme_uzb1_usb_stick:
-  hidden: true
 script.start_vacuum_cleaner:
   hidden: true
 binary_sensor.motion_sensor_158d000224fbf6:

@@ -130,6 +130,7 @@ system:
   entities:
   - group.system_group
   - group.internet_group
+  - group.zwave_group
 system_group:
   name: Systeem
   control: hidden
@@ -143,6 +144,12 @@ system_group:
   - sensor.memory_free
   - sensor.memory_use_percent
   - switch.cpu_fan
+zwave_group:
+  name: Zwave
+  entities:
+  - zwave.zwaveme_zme_uzb1_usb_stick
+  - zwave.cover_kitchen
+  - zwave.qubino_zmnhbdx_flush_2_relays
 internet_group:
   name: Internet
   entities:
