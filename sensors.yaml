@@ -9,19 +9,6 @@
   monitored_conditions:
     - cloud_cover
 
-- platform: miflora
-  hidden: true
-  mac: 'C4:7C:8D:63:75:0A'
-  name: miflora
-  force_update: false
-  median: 3
-  monitored_conditions:
-    - moisture
-    - light
-    - temperature
-    - conductivity
-    - battery
-
 - platform: mold_indicator
   name: mold_sensor_bathroom
   indoor_temp_sensor: sensor.temperature_158d0001b91ff4

@@ -1,28 +1,3 @@
-- id: plants_notification
-  alias: "Plants notification"
-  trigger:
-    - platform: state
-      entity_id: group.all_plants
-      from: "ok"
-      to: "problem"
-    - platform: state
-      entity_id: device_tracker.iphone_van_luuk
-      to: "home"
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: group.all_plants
-        state: "problem"
-      - condition: state
-        entity_id: device_tracker.iphone_van_luuk
-        state: "home"
-  action:
-    - service: notify.ios_iphone_van_luuk
-      data:
-        title: "Planten water geven"
-        message: "De planten drogen uit!"
-
 - id: tv_scene_start
   alias: "TV started"
   trigger:

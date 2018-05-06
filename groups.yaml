@@ -119,6 +119,11 @@ presence:
   - binary_sensor.luuk_home
   - device_tracker.phone_hans
   - device_tracker.iphonevanelly
+huishoudelijk:
+  name: Huishoudelijk
+  view: true
+  entities:
+  - group.plants
 system:
   name: Systeem
   view: true

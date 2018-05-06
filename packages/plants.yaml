@@ -1,0 +1,136 @@
+homeassistant:
+  customize:
+    sensor.mqtt_plant_woonkamer_hoek_moisture:
+      friendly_name: "Woonkamer hoek"
+    sensor.mqtt_plant_koelkast_moisture:
+      friendly_name: "Koelkast"
+    sensor.mqtt_plant_druivenstruik_moisture:
+      friendly_name: "Druivenstruik"
+
+group:
+  plants:
+    name: Planten
+    entities:
+      - sensor.mqtt_plant_woonkamer_hoek_moisture
+      - sensor.mqtt_plant_koelkast_moisture
+      - sensor.mqtt_plant_druivenstruik_moisture
+
+sensor:
+  # plant_woonkamer_hoek (C4:7C:8D:63:75:0A)
+  - platform: mqtt
+    name: mqtt_plant_woonkamer_hoek_moisture
+    unit_of_measurement: "%"
+    state_topic: "plantgateway/plants/plant_woonkamer_hoek"
+    value_template: '{{ value_json.moisture }}'
+  - platform: mqtt
+    name: mqtt_plant_woonkamer_hoek_battery
+    state_topic: "plantgateway/plants/plant_woonkamer_hoek"
+    value_template: '{{ value_json.battery }}'
+  - platform: mqtt
+    name: mqtt_plant_woonkamer_hoek_temperature
+    state_topic: "plantgateway/plants/plant_woonkamer_hoek"
+    value_template: '{{ value_json.temperature }}'
+  - platform: mqtt
+    name: mqtt_plant_woonkamer_hoek_conductivity
+    state_topic: "plantgateway/plants/plant_woonkamer_hoek"
+    value_template: '{{ value_json.conductivity }}'
+  - platform: mqtt
+    name: mqtt_plant_woonkamer_hoek_brightness
+    state_topic: "plantgateway/plants/plant_woonkamer_hoek"
+    value_template: '{{ value_json.brightness }}'
+  # plant_koelkast (C4:7C:8D:65:D5:FE)
+  - platform: mqtt
+    name: mqtt_plant_koelkast_moisture
+    unit_of_measurement: "%"
+    state_topic: "plantgateway/plants/plant_koelkast"
+    value_template: '{{ value_json.moisture }}'
+  - platform: mqtt
+    name: mqtt_plant_koelkast_battery
+    state_topic: "plantgateway/plants/plant_koelkast"
+    value_template: '{{ value_json.battery }}'
+  - platform: mqtt
+    name: mqtt_plant_koelkast_temperature
+    state_topic: "plantgateway/plants/plant_koelkast"
+    value_template: '{{ value_json.temperature }}'
+  - platform: mqtt
+    name: mqtt_plant_koelkast_conductivity
+    state_topic: "plantgateway/plants/plant_koelkast"
+    value_template: '{{ value_json.conductivity }}'
+  - platform: mqtt
+    name: mqtt_plant_koelkast_brightness
+    state_topic: "plantgateway/plants/plant_koelkast"
+    value_template: '{{ value_json.brightness }}'
+  # plant_druivenstruik (C4:7C:8D:65:DE:97)
+  - platform: mqtt
+    name: mqtt_plant_druivenstruik_moisture
+    unit_of_measurement: "%"
+    state_topic: "plantgateway/plants/plant_druivenstruik"
+    value_template: '{{ value_json.moisture }}'
+  - platform: mqtt
+    name: mqtt_plant_druivenstruik_battery
+    state_topic: "plantgateway/plants/plant_druivenstruik"
+    value_template: '{{ value_json.battery }}'
+  - platform: mqtt
+    name: mqtt_plant_druivenstruik_temperature
+    state_topic: "plantgateway/plants/plant_druivenstruik"
+    value_template: '{{ value_json.temperature }}'
+  - platform: mqtt
+    name: mqtt_plant_druivenstruik_conductivity
+    state_topic: "plantgateway/plants/plant_druivenstruik"
+    value_template: '{{ value_json.conductivity }}'
+  - platform: mqtt
+    name: mqtt_plant_druivenstruik_brightness
+    state_topic: "plantgateway/plants/plant_druivenstruik"
+    value_template: '{{ value_json.brightness }}'
+
+plant:
+  woonkamer_hoek:
+    sensors:
+      moisture: sensor.mqtt_plant_woonkamer_hoek_moisture
+      battery: sensor.mqtt_plant_woonkamer_hoek_battery
+      temperature: sensor.mqtt_plant_woonkamer_hoek_temperature
+      conductivity: sensor.mqtt_plant_woonkamer_hoek_conductivity
+      brightness: sensor.mqtt_plant_woonkamer_hoek_brightness
+    min_moisture: 25
+  koelkast:
+    sensors:
+      moisture: sensor.mqtt_plant_koelkast_moisture
+      battery: sensor.mqtt_plant_koelkast_battery
+      temperature: sensor.mqtt_plant_koelkast_temperature
+      conductivity: sensor.mqtt_plant_koelkast_conductivity
+      brightness: sensor.mqtt_plant_koelkast_brightness
+    min_moisture: 25
+  druivenstruik:
+    sensors:
+      moisture: sensor.mqtt_plant_druivenstruik_moisture
+      battery: sensor.mqtt_plant_druivenstruik_battery
+      temperature: sensor.mqtt_plant_druivenstruik_temperature
+      conductivity: sensor.mqtt_plant_druivenstruik_conductivity
+      brightness: sensor.mqtt_plant_druivenstruik_brightness
+    min_moisture: 25
+
+automation:
+  - id: plants_notification
+    alias: "Plants notification"
+    trigger:
+      - platform: state
+        entity_id: group.all_plants
+        from: "ok"
+        to: "problem"
+      - platform: state
+        entity_id: device_tracker.iphone_van_luuk
+        to: "home"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.all_plants
+          state: "problem"
+        - condition: state
+          entity_id: device_tracker.iphone_van_luuk
+          state: "home"
+    action:
+      - service: notify.ios_iphone_van_luuk
+        data:
+          title: "Planten water geven"
+          message: "De planten drogen uit!"
