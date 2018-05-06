@@ -250,9 +250,9 @@
       - condition: state
         entity_id: group.lights_keuken
         state: 'off'
-      - condition: state
-        entity_id: binary_sensor.dark_outside
-        state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d000224fbf6
+        below: 25
   action:
     - service: light.turn_on
       entity_id: group.lights_keuken
