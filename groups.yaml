@@ -132,6 +132,7 @@ system:
   - group.internet_group
 system_group:
   name: Systeem
+  control: hidden
   entities:
   - sensor.processor_use
   - sensor.cpu_temperature
@@ -141,6 +142,7 @@ system_group:
   - sensor.memory_use
   - sensor.memory_free
   - sensor.memory_use_percent
+  - switch.cpu_fan
 internet_group:
   name: Internet
   entities:

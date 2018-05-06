@@ -93,6 +93,12 @@ history:
       - group
 
 logbook:
+  exclude:
+    entities:
+      - group.system_group
+      - switch.cpu_fan
+      - automation.cpu_fan_on
+      - automation.cpu_fan_off
 
 panel_iframe:
   sonarr:
