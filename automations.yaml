@@ -521,19 +521,6 @@
         entity_id: climate.woonkamer
         temperature: 20
 
-- id: mailbox_notification
-  alias: "Brievenbusnotificatie"
-  hide_entity: True
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d0001b147ce
-      to: "on"
-  action:
-    - service: notify.ios_iphone_van_luuk
-      data:
-        title: "Brievenbus:"
-        message: "Er is (waarschijnlijk) post!"
-
 - id: battery_low_notification
   alias: "Batterij bijna leeg notificatie"
   hide_entity: True
