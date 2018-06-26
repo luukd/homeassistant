@@ -20,8 +20,12 @@ input_boolean:
     icon: mdi:television
 
 input_datetime:
-  alarm_clock_time:
-    name: Tijd
+  alarm_clock_time_workdays:
+    name: Tijd werkdagen
+    has_date: false
+    has_time: true
+  alarm_clock_time_days_off:
+    name: Tijd vrije dagen
     has_date: false
     has_time: true
 
@@ -35,29 +39,58 @@ input_number:
     mode: slider
     unit_of_measurement: minuten
 
+binary_sensor:
+  - platform: workday
+    country: NL
+
 sensor:
   - platform: time_date
     display_options:
       - time
   - platform: template
     sensors:
+      alarm_clock_today_hour:
+        value_template: >-
+          {%- if states.binary_sensor.workday_sensor.state == 'on' -%}
+            {{ states.input_datetime.alarm_clock_time_workdays.attributes.hour }}
+          {%- else -%}
+            {{ states.input_datetime.alarm_clock_time_days_off.attributes.hour }}
+          {%- endif -%}
+      alarm_clock_today_minute:
+        value_template: >-
+          {%- if states.binary_sensor.workday_sensor.state == 'on' -%}
+            {{ states.input_datetime.alarm_clock_time_workdays.attributes.minute }}
+          {%- else -%}
+            {{ states.input_datetime.alarm_clock_time_days_off.attributes.minute }}
+          {%- endif -%}
+      alarm_clock_today_time:
+        friendly_name: "Wektijd vandaag"
+        value_template: >-
+          {%- if states.sensor.alarm_clock_today_hour.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.alarm_clock_today_hour.state }}:
+          {%- if states.sensor.alarm_clock_today_minute.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.alarm_clock_today_minute.state }}
       light_fade_time_hour:
         friendly_name: "Light fade-in time hour"
         value_template: >-
-          {%- if (states.input_datetime.alarm_clock_time.attributes.minute- states.input_number.morning_lights_fadein.state|int) >= 0 -%}
-            {{ states.input_datetime.alarm_clock_time.attributes.hour }}
-          {%- elif states.input_datetime.alarm_clock_time.attributes.hour < 1 -%}
+          {%- if (states.sensor.alarm_clock_today_minute.state|int - states.input_number.morning_lights_fadein.state|int) >= 0 -%}
+            {{ states.sensor.alarm_clock_today_hour.state }}
+          {%- elif states.sensor.alarm_clock_today_hour.state|int < 1 -%}
             23
           {%- else -%}
-            {{ states.input_datetime.alarm_clock_time.attributes.hour|int - 1 }}
+            {{ states.sensor.alarm_clock_today_hour.state|int - 1 }}
           {%- endif -%}
       light_fade_time_minute:
         friendly_name: "Light fade-in time minutes"
         value_template: >-
-          {%- if (states.input_datetime.alarm_clock_time.attributes.minute - states.input_number.morning_lights_fadein.state|int) >= 0 -%}
-            {{ states.input_datetime.alarm_clock_time.attributes.minute - states.input_number.morning_lights_fadein.state|int }}
+          {%- if (states.sensor.alarm_clock_today_minute.state|int - states.input_number.morning_lights_fadein.state|int) >= 0 -%}
+            {{ states.sensor.alarm_clock_today_minute.state|int - states.input_number.morning_lights_fadein.state|int }}
           {%- else -%}
-            {{ 60 - ((states.input_datetime.alarm_clock_time.attributes.minute - states.input_number.morning_lights_fadein.state|int) * -1) }}
+            {{ 60 - ((states.sensor.alarm_clock_today_minute.state|int - states.input_number.morning_lights_fadein.state|int) * -1) }}
           {%- endif -%}
       light_fade_time:
         friendly_name: "Light fade-in time"
@@ -83,7 +116,9 @@ group:
     control: hidden
     entities:
       - input_boolean.alarm_clock_status
-      - input_datetime.alarm_clock_time
+      - input_datetime.alarm_clock_time_workdays
+      - input_datetime.alarm_clock_time_days_off
+      - sensor.alarm_clock_today_time
       - input_boolean.alarm_clock_play_news
       - input_number.morning_lights_fadein
 
@@ -118,7 +153,7 @@ automation:
     hide_entity: false
     trigger:
     - platform: template
-      value_template: "{{ states.sensor.time.state == (states.input_datetime.alarm_clock_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+      value_template: "{{ states.sensor.time.state == states.sensor.alarm_clock_today_time.state }}"
     condition:
       condition: and
       conditions:
@@ -142,3 +177,39 @@ automation:
         entity_id: media_player.slaapkamer
         media_content_id: "{{ states.sensor.laatste_journaal.state }}"
         media_content_type: "video/mp4"
+
+  - id: alarm_clock_disabled_reminder
+    alias: Wekker herinnering
+    initial_state: 'on'
+    trigger:
+    - platform: state
+      entity_id: input_boolean.slapen
+      from: 'off'
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: input_boolean.alarm_clock_status
+        state: 'off'
+    action:
+      service: notify.ios_iphone_van_luuk
+      data:
+        title: "⏰ Wekker staat uit"
+        message: "Wil je de wekker inschakelen?"
+        data:
+          push:
+            category: "enable_alarm_clock"
+
+  - id: handle_notification_enable_alarm_clock
+    alias: Wekker inschakelen notificatie afhandelen
+    hide_entity: True
+    trigger:
+      platform: event
+      event_type: ios.notification_action_fired
+      event_data:
+        actionName: ENABLE_ALARM_CLOCK
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.alarm_clock_status

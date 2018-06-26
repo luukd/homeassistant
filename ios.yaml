@@ -15,3 +15,18 @@ push:
           authenticationRequired: false
           destructive: false
           behavior: 'default'
+    - name: Wekker inschakelen
+      identifier: enable_alarm_clock
+      actions:
+        - identifier: 'ENABLE_ALARM_CLOCK'
+          title: 'Inschakelen'
+          activationMode: 'background'
+          authenticationRequired: false
+          destructive: false
+          behavior: 'default'
+        - identifier: 'DISABLE_ALARM_CLOCK'
+          title: 'Niet inschakelen'
+          activationMode: 'background'
+          authenticationRequired: false
+          destructive: false
+          behavior: 'default'
