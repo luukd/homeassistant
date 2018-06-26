@@ -1,0 +1,101 @@
+cover:
+  - platform: mqtt
+    name: "Zonnescherm zolder"
+    command_topic: "cmnd/somfy_hub_sonoff/control"
+    payload_open: "UP"
+    payload_close: "DOWN"
+    payload_stop: "STOP"
+    availability_topic: "tele/somfy_hub_sonoff/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      sunshade_strong_wind:
+        value_template: "{{ states('sensor.br_wind_speed')|float > 15 or states('sensor.br_wind_gust')|float > 15 or states('sensor.br_wind_force_1d')|int > 5 }}"
+      sunshade_sun_on_window_kitchen:
+        value_template: "{{ state_attr('sun.sun', 'elevation')|float > 0 and state_attr('sun.sun', 'azimuth')|int > 250 }}"
+      sunshade_sun_on_window_attic:
+        value_template: "{{ state_attr('sun.sun', 'elevation')|float > 0 and state_attr('sun.sun', 'azimuth')|int < 230 }}"
+
+automation:
+  - id: sunshade_kitchen_up
+    alias: Zonnescherm keuken omhoog
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.sunshade_sun_on_window_kitchen
+        to: 'off'
+    action:
+      - service: cover.open_cover
+        entity_id: cover.cover_kitchen_level
+  
+  - id: sunshade_kitchen_down
+    alias: Zonnescherm keuken omlaag
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.sunshade_sun_on_window_kitchen
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.sunshade_sun_on_window_kitchen
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.sunshade_strong_wind
+          state: 'off'
+    action:
+      - service: cover.set_cover_position
+        entity_id: cover.cover_kitchen_level
+        data:
+          position: 35
+  
+  - id: sunshade_attic_up
+    alias: Zonnescherm zolder omhoog
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.sunshade_sun_on_window_attic
+        to: 'off'
+    action:
+      - service: cover.open_cover
+        entity_id: cover.zonnescherm_zolder
+  
+  - id: sunshade_attic_down
+    alias: Zonnescherm zolder omlaag
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.sunshade_sun_on_window_attic
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.sunshade_sun_on_window_attic
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.sunshade_strong_wind
+          state: 'off'
+        - condition: numeric_state
+          entity_id: sensor.br_temperature_1d
+          above: 24
+    action:
+      - service: cover.close_cover
+        entity_id: cover.zonnescherm_zolder
+        
+  - id: sunshades_up_strong_wind
+    alias: Zonneschermen omhoog bij harde wind
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.sunshade_strong_wind
+        to: 'on'
+    action:
+      - service: cover.open_cover
+        entity_id: cover.cover_kitchen_level
+      - service: cover.open_cover
+        entity_id: cover.zonnescherm_zolder

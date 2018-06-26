@@ -1,8 +1,13 @@
 - platform: buienradar
   monitored_conditions:
-    - humidity
     - temperature
+    - humidity
     - windspeed
+    - windgust
+    - precipitation
+    - irradiance
+    - windforce_1d
+    - temperature_1d
 
 - platform: darksky
   api_key: !secret darksky_api_key

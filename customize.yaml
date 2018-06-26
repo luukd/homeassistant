@@ -27,7 +27,13 @@ device_tracker.iphonevanelly:
   friendly_name: "Elly"
 binary_sensor.luuk_home:
   icon: mdi:account
+cover.zonnescherm_zolder:
+  homebridge_visible: true
+  homebridge_cover_type: rollershutter
+  device_class: window
 cover.cover_kitchen_level:
+  homebridge_visible: true
+  homebridge_cover_type: rollershutter
   device_class: window
   friendly_name: "Zonnescherm keuken"
 cover.cover_kitchen_switch:
@@ -85,6 +91,20 @@ binary_sensor.wall_switch_left_158d000183f47d:
   hidden: true
 binary_sensor.wall_switch_right_158d000183f47d:
   hidden: true
+sensor.br_temperature:
+  friendly_name: Temperatuur
+sensor.br_precipitation:
+  friendly_name: Neerslag
+sensor.br_humidity:
+  friendly_name: Luchtvochtigheid
+sensor.br_wind_speed:
+  friendly_name: Windsnelheid
+sensor.br_wind_gust:
+  friendly_name: Windstoten
+sensor.dark_sky_cloud_coverage:
+  friendly_name: Bewolking
+sun.sun:
+  friendly_name: Zon
 sensor.humidity_158d0001b91ff4:
   friendly_name: "Luchtvochtigheid badkamer"
   icon: mdi:water-percent
