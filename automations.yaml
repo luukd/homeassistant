@@ -333,11 +333,19 @@
     - platform: state
       entity_id: binary_sensor.0x00158d0001ad6a52_occupancy
       to: 'on'
+    - platform: state
+      entity_id: binary_sensor.iemand_thuis
       to: 'on'
   condition:
+    - condition: state
+      entity_id: binary_sensor.0x00158d0001ad6a52_occupancy
+      state: 'on'
     - condition: numeric_state
       entity_id: sensor.0x00158d0001ad6a52_illuminance
       below: 35
+    - condition: state
+      entity_id: binary_sensor.iemand_thuis
+      state: 'on'
   action:
     - service: light.turn_on
       entity_id: light.lamp_hal_achter
@@ -365,6 +373,9 @@
     - platform: state
       entity_id: input_boolean.slapen
       to: 'off'
+    - platform: state
+      entity_id: binary_sensor.iemand_thuis
+      to: 'on'
   condition:
     condition: and
     conditions:
@@ -377,6 +388,9 @@
       - condition: state
         entity_id: input_boolean.slapen
         state: 'off'
+      - condition: state
+        entity_id: binary_sensor.iemand_thuis
+        state: 'on'
   action:
     - service: light.turn_on
       data:
