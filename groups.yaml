@@ -122,6 +122,7 @@ presence:
   - binary_sensor.luuk_home
   - device_tracker.phone_hans
   - device_tracker.iphonevanelly
+  - device_tracker.phone_sanne
 huishoudelijk:
   name: Huishoudelijk
   view: true

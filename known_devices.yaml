@@ -42,3 +42,11 @@ iphonevanelly:
   picture:
   track: true
   vendor: Apple, Inc.
+
+phone_sanne:
+  hide_if_away: false
+  icon:
+  mac: 48:50:73:64:B6:FC
+  name: Windows Phone Sanne
+  picture:
+  track: true
