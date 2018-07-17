@@ -16,8 +16,8 @@
       name: Slaapkamer
 - platform: mqtt
   name: "Spotjes keuken links"
-  state_topic: "stat/sonoff_keuken_spots_links/POWER"
-  command_topic: "cmnd/sonoff_keuken_spots_links/POWER"
+  state_topic: "stat/sonoff_keuken_spots_links/POWER1"
+  command_topic: "cmnd/sonoff_keuken_spots_links/POWER1"
   availability_topic: "tele/sonoff_keuken_spots_links/LWT"
   qos: 1
   payload_on: "ON"
@@ -27,8 +27,8 @@
   retain: true
 - platform: mqtt
   name: "Spotjes keuken rechts"
-  state_topic: "stat/sonoff_keuken_spots_rechts/POWER"
-  command_topic: "cmnd/sonoff_keuken_spots_rechts/POWER"
+  state_topic: "stat/sonoff_keuken_spots_rechts/POWER1"
+  command_topic: "cmnd/sonoff_keuken_spots_rechts/POWER1"
   availability_topic: "tele/sonoff_keuken_spots_rechts/LWT"
   qos: 1
   payload_on: "ON"
@@ -38,8 +38,8 @@
   retain: true
 - platform: mqtt
   name: "Lamp hal achter"
-  state_topic: "stat/sonoff_hal_achter/POWER"
-  command_topic: "cmnd/sonoff_hal_achter/POWER"
+  state_topic: "stat/sonoff_hal_achter/POWER1"
+  command_topic: "cmnd/sonoff_hal_achter/POWER1"
   availability_topic: "tele/sonoff_hal_achter/LWT"
   qos: 1
   payload_on: "ON"
@@ -49,8 +49,8 @@
   retain: true
 - platform: mqtt
   name: "Lamp hal voordeur"
-  state_topic: "stat/sonoff_hal_voordeur/POWER"
-  command_topic: "cmnd/sonoff_hal_voordeur/POWER"
+  state_topic: "stat/sonoff_hal_voordeur/POWER1"
+  command_topic: "cmnd/sonoff_hal_voordeur/POWER1"
   availability_topic: "tele/sonoff_hal_voordeur/LWT"
   qos: 1
   payload_on: "ON"
