@@ -50,10 +50,10 @@ switch.cover_kitchen_switch:
   hidden: true
 script.start_vacuum_cleaner:
   hidden: true
-binary_sensor.motion_sensor_158d000224fbf6:
+binary_sensor.0x00158d000224fbf6_occupancy:
   friendly_name: "Bewegingssensor keuken"
   hidden: true
-binary_sensor.motion_sensor_158d0001ad6a52:
+binary_sensor.0x00158d0001ad6a52_occupancy:
   friendly_name: "Bewegingssensor hal achter"
   hidden: true
 binary_sensor.motion_sensor_158d0001ab31bc:
@@ -83,7 +83,7 @@ binary_sensor.wall_switch_158d000157670b:
 binary_sensor.wall_switch_158d00015f2255:
   friendly_name: "Schakelaar woonkamer achter"
   hidden: true
-binary_sensor.wall_switch_158d00015766fb:
+sensor.0x00158d00015766fb:
   friendly_name: "Schakelaar woonkamer voor"
   hidden: true
 binary_sensor.wall_switch_both_158d000183f47d:
@@ -129,12 +129,10 @@ light.gateway_light_34ce0091ead6:
   hidden: true
 sensor.illumination_34ce0091ead6:
   hidden: true
-sensor.illumination_158d000224fbf6:
-  hidden: true
 sensor.illumination_158d0001ab31bc:
   friendly_name: "Lichtsterkte hal voordeur"
   hidden: true
-sensor.illumination_158d0001ad6a52:
+sensor.0x00158d0001ad6a52_illuminance:
   friendly_name: "Lichtsterkte hal achter"
   hidden: true
 sensor.illumination_158d0001e470dc:

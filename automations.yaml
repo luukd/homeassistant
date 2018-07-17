@@ -92,11 +92,20 @@
     - platform: event
       event_type: click
       event_data:
-        entity_id: binary_sensor.wall_switch_158d00015766fb
-    - platform: event
-      event_type: click
-      event_data:
         entity_id: binary_sensor.wall_switch_left_158d000183f47d
+  action:
+    service: light.toggle
+    entity_id: group.lights_woonkamer
+
+- alias: Woonkamer switch 2
+  id: woonkamer_switch_2
+  hide_entity: True
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/0x00158d00015766fb'
+  condition:
+    condition: template
+    value_template: "{{ 'single' == trigger.payload_json.click }}"
   action:
     service: light.toggle
     entity_id: group.lights_woonkamer
@@ -242,7 +251,7 @@
   hide_entity: True
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d000224fbf6
+      entity_id: binary_sensor.0x00158d000224fbf6_occupancy
       to: 'on'
   condition:
     condition: and
@@ -251,7 +260,7 @@
         entity_id: group.lights_keuken
         state: 'off'
       - condition: numeric_state
-        entity_id: sensor.illumination_158d000224fbf6
+        entity_id: sensor.0x00158d000224fbf6_illuminance
         below: 25
   action:
     - service: light.turn_on
@@ -262,10 +271,10 @@
   hide_entity: True
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d000224fbf6
+      entity_id: binary_sensor.0x00158d000224fbf6_occupancy
       to: 'off'
       for:
-        minutes: 3
+        minutes: 4
   condition:
     condition: and
     conditions:
@@ -273,7 +282,7 @@
         entity_id: group.lights_keuken
         state: 'on'
       - condition: state
-        entity_id: binary_sensor.motion_sensor_158d000224fbf6
+        entity_id: binary_sensor.0x00158d000224fbf6_occupancy
         state: 'off'
   action:
     - service: light.turn_off
@@ -317,30 +326,31 @@
     - service: light.turn_off
       entity_id: light.lamp_hal_voordeur
 
-- alias: Lampen hal aan
+- alias: Lampen hal achter aan
   id: hall_lights_on
   hide_entity: True
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001ad6a52
+      entity_id: binary_sensor.0x00158d0001ad6a52_occupancy
+      to: 'on'
       to: 'on'
   condition:
     - condition: numeric_state
-      entity_id: sensor.illumination_158d0001ad6a52
+      entity_id: sensor.0x00158d0001ad6a52_illuminance
       below: 35
   action:
     - service: light.turn_on
       entity_id: light.lamp_hal_achter
 
-- alias: Lampen hal uit
+- alias: Lampen hal achter uit
   id: hall_lights_off
   hide_entity: True
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001ad6a52
+      entity_id: binary_sensor.0x00158d0001ad6a52_occupancy
       to: 'off'
       for:
-        minutes: 1
+        minutes: 2
   action:
     - service: light.turn_off
       entity_id: light.lamp_hal_achter
@@ -459,24 +469,6 @@
     service: scene.turn_on
     entity_id: scene.opstaan
 
-- id: request_location_update
-  alias: Locatie update
-  hide_entity: True
-  trigger:
-    - platform: state
-      entity_id:
-      - binary_sensor.motion_sensor_158d0001ad6a52
-      - binary_sensor.motion_sensor_158d0001ab31bc
-      to: 'on'
-  condition:
-    - condition: state
-      entity_id: binary_sensor.iemand_thuis
-      state: 'off'
-  action:
-    service: notify.ios_iphone_van_luuk
-    data:
-      message: "request_location_update"
-
 - id: notify_start_heating
   alias: Verwarming inschakelen notificatie
   trigger:
@@ -531,16 +523,16 @@
       - binary_sensor.door_window_sensor_158d0001e481df
       - binary_sensor.door_window_sensor_158d0001e48a17
       - binary_sensor.motion_sensor_158d0001ab31bc
-      - binary_sensor.motion_sensor_158d0001ad6a52
+#       - binary_sensor.motion_sensor_158d0001ad6a52
       - binary_sensor.motion_sensor_158d0001e470dc
       - binary_sensor.motion_sensor_158d0001e544b9
-      - binary_sensor.motion_sensor_158d000224fbf6
+#       - binary_sensor.motion_sensor_158d000224fbf6
       - binary_sensor.smoke_sensor_158d0001b7930d
       - binary_sensor.smoke_sensor_158d0001db9792
       - binary_sensor.switch_158d00016c22e6
       - binary_sensor.switch_158d0001d62bf9
       - binary_sensor.switch_158d0001d645d5
-      - binary_sensor.wall_switch_158d00015766fb
+#       - binary_sensor.wall_switch_158d00015766fb
       - binary_sensor.wall_switch_158d000157670b
       - binary_sensor.wall_switch_158d00015f2255
       - binary_sensor.wall_switch_both_158d000183f47d

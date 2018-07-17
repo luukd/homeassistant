@@ -135,6 +135,7 @@ system:
   - group.system_group
   - group.internet_group
   - group.zwave_group
+  - group.zigbee_group
 system_group:
   name: Systeem
   control: hidden
