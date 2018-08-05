@@ -9,12 +9,10 @@
       color_temp: 360
     light.woonkamer_schemerlamp:
       state: on
-      brightness: 45
-      color_temp: 360
+      profile: default
     light.eettafel:
       state: on
       profile: default
-      brightness: 204
 
 - name: Lampen uit
   entities:
@@ -33,6 +31,9 @@
   entities:
     group.lights_woonkamer: off
     group.lights_keuken: off
+    light.lamp_hal_voordeur: off
+    light.lamp_hal_achter: off
+    light.overloop: off
     input_boolean.slapen: on
     remote.harmony_hub: off
 
