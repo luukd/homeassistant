@@ -1,7 +1,7 @@
-home:
+default_view:
   name: Home
   view: true
-  icon: mdi:home 
+  icon: mdi:home
   entities:
   - group.presence
   - group.lights_home
@@ -10,11 +10,11 @@ home:
 woonkamer:
   name: Woonkamer
   view: true
+  icon: mdi:sofa
   entities:
   - group.lights_woonkamer
   - group.lights_keuken
   - group.climate_woonkamer
-  - automation.stofzuigen
   - scene.thuis
   - scene.film
   - scene.slapen
@@ -24,11 +24,13 @@ woonkamer:
 badkamer:
   name: Badkamer
   view: true
+  icon: mdi:shower
   entities:
   - group.climate_badkamer
 slaapkamer:
   name: Slaapkamer
   view: true
+  icon: mdi:hotel
   entities:
   - light.slaapkamer
   - group.alarm_clock
@@ -126,12 +128,15 @@ presence:
 huishoudelijk:
   name: Huishoudelijk
   view: true
+  icon: mdi:broom
   entities:
   - group.plants
   - group.vacuum_cleaners
+  - binary_sensor.washing_machine_running
 system:
   name: Systeem
   view: true
+  icon: mdi:settings
   entities:
   - group.system_group
   - group.internet_group
