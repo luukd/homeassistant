@@ -128,6 +128,7 @@ huishoudelijk:
   view: true
   entities:
   - group.plants
+  - group.vacuum_cleaners
 system:
   name: Systeem
   view: true

@@ -1,18 +1,3 @@
-start_vacuum_cleaner:
-  sequence:
-    - service: remote.send_command
-      data_template:
-        entity_id: remote.harmony_hub
-        command: Clean
-        device: 45085387
-    - delay:
-        seconds: 5
-    - service: remote.send_command
-      data_template:
-        entity_id: remote.harmony_hub
-        command: Clean
-        device: 45085387
-
 move_vacuum_cleaner_for_service:
   alias: Stofzuiger verplaatsen voor onderhoud
   sequence:

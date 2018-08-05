@@ -1,0 +1,90 @@
+group:
+  vacuum_cleaners:
+    name: Stofzuigers
+    icon: mdi:robot-vacuum
+    control: hidden
+    entities:
+      - automation.vacuum_cleaner_schedule
+      - vacuum.stofzuiger_woonkamer
+      - vacuum.xiaomi_vacuum_cleaner
+      - script.move_vacuum_cleaner_for_service
+
+vacuum:
+  - platform: mqtt
+    name: "Stofzuiger woonkamer"
+    supported_features:
+      - pause
+      - return_home
+    command_topic: "mqtt_vacuum/command"
+
+automation:
+  - id: vacuum_cleaner_schedule
+    alias: "Stofzuigen"
+    trigger:
+      platform: state
+      entity_id: binary_sensor.iemand_thuis
+      to: 'off'
+    condition:
+      - condition: time
+        after: "07:00:00"
+        before: "12:00:00"
+        weekday:
+          - mon
+          - fri
+    action:
+      - service: script.turn_on
+        entity_id: script.start_vacuum_cleaner
+      - service: vacuum.turn_on
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      - service: notify.ios_iphone_van_luuk
+        data:
+          message: "Stofzuigers gestart"
+  
+  - alias: Stofzuiger woonkamer starten
+    id: mqtt_vacuum_turn_on
+    initial_state: 'on'
+    hide_entity: True
+    trigger:
+      platform: mqtt
+      topic: 'mqtt_vacuum/command'
+      payload: start_pause
+    action:
+      - service: script.turn_on
+        entity_id: script.start_vacuum_cleaner
+  
+  - alias: Stofzuiger woonkamer naar dock
+    id: mqtt_vacuum_return_home
+    initial_state: 'on'
+    hide_entity: True
+    trigger:
+      platform: mqtt
+      topic: 'mqtt_vacuum/command'
+      payload: return_to_base
+    action:
+      - service: script.turn_on
+        entity_id: script.vacuum_return_home
+
+script:
+  start_vacuum_cleaner:
+    sequence:
+      # Wake up
+      - service: remote.send_command
+        data_template:
+          entity_id: remote.harmony_hub
+          command: Clean
+          device: 45085387
+      - delay:
+          seconds: 5
+      # Start cleaning
+      - service: remote.send_command
+        data_template:
+          entity_id: remote.harmony_hub
+          command: Clean
+          device: 45085387
+  vacuum_return_home:
+    sequence:
+      - service: remote.send_command
+        data_template:
+          entity_id: remote.harmony_hub
+          command: Home
+          device: 45085387

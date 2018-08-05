@@ -214,26 +214,6 @@
       data:
         activity: "Watch Chromecast"
 
-- id: vacuum_cleaner_schedule
-  alias: "Stofzuigen"
-  trigger:
-    platform: state
-    entity_id: binary_sensor.iemand_thuis
-    to: 'off'
-  condition:
-    - condition: time
-      after: "07:00:00"
-      before: "12:00:00"
-      weekday:
-        - mon
-        - fri
-  action:
-    - service: script.turn_on
-      entity_id: script.start_vacuum_cleaner
-    - service: notify.ios_iphone_van_luuk
-      data:
-        message: "Stofzuiger is gestart"
-
 - alias: Lampen keuken schakelaar
   id: kitchen_lights_switch
   hide_entity: True
