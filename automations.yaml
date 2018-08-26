@@ -81,44 +81,34 @@
         entity_id: 'binary_sensor.iemand_thuis'
         state: 'off'
 
-- alias: Woonkamer switch
-  id: woonkamer_switch
-  hide_entity: True
+- alias: Woonkamer switches
+  id: woonkamer_switches
   trigger:
-    - platform: event
-      event_type: click
-      event_data:
-        entity_id: binary_sensor.wall_switch_158d00015f2255
-    - platform: event
-      event_type: click
-      event_data:
-        entity_id: binary_sensor.wall_switch_left_158d000183f47d
-  action:
-    service: light.toggle
-    entity_id: group.lights_woonkamer
-
-- alias: Woonkamer switch 2
-  id: woonkamer_switch_2
-  hide_entity: True
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/0x00158d00015766fb'
+    - platform: mqtt
+      topic: 'zigbee2mqtt/0x00158d00015766fb'
+    - platform: mqtt
+      topic: 'zigbee2mqtt/0x00158d00015f2255'
+    - platform: mqtt
+      topic: 'zigbee2mqtt/0x00158d000183f47d'
   condition:
-    condition: template
-    value_template: "{{ 'single' == trigger.payload_json.click }}"
+    condition: or
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: template
+        value_template: "{{ 'left' == trigger.payload_json.click }}"
   action:
     service: light.toggle
     entity_id: group.lights_woonkamer
 
 - alias: Spotify speaker wissel naar keuken
   id: spotify_speaker_switch_to_kitchen
-  hide_entity: True
   trigger:
-    - platform: event
-      event_type: click
-      event_data:
-        entity_id: binary_sensor.wall_switch_both_158d000183f47d
+    - platform: mqtt
+      topic: 'zigbee2mqtt/0x00158d000183f47d'
   condition:
+    - condition: template
+      value_template: "{{ 'both' == trigger.payload_json.click }}"
     - condition: state
       entity_id: binary_sensor.spotify_playing_to_receiver
       state: "on"
@@ -130,13 +120,12 @@
 
 - alias: Spotify speaker wissel naar woonkamer
   id: spotify_speaker_switch_to_living_room
-  hide_entity: True
   trigger:
-    - platform: event
-      event_type: click
-      event_data:
-        entity_id: binary_sensor.wall_switch_both_158d000183f47d
+    - platform: mqtt
+      topic: 'zigbee2mqtt/0x00158d000183f47d'
   condition:
+    - condition: template
+      value_template: "{{ 'both' == trigger.payload_json.click }}"
     - condition: state
       entity_id: binary_sensor.spotify_playing_to_kitchen
       state: "on"
@@ -218,10 +207,11 @@
   id: kitchen_lights_switch
   hide_entity: True
   trigger:
-    - platform: event
-      event_type: click
-      event_data:
-        entity_id: binary_sensor.wall_switch_right_158d000183f47d
+    - platform: mqtt
+      topic: 'zigbee2mqtt/0x00158d000183f47d'
+  condition:
+    - condition: template
+      value_template: "{{ 'right' == trigger.payload_json.click }}"
   action:
     service: light.toggle
     entity_id: group.lights_keuken
@@ -241,7 +231,7 @@
         state: 'off'
       - condition: numeric_state
         entity_id: sensor.0x00158d000224fbf6_illuminance
-        below: 25
+        below: 20
   action:
     - service: light.turn_on
       entity_id: group.lights_keuken
@@ -273,15 +263,15 @@
   hide_entity: True
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001ab31bc
+      entity_id: binary_sensor.0x00158d0001ab31bc_occupancy
       to: 'on'
     - platform: state
       entity_id: binary_sensor.doorbell_ringing
       to: 'on'
   condition:
     - condition: numeric_state
-      entity_id: sensor.illumination_158d0001ab31bc
-      below: 20
+      entity_id: sensor.0x00158d0001ab31bc_illuminance
+      below: 15
   action:
     - service: light.turn_on
       entity_id: light.lamp_hal_voordeur
@@ -291,7 +281,7 @@
   hide_entity: True
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001ab31bc
+      entity_id: binary_sensor.0x00158d0001ab31bc_occupancy
       to: 'off'
     - platform: state
       entity_id: binary_sensor.doorbell_ringing
@@ -300,7 +290,7 @@
         minutes: 2
   condition:
     - condition: state
-      entity_id: binary_sensor.motion_sensor_158d0001ab31bc
+      entity_id: binary_sensor.0x00158d0001ab31bc_occupancy
       state: 'off'
   action:
     - service: light.turn_off
@@ -322,7 +312,7 @@
       state: 'on'
     - condition: numeric_state
       entity_id: sensor.0x00158d0001ad6a52_illuminance
-      below: 35
+      below: 20
     - condition: state
       entity_id: binary_sensor.iemand_thuis
       state: 'on'
@@ -364,7 +354,7 @@
         state: 'on'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0001e470dc
-        below: 15
+        below: 10
       - condition: state
         entity_id: input_boolean.slapen
         state: 'off'
@@ -420,12 +410,12 @@
 
 - alias: Lamp slaapkamer schakelaar
   id: bedroom_lights_switch
-  hide_entity: True
   trigger:
-    - platform: event
-      event_type: click
-      event_data:
-        entity_id: binary_sensor.wall_switch_158d000157670b
+    - platform: mqtt
+      topic: 'zigbee2mqtt/0x00158d000157670b'
+  condition:
+    - condition: template
+      value_template: "{{ 'click' == trigger.payload_json.click }}"
   action:
     service: light.toggle
     entity_id: light.slaapkamer
@@ -507,32 +497,18 @@
         entity_id: climate.woonkamer
         temperature: 20
 
-- id: battery_low_notification
-  alias: "Batterij bijna leeg notificatie"
+- id: battery_low_notification_1
+  alias: "Batterij bijna leeg notificatie 1"
   hide_entity: True
   trigger:
     - platform: numeric_state
       entity_id:
-      - binary_sensor.door_window_sensor_158d0001b147ce
-      - binary_sensor.door_window_sensor_158d0001e481df
-      - binary_sensor.door_window_sensor_158d0001e48a17
-      - binary_sensor.motion_sensor_158d0001ab31bc
-#       - binary_sensor.motion_sensor_158d0001ad6a52
       - binary_sensor.motion_sensor_158d0001e470dc
-      - binary_sensor.motion_sensor_158d0001e544b9
-#       - binary_sensor.motion_sensor_158d000224fbf6
       - binary_sensor.smoke_sensor_158d0001b7930d
       - binary_sensor.smoke_sensor_158d0001db9792
       - binary_sensor.switch_158d00016c22e6
-      - binary_sensor.switch_158d0001d62bf9
-      - binary_sensor.switch_158d0001d645d5
-#       - binary_sensor.wall_switch_158d00015766fb
-      - binary_sensor.wall_switch_158d000157670b
-      - binary_sensor.wall_switch_158d00015f2255
-      - binary_sensor.wall_switch_both_158d000183f47d
-      - sensor.temperature_158d0001b91ff4
-      - sensor.temperature_158d0001b95352
       value_template: '{{ state.attributes.battery_level }}'
+      above: 0
       below: 10
       for:
         hours: 1
@@ -545,6 +521,41 @@
       data:
         title: "Batterij bijna leeg"
         message: 'De batterij van {{ trigger.from_state.attributes.friendly_name }} is bijna leeg ({{ trigger.from_state.attributes.battery_level }})'
+
+- id: battery_low_notification_2
+  alias: "Batterij bijna leeg notificatie 2"
+  hide_entity: True
+  trigger:
+    - platform: numeric_state
+      entity_id:
+      - binary_sensor.0x00158d0001b147ce
+      - binary_sensor.0x00158d0001e481df
+      - binary_sensor.0x00158d0001e48a17
+      - sensor.0x00158d0001ab31bc_illuminance
+      - sensor.0x00158d0001ad6a52_illuminance
+      - sensor.0x00158d0001d62bf9
+      - sensor.0x00158d0001d645d5
+      - sensor.0x00158d000224fbf6_illuminance
+      - sensor.0x00158d00015766fb
+      - sensor.0x00158d000157670b
+      - sensor.0x00158d00015f2255
+      - sensor.0x00158d000183f47d
+      - sensor.0x00158d0001b95352_temperature
+      - sensor.0x00158d0001b91ff4_temperature
+      value_template: '{{ state.attributes.battery | int }}'
+      above: 0
+      below: 10
+      for:
+        hours: 1
+  action:
+    - service: notify.ios_iphone_van_luuk
+      data:
+        title: "Batterij bijna leeg"
+        message: 'De batterij van {{ trigger.from_state.attributes.friendly_name }} is bijna leeg ({{ trigger.from_state.attributes.battery | int }})'
+    - service: persistent_notification.create
+      data:
+        title: "Batterij bijna leeg"
+        message: 'De batterij van {{ trigger.from_state.attributes.friendly_name }} is bijna leeg ({{ trigger.from_state.attributes.battery | int }})'
 
 - id: smoke_alarm
   alias: Rook gedetecteerd

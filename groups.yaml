@@ -76,11 +76,11 @@ climate_badkamer:
   entities:
   - climate.badkamer
   - sensor.badkamer_heating
-  - sensor.humidity_158d0001b91ff4
+  - sensor.0x00158d0001b91ff4_humidity
   - sensor.mold_sensor_bathroom
   - input_number.ventilation
-  - binary_sensor.door_window_sensor_158d0001e48a17
-  - binary_sensor.door_window_sensor_158d0001e481df
+  - binary_sensor.0x00158d0001e48a17
+  - binary_sensor.0x00158d0001e481df
 climate_slaapkamer:
   name: Climate
   entities:
