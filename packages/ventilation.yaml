@@ -1,64 +1,75 @@
-homeassistant:
-  customize:
-    sensor.ventilation_current_mode:
-      hidden: true
-  customize_glob:
-    "switch.qubino_zmnhbdx_flush_2_relays*":
-      hidden: true
-    "sensor.qubino_zmnhbdx_flush_2_relays*":
-      hidden: true
-
-input_number:
-  ventilation:
+input_select:
+  ventilation_mode:
     name: Ventilatie
-    initial: 1
-    min: 1
-    max: 3
-    step: 1
-    mode: slider
+    options:
+       - Auto
+       - Laag
+       - Midden
+       - Hoog
     icon: mdi:fan
 
 sensor:
   - platform: template
     sensors:
+      ventilation_demand_bathroom:
+        value_template: >
+          {% if (is_state('binary_sensor.natural_ventilation_bathroom', 'on')) %}
+            1
+          {% elif (is_state('binary_sensor.high_humidity_bathroom', 'off')) %}
+            1
+          {% else %}
+            3
+          {% endif %}
+      ventilation_demand:
+        value_template: >
+          {% if (is_state('input_select.ventilation_mode', 'Laag')) %}
+            1
+          {% elif (is_state('input_select.ventilation_mode', 'Midden')) %}
+            2
+          {% elif (is_state('input_select.ventilation_mode', 'Hoog')) %}
+            3
+          {% else %}
+            {{ states('sensor.ventilation_demand_bathroom') }}
+          {% endif %}
+      
       ventilation_current_mode:
         value_template: >
           {% if (is_state('switch.qubino_zmnhbdx_flush_2_relays_switch_2', 'on')) %}
-            3.0
+            3
           {% elif (is_state('switch.qubino_zmnhbdx_flush_2_relays_switch_3', 'on')) %}
-            2.0
+            2
           {% else %} 
-            1.0
+            1
           {% endif %}
 
-automation:
-  - id: update_ventilation_slider
-    alias: Ventilatie slider bijwerken
-    initial_state: 'on'
-    trigger:
-      platform: state
-      entity_id: sensor.ventilation_current_mode
-    condition:
-      condition: template
-      value_template: '{{ states.input_number.ventilation.state != states.sensor.ventilation_current_mode.state }}'
-    action:
-      - delay: '00:00:03'
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.ventilation
-          value: "{{ states.sensor.ventilation_current_mode.state }}"
+binary_sensor:
+  - platform: template
+    sensors:
+      natural_ventilation_bathroom:
+        value_template: >-
+          {{ is_state('binary_sensor.0x00158d0001e481df', 'on') and is_state('binary_sensor.0x00158d0001e48a17', 'on') }}
+        delay_on:
+          seconds: 5
+      high_humidity_bathroom:
+        friendly_name: "Hoge luchtvochtigheid badkamer"
+        value_template: >-
+          {{ states('sensor.mold_sensor_bathroom')|int > 80 }}
+        delay_off:
+          minutes: 1
+        delay_on:
+          seconds: 5
 
+automation:
   - id: ventilation_switches_1
     alias: Ventilatie switches 1
     initial_state: 'on'
-    hide_entity: True
     trigger:
       - platform: state
-        entity_id: input_number.ventilation
-        to: "1.0"
+        entity_id: sensor.ventilation_demand
+        to: "1"
     condition:
       condition: template
-      value_template: '{{ states.input_number.ventilation.state != states.sensor.ventilation_current_mode.state }}'
+      value_template: '{{ states.sensor.ventilation_demand.state|int != states.sensor.ventilation_current_mode.state|int }}'
     action:
       - service: switch.turn_off
         entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
@@ -68,14 +79,13 @@ automation:
   - id: ventilation_switches_2
     alias: Ventilatie switches 2
     initial_state: 'on'
-    hide_entity: True
     trigger:
       - platform: state
-        entity_id: input_number.ventilation
-        to: "2.0"
+        entity_id: sensor.ventilation_demand
+        to: "2"
     condition:
       condition: template
-      value_template: '{{ states.input_number.ventilation.state != states.sensor.ventilation_current_mode.state }}'
+      value_template: '{{ states.sensor.ventilation_demand.state|int != states.sensor.ventilation_current_mode.state|int }}'
     action:
       - service: switch.turn_off
         entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
@@ -85,56 +95,15 @@ automation:
   - id: ventilation_switches_3
     alias: Ventilatie switches 3
     initial_state: 'on'
-    hide_entity: True
     trigger:
       - platform: state
-        entity_id: input_number.ventilation
-        to: "3.0"
+        entity_id: sensor.ventilation_demand
+        to: "3"
     condition:
       condition: template
-      value_template: '{{ states.input_number.ventilation.state != states.sensor.ventilation_current_mode.state }}'
+      value_template: '{{ states.sensor.ventilation_demand.state|int != states.sensor.ventilation_current_mode.state|int }}'
     action:
-      - service: switch.turn_off
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3
       - service: switch.turn_on
         entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
-
-  - id: ventilation_bathroom_high
-    alias: Ventileren badkamer (hoog)
-    initial_state: 'on'
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.mold_sensor_bathroom
-        above: 85
-    action:
-      service: input_number.set_value
-      data_template:
-        entity_id: input_number.ventilation
-        value: 3.0
-
-  - id: ventilation_bathroom_medium
-    alias: Ventileren badkamer (middel)
-    initial_state: 'on'
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.mold_sensor_bathroom
-        below: 85
-        above: 75
-    action:
-      service: input_number.set_value
-      data_template:
-        entity_id: input_number.ventilation
-        value: 2.0
-
-  - id: ventilation_bathroom_low
-    alias: Ventileren badkamer (laag)
-    initial_state: 'on'
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.mold_sensor_bathroom
-        below: 75
-    action:
-      service: input_number.set_value
-      data_template:
-        entity_id: input_number.ventilation
-        value: 1.0
+      - service: switch.turn_off
+        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3

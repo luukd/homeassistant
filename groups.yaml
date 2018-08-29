@@ -70,7 +70,7 @@ climate_woonkamer:
   - climate.woonkamer
   - sensor.woonkamer_humidity
   - sensor.woonkamer_heating
-  - input_number.ventilation
+  - input_select.ventilation_mode
 climate_badkamer:
   name: Climate
   entities:
@@ -78,7 +78,7 @@ climate_badkamer:
   - sensor.badkamer_heating
   - sensor.0x00158d0001b91ff4_humidity
   - sensor.mold_sensor_bathroom
-  - input_number.ventilation
+  - input_select.ventilation_mode
   - binary_sensor.0x00158d0001e48a17
   - binary_sensor.0x00158d0001e481df
 climate_slaapkamer:
@@ -101,7 +101,7 @@ climate_home:
   - climate.slaapkamer
   - climate.werkkamer
   - climate.warm_water
-  - input_number.ventilation
+  - input_select.ventilation_mode
   - cover.zonnescherm_zolder
 weather:
   name: Weer
