@@ -67,11 +67,6 @@ xiaomi_aqara:
     - mac: !secret xiaomi_aqara_mac
       key: !secret xiaomi_aqara_key
 
-vacuum:
-  - platform: xiaomi_miio
-    host: !secret xiaomi_vacuum_host
-    token: !secret xiaomi_vacuum_token
-
 emulated_hue:
   exposed_domains:
     - light

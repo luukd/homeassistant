@@ -4,18 +4,35 @@ group:
     icon: mdi:robot-vacuum
     control: hidden
     entities:
-      - automation.vacuum_cleaner_schedule
       - vacuum.stofzuiger_woonkamer
-      - vacuum.xiaomi_vacuum_cleaner
+      - vacuum.stofzuiger_boven
       - script.move_vacuum_cleaner_for_service
+      - camera.vacuum_map
 
 vacuum:
+  - platform: xiaomi_miio
+    name: Stofzuiger boven
+    host: !secret xiaomi_vacuum_host
+    token: !secret xiaomi_vacuum_token
   - platform: mqtt
-    name: "Stofzuiger woonkamer"
+    name: Stofzuiger woonkamer
     supported_features:
       - pause
       - return_home
     command_topic: "mqtt_vacuum/command"
+
+sensor:
+  - platform: rest
+    name: Vacuum map
+    resource: http://10.0.0.74/api/remote/map?scale=5&border=0
+    value_template: 'http://10.0.0.74{{value_json.mapsrc}}'
+
+camera:
+  - platform: generic
+    name: Vacuum map
+    still_image_url: '{{states("sensor.vacuum_map")}}'
+    content_type: "image/png"
+    limit_refetch_to_url_change: true
 
 automation:
   - id: vacuum_cleaner_schedule
@@ -32,10 +49,10 @@ automation:
           - mon
           - fri
     action:
-      - service: script.turn_on
-        entity_id: script.start_vacuum_cleaner
       - service: vacuum.turn_on
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.stofzuiger_woonkamer
+      - service: vacuum.turn_on
+        entity_id: vacuum.stofzuiger_boven
       - service: notify.ios_iphone_van_luuk
         data:
           message: "Stofzuigers gestart"
@@ -63,6 +80,32 @@ automation:
     action:
       - service: script.turn_on
         entity_id: script.vacuum_return_home
+  
+  - alias: Stofzuigen klaar notificatie
+    id: vacuum_done_notification
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: vacuum.stofzuiger_boven
+      from: 'on'
+      to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ states.vacuum.stofzuiger_boven.attributes.cleaning_time | int > 3 }}'
+        - condition: template
+          value_template: '{{ states.vacuum.stofzuiger_boven.attributes.status != "Paused" }}'
+    action:
+      - service: notify.ios_iphone_van_luuk
+        data:
+          message: "Stofzuigen klaar!"
+          data:
+            attachment:
+              content-type: "png"
+            push:
+              category: camera
+            entity_id: camera.vacuum_map
 
 script:
   start_vacuum_cleaner:
@@ -88,3 +131,34 @@ script:
           entity_id: remote.harmony_hub
           command: Home
           device: 45085387
+  move_vacuum_cleaner_for_service:
+    alias: Stofzuiger verplaatsen voor onderhoud
+    sequence:
+    - service: vacuum.xiaomi_remote_control_start
+      data:
+        entity_id: vacuum.stofzuiger_boven
+    - delay: 00:00:10
+    - service: vacuum.xiaomi_remote_control_move
+      data:
+        entity_id: vacuum.stofzuiger_boven
+        duration: 3000
+        rotation: 0
+        velocity: 0.2
+    - delay: 00:00:03
+    - service: vacuum.xiaomi_remote_control_move
+      data:
+        entity_id: vacuum.stofzuiger_boven
+        duration: 80
+        rotation: 30
+        velocity: 0.1
+    - delay: 00:00:02
+    - service: vacuum.xiaomi_remote_control_move
+      data:
+        entity_id: vacuum.stofzuiger_boven
+        duration: 3000
+        rotation: 0
+        velocity: 0.2
+    - delay: 00:00:03
+    - service: vacuum.xiaomi_remote_control_stop
+      data:
+        entity_id: vacuum.stofzuiger_boven
