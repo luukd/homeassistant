@@ -415,7 +415,7 @@
       topic: 'zigbee2mqtt/0x00158d000157670b'
   condition:
     - condition: template
-      value_template: "{{ 'click' == trigger.payload_json.click }}"
+      value_template: "{{ 'single' == trigger.payload_json.click }}"
   action:
     service: light.toggle
     entity_id: light.slaapkamer
@@ -528,9 +528,9 @@
   trigger:
     - platform: numeric_state
       entity_id:
-      - binary_sensor.0x00158d0001b147ce
-      - binary_sensor.0x00158d0001e481df
-      - binary_sensor.0x00158d0001e48a17
+#       - binary_sensor.0x00158d0001b147ce
+#       - binary_sensor.0x00158d0001e481df
+#       - binary_sensor.0x00158d0001e48a17
       - sensor.0x00158d0001ab31bc_illuminance
       - sensor.0x00158d0001ad6a52_illuminance
       - sensor.0x00158d0001d62bf9
