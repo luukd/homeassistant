@@ -1,0 +1,38 @@
+binary_sensor:
+  - platform: template
+    sensors:
+      indoor_temp_gt_outdoor_temp:
+        friendly_name: "Binnen warmer dan buiten"
+        value_template: '{{(states("sensor.slaapkamer_temperature") | float > states("sensor.br_temperature") | float)}}'
+        
+automation:
+  - id: warm_weather_bedroom_window_notification
+    alias: "Herinnering slaapkamerraam open bij warm weer"
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.iemand_thuis
+        from: "off"
+        to: "on"
+      - platform: state
+        entity_id: binary_sensor.indoor_temp_gt_outdoor_temp
+        from: "off"
+        to: "on"
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.slaapkamer_temperature
+          above: 22
+        - condition: state
+          entity_id: binary_sensor.iemand_thuis
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.indoor_temp_gt_outdoor_temp
+          state: 'on'
+        - condition: template
+          value_template: '{{ (as_timestamp(now()) - as_timestamp(states.automation.herinnering_slaapkamerraam_open_bij_warm_weer.last_updated)) > 21600 }}'
+    action:
+      - service: notify.ios_iphone_van_luuk
+        data:
+          title: "Zet de ramen open"
+          message: "Het is {{ states('sensor.slaapkamer_temperature') }}°C in de slaapkamer en {{ states('sensor.br_temperature') }}°C buiten."
