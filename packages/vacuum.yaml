@@ -49,9 +49,9 @@ automation:
           - mon
           - fri
     action:
-      - service: vacuum.turn_on
+      - service: vacuum.start_pause
         entity_id: vacuum.stofzuiger_woonkamer
-      - service: vacuum.turn_on
+      - service: vacuum.start
         entity_id: vacuum.stofzuiger_boven
       - service: notify.ios_iphone_van_luuk
         data:
