@@ -10,25 +10,24 @@ light.lamp_hal_voordeur:
   homebridge_visible: true
 scene.slapen:
   homebridge_visible: true
+
 binary_sensor.iemand_thuis:
   icon: mdi:home
 device_tracker.iphone_van_luuk:
-  friendly_name: "iPhone Luuk (app)"
-  hidden: true
+  friendly_name: iPhone Luuk (app)
 device_tracker.iphone_van_luuk_nmap:
-  friendly_name: "iPhone Luuk (nmap)"
-  hidden: true
+  friendly_name: iPhone Luuk (nmap)
 device_tracker.iphone_luuk_tado:
-  friendly_name: "iPhone Luuk (tado)"
-  hidden: true
+  friendly_name: iPhone Luuk (tado)
 device_tracker.phone_hans:
-  friendly_name: "Hans"
+  friendly_name: Hans
 device_tracker.iphonevanelly:
-  friendly_name: "Elly"
+  friendly_name: Elly
 device_tracker.phone_sanne:
-  friendly_name: "Sanne"
+  friendly_name: Sanne
 binary_sensor.luuk_home:
   icon: mdi:account
+
 cover.zonnescherm_zolder:
   homebridge_visible: true
   homebridge_cover_type: rollershutter
@@ -37,33 +36,18 @@ cover.cover_kitchen_level:
   homebridge_visible: true
   homebridge_cover_type: rollershutter
   device_class: window
-  friendly_name: "Zonnescherm keuken"
-cover.cover_kitchen_switch:
-  hidden: true
-sensor.cover_kitchen_energy:
-  hidden: true
-sensor.cover_kitchen_power:
-  hidden: true
-sensor.cover_kitchen_previous_reading:
-  hidden: true
-switch.cover_kitchen_switch:
-  hidden: true
-script.start_vacuum_cleaner:
-  hidden: true
+  friendly_name: Zonnescherm keuken
+
 binary_sensor.0x00158d000224fbf6_occupancy:
-  friendly_name: "Bewegingssensor keuken"
-  hidden: true
+  friendly_name: Bewegingssensor keuken
 binary_sensor.0x00158d0001ad6a52_occupancy:
-  friendly_name: "Bewegingssensor hal achter"
-  hidden: true
+  friendly_name: Bewegingssensor hal achter
 binary_sensor.0x00158d0001ab31bc_occupancy:
-  friendly_name: "Bewegingssensor hal voordeur"
-  hidden: true
-binary_sensor.motion_sensor_158d0001e470dc:
-  friendly_name: "Bewegingssensor overloop"
-  hidden: true
+  friendly_name: Bewegingssensor hal voordeur
+binary_sensor.0x00158d0001e470dc_occupancy:
+  friendly_name: Bewegingssensor overloop
 binary_sensor.0x00158d0001b147ce:
-  friendly_name: "Sensor brievenbus"
+  friendly_name: Sensor brievenbus
   device_class: opening
 binary_sensor.0x00158d0001e48a17:
   friendly_name: Badkamerraam
@@ -71,23 +55,39 @@ binary_sensor.0x00158d0001e48a17:
 binary_sensor.0x00158d0001e481df:
   friendly_name: Badkamerdeur
   device_class: door
-binary_sensor.smoke_sensor_158d0001b7930d:
+binary_sensor.0x00158d0001b7930d:
   friendly_name: Rookmelder woonkamer
-# binary_sensor.smoke_sensor_158d0001db9792:
-binary_sensor.switch_158d0001d645d5:
-  friendly_name: "Knop slaapkamer"
-  hidden: true
+binary_sensor.0x00158d0001db9792:
+  friendly_name: Rookmelder
+sensor.0x00158d00016c22e6:
+  friendly_name: Knop slaapkamer
 sensor.0x00158d000157670b:
-  friendly_name: "Schakelaar slaapkamer"
+  friendly_name: Schakelaar slaapkamer
 sensor.0x00158d00015f2255:
-  friendly_name: "Schakelaar woonkamer achter"
-  hidden: true
+  friendly_name: Schakelaar woonkamer achter
 sensor.0x00158d00015766fb:
-  friendly_name: "Schakelaar woonkamer voor"
-  hidden: true
+  friendly_name: Schakelaar woonkamer voor
 sensor.0x00158d000183f47d:
-  friendly_name: "Schakelaar woonkamer/keuken"
-  hidden: true
+  friendly_name: Schakelaar woonkamer/keuken
+sensor.0x00158d0001b91ff4_humidity:
+  friendly_name: Luchtvochtigheid badkamer
+sensor.0x00158d0001b91ff4_pressure:
+  friendly_name: Luchtdruk badkamer
+sensor.0x00158d0001b91ff4_temperature:
+  friendly_name: Temperatuur badkamer
+sensor.0x00158d0001b95352_humidity:
+  friendly_name: Luchtvochtigheid overloop
+sensor.0x00158d0001b95352_pressure:
+  friendly_name: Luchtdruk overloop
+sensor.0x00158d0001b95352_temperature:
+  friendly_name: Temperatuur overloop
+sensor.0x00158d0001ab31bc_illuminance:
+  friendly_name: Lichtsterkte hal voordeur
+sensor.0x00158d0001ad6a52_illuminance:
+  friendly_name: Lichtsterkte hal achter
+sensor.0x00158d0001e470dc_illuminance:
+  friendly_name: Lichtsterkte overloop
+  
 sensor.br_temperature:
   friendly_name: Temperatuur
 sensor.br_precipitation:
@@ -102,93 +102,6 @@ sensor.dark_sky_cloud_coverage:
   friendly_name: Bewolking
 sun.sun:
   friendly_name: Zon
-sensor.0x00158d0001b91ff4_humidity:
-  friendly_name: "Luchtvochtigheid badkamer"
-sensor.0x00158d0001b91ff4_pressure:
-  friendly_name: "Luchtdruk badkamer"
-sensor.0x00158d0001b91ff4_temperature:
-  friendly_name: "Temperatuur badkamer"
-sensor.0x00158d0001b95352_humidity:
-  friendly_name: "Luchtvochtigheid overloop"
-sensor.0x00158d0001b95352_pressure:
-  friendly_name: "Luchtdruk overloop"
-sensor.0x00158d0001b95352_temperature:
-  friendly_name: "Temperatuur overloop"
-light.gateway_light_34ce0091ead6:
-  hidden: true
-sensor.illumination_34ce0091ead6:
-  hidden: true
-sensor.0x00158d0001ab31bc_illuminance:
-  friendly_name: "Lichtsterkte hal voordeur"
-  hidden: true
-sensor.0x00158d0001ad6a52_illuminance:
-  friendly_name: "Lichtsterkte hal achter"
-  hidden: true
-sensor.illumination_158d0001e470dc:
-  friendly_name: "Lichtsterkte overloop"
-  hidden: true
-climate.warm_water:
-  hidden: true
-sensor.warm_water_link:
-  hidden: true
-sensor.warm_water_overlay:
-  hidden: true
-sensor.warm_water_power:
-  hidden: true
-sensor.warm_water_tado_mode:
-  hidden: true
-sensor.badkamer_humidity:
-  hidden: true
-sensor.badkamer_link:
-  hidden: true
-sensor.badkamer_overlay:
-  hidden: true
-sensor.badkamer_power:
-  hidden: true
-sensor.badkamer_tado_mode:
-  hidden: true
-sensor.badkamer_temperature:
-  hidden: true
-sensor.slaapkamer_link:
-  hidden: true
-sensor.slaapkamer_overlay:
-  hidden: true
-sensor.slaapkamer_power:
-  hidden: true
-sensor.slaapkamer_tado_mode:
-  hidden: true
-sensor.slaapkamer_temperature:
-  hidden: true
-sensor.werkkamer_link:
-  hidden: true
-sensor.werkkamer_overlay:
-  hidden: true
-sensor.werkkamer_power:
-  hidden: true
-sensor.werkkamer_tado_mode:
-  hidden: true
-sensor.werkkamer_temperature:
-  hidden: true
-sensor.woonkamer_link:
-  hidden: true
-sensor.woonkamer_overlay:
-  hidden: true
-sensor.woonkamer_power:
-  hidden: true
-sensor.woonkamer_tado_mode:
-  hidden: true
-sensor.woonkamer_temperature:
-  hidden: true
-sensor.luuks_woning_tado_bridge_status:
-  hidden: true
 sensor.mold_sensor_bathroom:
   friendly_name: Schimmelkans badkamer
   icon: mdi:water
-binary_sensor.harmony_tv_activity:
-  hidden: true
-binary_sensor.spotify_playing_to_receiver:
-  hidden: true
-binary_sensor.spotify_playing_to_kitchen:
-  hidden: true
-remote.harmony_hub:
-  hidden: true

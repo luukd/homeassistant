@@ -338,7 +338,7 @@
   hide_entity: True
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e470dc
+      entity_id: binary_sensor.0x00158d0001e470dc_occupancy
       to: 'on'
     - platform: state
       entity_id: input_boolean.slapen
@@ -350,10 +350,10 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: binary_sensor.motion_sensor_158d0001e470dc
+        entity_id: binary_sensor.0x00158d0001e470dc_occupancy
         state: 'on'
       - condition: numeric_state
-        entity_id: sensor.illumination_158d0001e470dc
+        entity_id: sensor.0x00158d0001e470dc_illuminance
         below: 10
       - condition: state
         entity_id: input_boolean.slapen
@@ -365,14 +365,15 @@
     - service: light.turn_on
       data:
         entity_id: light.overloop
-        profile: default
+        brightness: 255
+        kelvin: 3000
       
 - alias: Lampen overloop aan s'nachts
   id: overloop_lights_on_night
   hide_entity: True
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e470dc
+      entity_id: binary_sensor.0x00158d0001e470dc_occupancy
       to: 'on'
     - platform: state
       entity_id: input_boolean.slapen
@@ -381,11 +382,11 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: binary_sensor.motion_sensor_158d0001e470dc
+        entity_id: binary_sensor.0x00158d0001e470dc_occupancy
         state: 'on'
       - condition: numeric_state
-        entity_id: sensor.illumination_158d0001e470dc
-        below: 30
+        entity_id: sensor.0x00158d0001e470dc_illuminance
+        below: 10
       - condition: state
         entity_id: input_boolean.slapen
         state: 'on'
@@ -400,10 +401,10 @@
   hide_entity: True
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e470dc
+      entity_id: binary_sensor.0x00158d0001e470dc_occupancy
       to: 'off'
       for:
-        minutes: 1
+        minutes: 2
   action:
     - service: light.turn_off
       entity_id: light.overloop
@@ -423,12 +424,11 @@
 - alias: Activeer slapen met knop
   id: slapen_switch
   trigger:
-    platform: event
-    event_type: click
-    event_data:
-      entity_id: binary_sensor.switch_158d00016c22e6
-      click_type: single
+    - platform: mqtt
+      topic: 'zigbee2mqtt/0x00158d00016c22e6'
   condition:
+    - condition: template
+      value_template: "{{ 'single' == trigger.payload_json.click }}"
     - condition: state
       entity_id: input_boolean.slapen
       state: 'off'
@@ -436,15 +436,24 @@
     service: scene.turn_on
     entity_id: scene.slapen
 
-- alias: Opstaan
+- alias: Opstaan (knop)
+  trigger:
+    - platform: mqtt
+      topic: 'zigbee2mqtt/0x00158d00016c22e6'
+  condition:
+    - condition: template
+      value_template: "{{ 'single' == trigger.payload_json.click }}"
+    - condition: state
+      entity_id: input_boolean.slapen
+      state: 'on'
+  action:
+    service: scene.turn_on
+    entity_id: scene.opstaan
+
+- alias: Opstaan (tijd)
   trigger:
     - platform: time
       at: "07:30:00"
-    - platform: event
-      event_type: click
-      event_data:
-        entity_id: binary_sensor.switch_158d00016c22e6
-        click_type: single
   condition:
     - condition: state
       entity_id: input_boolean.slapen
@@ -497,33 +506,8 @@
         entity_id: climate.woonkamer
         temperature: 20
 
-- id: battery_low_notification_1
-  alias: "Batterij bijna leeg notificatie 1"
-  hide_entity: True
-  trigger:
-    - platform: numeric_state
-      entity_id:
-      - binary_sensor.motion_sensor_158d0001e470dc
-      - binary_sensor.smoke_sensor_158d0001b7930d
-      - binary_sensor.smoke_sensor_158d0001db9792
-      - binary_sensor.switch_158d00016c22e6
-      value_template: '{{ state.attributes.battery_level }}'
-      above: 0
-      below: 10
-      for:
-        hours: 1
-  action:
-    - service: notify.ios_iphone_van_luuk
-      data:
-        title: "Batterij bijna leeg"
-        message: 'De batterij van {{ trigger.from_state.attributes.friendly_name }} is bijna leeg ({{ trigger.from_state.attributes.battery_level }})'
-    - service: persistent_notification.create
-      data:
-        title: "Batterij bijna leeg"
-        message: 'De batterij van {{ trigger.from_state.attributes.friendly_name }} is bijna leeg ({{ trigger.from_state.attributes.battery_level }})'
-
-- id: battery_low_notification_2
-  alias: "Batterij bijna leeg notificatie 2"
+- id: battery_low_notification
+  alias: "Batterij bijna leeg notificatie"
   hide_entity: True
   trigger:
     - platform: numeric_state
@@ -531,14 +515,18 @@
 #       - binary_sensor.0x00158d0001b147ce
 #       - binary_sensor.0x00158d0001e481df
 #       - binary_sensor.0x00158d0001e48a17
+#       - binary_sensor.0x00158d0001b7930d
+#       - binary_sensor.0x00158d0001db9792
       - sensor.0x00158d0001ab31bc_illuminance
       - sensor.0x00158d0001ad6a52_illuminance
       - sensor.0x00158d0001d62bf9
       - sensor.0x00158d0001d645d5
+      - sensor.0x00158d0001e470dc_illuminance
       - sensor.0x00158d000224fbf6_illuminance
       - sensor.0x00158d00015766fb
       - sensor.0x00158d000157670b
       - sensor.0x00158d00015f2255
+      - sensor.0x00158d00016c22e6
       - sensor.0x00158d000183f47d
       - sensor.0x00158d0001b95352_temperature
       - sensor.0x00158d0001b91ff4_temperature
@@ -562,15 +550,16 @@
   trigger:
     platform: state
     entity_id:
-      - binary_sensor.smoke_sensor_158d0001b7930d
-      - binary_sensor.smoke_sensor_158d0001db9792
+      - binary_sensor.0x00158d0001b7930d
+      - binary_sensor.0x00158d0001db9792
     from: 'off'
     to: 'on'
   action:
     - service: light.turn_on
       data:
         entity_id: group.lights_home
-        profile: default
+        brightness: 255
+        kelvin: 3000
     - service: notify.ios_iphone_van_luuk
       data:
         title: "⚠️ ROOK GEDETECTEERD ⚠️"

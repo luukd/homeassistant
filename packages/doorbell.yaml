@@ -72,16 +72,3 @@ automation:
         data:
           title: "Deurbel:"
           message: "Er wordt aangebeld!"
-  
-  - id: doorbell_ring
-    alias: Deurbel geluid
-    initial_state: 'on'
-    trigger:
-      - platform: state
-        entity_id: input_boolean.doorbell_state
-        to: "on"
-    action:
-      - service: xiaomi_aqara.play_ringtone
-        data:
-          ringtone_id: 10
-          ringtone_vol: 80
