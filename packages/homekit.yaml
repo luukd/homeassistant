@@ -1,0 +1,24 @@
+homekit:
+  auto_start: False
+  filter:
+    include_entities:
+      - cover.cover_kitchen_level
+      - cover.zonnescherm_zolder
+      - group.lights_keuken
+      - group.lights_woonkamer
+      - light.lamp_hal_achter
+      - light.lamp_hal_voordeur
+      - light.overloop
+      - light.slaapkamer
+      - scene.slapen
+      
+
+automation:
+  - alias: 'Start HomeKit'
+    trigger:
+      - platform: event
+        event_type: zwave.network_ready
+      - platform: event
+        event_type: zwave.network_complete
+    action:
+      - service: homekit.start

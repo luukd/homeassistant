@@ -4,10 +4,6 @@ group.lights_woonkamer:
 group.lights_keuken:
   homebridge_visible: true
   emulated_hue_hidden: false
-light.lamp_hal_achter:
-  homebridge_visible: true
-light.lamp_hal_voordeur:
-  homebridge_visible: true
 scene.slapen:
   homebridge_visible: true
 
@@ -29,12 +25,8 @@ binary_sensor.luuk_home:
   icon: mdi:account
 
 cover.zonnescherm_zolder:
-  homebridge_visible: true
-  homebridge_cover_type: rollershutter
   device_class: window
 cover.cover_kitchen_level:
-  homebridge_visible: true
-  homebridge_cover_type: rollershutter
   device_class: window
   friendly_name: Zonnescherm keuken
 
