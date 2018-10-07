@@ -36,6 +36,7 @@ camera:
 
 automation:
   - id: vacuum_cleaner_schedule
+    initial_state: 'on'
     alias: "Stofzuigen"
     trigger:
       platform: state
@@ -56,6 +57,12 @@ automation:
       - service: notify.ios_iphone_van_luuk
         data:
           message: "Stofzuigers gestart"
+          data:
+            attachment:
+              content-type: "png"
+            push:
+              category: camera
+            entity_id: camera.vacuum_map
   
   - alias: Stofzuiger woonkamer starten
     id: mqtt_vacuum_turn_on
@@ -85,21 +92,42 @@ automation:
     id: vacuum_done_notification
     initial_state: 'on'
     trigger:
-      platform: state
-      entity_id: vacuum.stofzuiger_boven
-      from: 'on'
-      to: 'off'
+      - platform: state
+        entity_id: vacuum.stofzuiger_boven
+        from: 'cleaning'
+        to: 'returning'
+      - platform: state
+        entity_id: vacuum.stofzuiger_boven
+        from: 'cleaning'
+        to: 'docked'
     condition:
       condition: and
       conditions:
         - condition: template
-          value_template: '{{ states.vacuum.stofzuiger_boven.attributes.cleaning_time | int > 3 }}'
-        - condition: template
-          value_template: '{{ states.vacuum.stofzuiger_boven.attributes.status != "Paused" }}'
+          value_template: '{{ states.vacuum.stofzuiger_boven.attributes.cleaning_time | int > 5 }}'
     action:
       - service: notify.ios_iphone_van_luuk
         data:
           message: "Stofzuigen klaar!"
+          data:
+            attachment:
+              content-type: "png"
+            push:
+              category: camera
+            entity_id: camera.vacuum_map
+  
+  - alias: Stofzuigen fout notificatie
+    id: vacuum_error_notification
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: vacuum.stofzuiger_boven
+        to: 'error'
+    action:
+      - service: notify.ios_iphone_van_luuk
+        data:
+          title: '{{ states.vacuum.stofzuiger_boven.attributes.friendly_name }} vastgelopen!'
+          message: 'Foutmelding: {{ states.vacuum.stofzuiger_boven.attributes.error }}'
           data:
             attachment:
               content-type: "png"
