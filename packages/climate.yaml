@@ -1,0 +1,49 @@
+input_boolean:
+  climate_turned_off_by_ha:
+    name: Verwarming uitgeschakeld door HomeAssistant
+
+automation:
+  - alias: Verwarming woonkamer uit als deur open staat
+    initial_state: 'on'
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d000248cc5a
+      to: 'on'
+      for:
+        minutes: 5
+    condition:
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: climate.woonkamer
+        state: 'Smart schedule'
+    action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.climate_turned_off_by_ha
+    - service: climate.set_operation_mode
+      entity_id: climate.woonkamer
+      data:
+        operation_mode: "Off"
+
+  - alias: Verwarming woonkamer reset na deur sluiten
+    initial_state: 'on'
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d000248cc5a
+      to: 'off'
+    condition:
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: input_boolean.climate_turned_off_by_ha
+        state: 'on'
+      - condition: state
+        entity_id: climate.woonkamer
+        state: 'Off'
+    action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.climate_turned_off_by_ha
+    - service: climate.set_operation_mode
+      entity_id: climate.woonkamer
+      data:
+        operation_mode: "Smart schedule"
