@@ -8,7 +8,7 @@ homekit:
       - group.lights_woonkamer
       - light.lamp_hal_achter
       - light.lamp_hal_voordeur
-      - light.overloop
+      - light.0x000b57fffed76d51
       - light.slaapkamer
       - scene.slapen
       

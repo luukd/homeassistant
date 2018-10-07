@@ -41,11 +41,17 @@ binary_sensor.0x00158d0001e470dc_occupancy:
 binary_sensor.0x00158d0001b147ce:
   friendly_name: Sensor brievenbus
   device_class: opening
+binary_sensor.0x00158d000248ef10:
+  friendly_name: Deur trapkast
+  device_class: door
 binary_sensor.0x00158d0001e48a17:
   friendly_name: Badkamerraam
   device_class: window
 binary_sensor.0x00158d0001e481df:
   friendly_name: Badkamerdeur
+  device_class: door
+binary_sensor.0x00158d000248cc5a:
+  friendly_name: Deur woonkamer
   device_class: door
 binary_sensor.0x00158d0001b7930d:
   friendly_name: Rookmelder woonkamer
@@ -79,6 +85,10 @@ sensor.0x00158d0001ad6a52_illuminance:
   friendly_name: Lichtsterkte hal achter
 sensor.0x00158d0001e470dc_illuminance:
   friendly_name: Lichtsterkte overloop
+light.0x000b57fffed76d51:
+  friendly_name: Overloop
+light.0x000b57fffed4c43e:
+  friendly_name: Trapkast
   
 sensor.br_temperature:
   friendly_name: Temperatuur

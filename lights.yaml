@@ -10,8 +10,8 @@
       name: Woonkamer plant
     10.0.0.80:
       name: Woonkamer schemerlamp
-    10.0.0.59:
-      name: Overloop
+#     10.0.0.59:
+#       name: Lamp
     10.0.0.120:
       name: Slaapkamer
 - platform: mqtt

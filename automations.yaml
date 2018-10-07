@@ -258,6 +258,24 @@
     - service: light.turn_off
       entity_id: group.lights_keuken
 
+- alias: Lamp trapkast aan
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d000248ef10
+      to: 'on'
+  action:
+    - service: light.turn_on
+      entity_id: light.0x000b57fffed4c43e
+
+- alias: Lamp trapkast uit
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d000248ef10
+      to: 'off'
+  action:
+    - service: light.turn_off
+      entity_id: light.0x000b57fffed4c43e
+
 - alias: Lamp hal voordeur aan
   id: hall_front_door_lights_on
   hide_entity: True
@@ -364,9 +382,8 @@
   action:
     - service: light.turn_on
       data:
-        entity_id: light.overloop
+        entity_id: light.0x000b57fffed76d51
         brightness: 255
-        kelvin: 3000
       
 - alias: Lampen overloop aan s'nachts
   id: overloop_lights_on_night
@@ -393,8 +410,8 @@
   action:
     - service: light.turn_on
       data:
-        entity_id: light.overloop
-        profile: night
+        entity_id: light.0x000b57fffed76d51
+        brightness: 5
 
 - alias: Lampen overloop uit
   id: overloop_lights_off
@@ -407,7 +424,7 @@
         minutes: 2
   action:
     - service: light.turn_off
-      entity_id: light.overloop
+      entity_id: light.0x000b57fffed76d51
 
 - alias: Lamp slaapkamer schakelaar
   id: bedroom_lights_switch

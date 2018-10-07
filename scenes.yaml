@@ -33,7 +33,7 @@
     group.lights_keuken: off
     light.lamp_hal_voordeur: off
     light.lamp_hal_achter: off
-    light.overloop: off
+    light.0x000b57fffed76d51: off
     input_boolean.slapen: on
     remote.harmony_hub: off
 
