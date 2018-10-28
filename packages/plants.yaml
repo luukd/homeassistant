@@ -112,6 +112,7 @@ plant:
 automation:
   - id: plants_notification
     alias: "Plants notification"
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: group.all_plants

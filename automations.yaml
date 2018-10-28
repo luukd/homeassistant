@@ -1,5 +1,6 @@
 - id: tv_scene_start
   alias: "TV started"
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id: binary_sensor.harmony_tv_activity
@@ -24,6 +25,7 @@
  
 - id: home_lights
   alias: "Turn on lights"
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id: binary_sensor.iemand_thuis
@@ -56,6 +58,7 @@
         state: 'off'
 
 - alias: "Turn off lights"
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id: binary_sensor.iemand_thuis
@@ -83,6 +86,7 @@
 
 - alias: Woonkamer switches
   id: woonkamer_switches
+  initial_state: 'on'
   trigger:
     - platform: mqtt
       topic: 'zigbee2mqtt/0x00158d00015766fb'
@@ -103,6 +107,7 @@
 
 - alias: Spotify speaker wissel naar keuken
   id: spotify_speaker_switch_to_kitchen
+  initial_state: 'on'
   trigger:
     - platform: mqtt
       topic: 'zigbee2mqtt/0x00158d000183f47d'
@@ -120,6 +125,7 @@
 
 - alias: Spotify speaker wissel naar woonkamer
   id: spotify_speaker_switch_to_living_room
+  initial_state: 'on'
   trigger:
     - platform: mqtt
       topic: 'zigbee2mqtt/0x00158d000183f47d'
@@ -137,6 +143,7 @@
 
 - id: harmony_activity_airplay
   alias: "Activate Harmony activity when playing AirPlay"
+  initial_state: 'on'
   hide_entity: True
   trigger:
     platform: state
@@ -155,6 +162,7 @@
 
 - id: harmony_activity_spotify_start
   alias: "Activate Harmony activity when playing Spotify"
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: state
@@ -172,6 +180,7 @@
 
 - id: harmony_activity_spotify_stop
   alias: "Stop Harmony activity when playing Spotify"
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: state
@@ -189,6 +198,7 @@
 
 - id: harmony_activity_chromecast
   alias: "Activate Chrome Cast activity when casting"
+  initial_state: 'on'
   hide_entity: True
   trigger:
     platform: state
@@ -205,6 +215,7 @@
 
 - alias: Lampen keuken schakelaar
   id: kitchen_lights_switch
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: mqtt
@@ -218,6 +229,7 @@
 
 - alias: Lampen keuken aan bij beweging
   id: kitchen_lights_on
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: state
@@ -238,6 +250,7 @@
 
 - alias: Lampen keuken uit bij geen beweging
   id: kitchen_lights_off
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: state
@@ -259,6 +272,7 @@
       entity_id: group.lights_keuken
 
 - alias: Lamp trapkast aan
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id: binary_sensor.0x00158d000248ef10
@@ -268,6 +282,7 @@
       entity_id: light.0x000b57fffed4c43e
 
 - alias: Lamp trapkast uit
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id: binary_sensor.0x00158d000248ef10
@@ -278,6 +293,7 @@
 
 - alias: Lamp hal voordeur aan
   id: hall_front_door_lights_on
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: state
@@ -296,6 +312,7 @@
 
 - alias: Lampen hal voordeur uit
   id: hall_front_door_lights_off
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: state
@@ -316,6 +333,7 @@
 
 - alias: Lampen hal achter aan
   id: hall_lights_on
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: state
@@ -340,6 +358,7 @@
 
 - alias: Lampen hal achter uit
   id: hall_lights_off
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: state
@@ -353,6 +372,7 @@
       
 - alias: Lampen overloop aan
   id: overloop_lights_on_day
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: state
@@ -387,6 +407,7 @@
       
 - alias: Lampen overloop aan s'nachts
   id: overloop_lights_on_night
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: state
@@ -415,6 +436,7 @@
 
 - alias: Lampen overloop uit
   id: overloop_lights_off
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: state
@@ -428,6 +450,7 @@
 
 - alias: Lamp slaapkamer schakelaar
   id: bedroom_lights_switch
+  initial_state: 'on'
   trigger:
     - platform: mqtt
       topic: 'zigbee2mqtt/0x00158d000157670b'
@@ -440,6 +463,7 @@
 
 - alias: Activeer slapen met knop
   id: slapen_switch
+  initial_state: 'on'
   trigger:
     - platform: mqtt
       topic: 'zigbee2mqtt/0x00158d00016c22e6'
@@ -454,6 +478,7 @@
     entity_id: scene.slapen
 
 - alias: Opstaan (knop)
+  initial_state: 'on'
   trigger:
     - platform: mqtt
       topic: 'zigbee2mqtt/0x00158d00016c22e6'
@@ -468,6 +493,7 @@
     entity_id: scene.opstaan
 
 - alias: Opstaan (tijd)
+  initial_state: 'on'
   trigger:
     - platform: time
       at: "07:30:00"
@@ -481,6 +507,7 @@
 
 - id: notify_start_heating
   alias: Verwarming inschakelen notificatie
+  initial_state: 'on'
   trigger:
     - platform: time
       at: "17:00:00"
@@ -511,6 +538,7 @@
 
 - id: handle_notification_start_heating
   alias: Verwarming inschakelen notificatie afhandelen
+  initial_state: 'on'
   hide_entity: True
   trigger:
     platform: event
@@ -525,6 +553,7 @@
 
 - id: battery_low_notification
   alias: "Batterij bijna leeg notificatie"
+  initial_state: 'on'
   hide_entity: True
   trigger:
     - platform: numeric_state
@@ -564,6 +593,7 @@
 
 - id: smoke_alarm
   alias: Rook gedetecteerd
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id:
@@ -587,6 +617,7 @@
 
 - id: zwave_heal
   alias: heal at 2:32am
+  initial_state: 'on'
   hide_entity: True
   trigger:
     platform: time
@@ -596,6 +627,7 @@
 
 - id: ssl_certificate_expiry_warning
   alias: "SSL certificaat notificatie"
+  initial_state: 'on'
   hide_entity: True
   trigger:
     platform: numeric_state
@@ -615,6 +647,7 @@
 
 - id: tv_bedroom_on
   alias: "TV slaapkamer inschakelen"
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id: media_player.slaapkamer
@@ -629,6 +662,7 @@
       
 - id: tv_bedroom_off
   alias: "TV slaapkamer uitschakelen"
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id: media_player.slaapkamer

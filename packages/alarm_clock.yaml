@@ -203,6 +203,7 @@ automation:
 
   - id: handle_notification_enable_alarm_clock
     alias: Wekker inschakelen notificatie afhandelen
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: event

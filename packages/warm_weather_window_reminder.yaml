@@ -8,6 +8,7 @@ binary_sensor:
 automation:
   - id: warm_weather_bedroom_window_notification
     alias: "Herinnering slaapkamerraam open bij warm weer"
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: binary_sensor.iemand_thuis

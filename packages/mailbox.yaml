@@ -12,6 +12,7 @@ binary_sensor:
 automation:
   - id: mailbox_notification
     alias: "Brievenbusnotificatie"
+    initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: state
