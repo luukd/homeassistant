@@ -1,0 +1,84 @@
+rest_command:
+  tado_virtual_device_set_tracking:
+    url: "https://my.tado.com/api/v2/homes/{{homeId}}/mobileDevices/{{deviceId}}/settings?username={{deviceUsername}}&password={{devicePassword}}"
+    method: PUT
+    headers:
+      content-type: "application/json"
+    payload: '{ "geoTrackingEnabled": {{geoTrackingEnabled}} }'
+    
+  tado_virtual_device_set_location:
+    url: "https://my.tado.com/api/v2/homes/{{homeId}}/mobileDevices/{{deviceId}}/geolocationFix?username={{deviceUsername}}&password={{devicePassword}}"
+    method: PUT
+    headers:
+      content-type: "application/json"
+    payload: '{ "geolocation": { "latitude": {{ latitude }}, "longitude": {{ longitude }} }, "timestamp": "{{ now().isoformat(timespec="seconds") }}", "accuracy": 32 }'
+
+script:
+  tado_virtual_device_set_home:
+    sequence:
+      - service: rest_command.tado_virtual_device_set_tracking
+        data:
+          homeId: !secret tado_home_id
+          deviceId: !secret tado_virtual_device_id
+          deviceUsername: !secret tado_virtual_device_username
+          devicePassword: !secret tado_virtual_device_password
+          geoTrackingEnabled: "true"
+      - service: rest_command.tado_virtual_device_set_location
+        data:
+          homeId: !secret tado_home_id
+          deviceId: !secret tado_virtual_device_id
+          deviceUsername: !secret tado_virtual_device_username
+          devicePassword: !secret tado_virtual_device_password
+          latitude: !secret ha_latitude
+          longitude: !secret ha_longitude
+  
+  tado_virtual_device_set_away:
+    sequence:
+      - service: rest_command.tado_virtual_device_set_tracking
+        data:
+          homeId: !secret tado_home_id
+          deviceId: !secret tado_virtual_device_id
+          deviceUsername: !secret tado_virtual_device_username
+          devicePassword: !secret tado_virtual_device_password
+          geoTrackingEnabled: "false"
+
+automation:
+  - alias: "Tado aan als iemand thuis is"
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.iemand_thuis
+        to: 'on'
+      - platform: time
+        minutes: '/10'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.iemand_thuis
+          state: 'on'
+        - condition: state
+          entity_id: device_tracker.home_assistant_virtual_device
+          state: 'not_home'
+    action:
+      service: script.tado_virtual_device_set_home
+      
+  - alias: "Tado uit als niemand thuis is"
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.iemand_thuis
+        to: 'off'
+      - platform: time
+        minutes: '/10'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.iemand_thuis
+          state: 'off'
+        - condition: state
+          entity_id: device_tracker.home_assistant_virtual_device
+          state: 'home'
+    action:
+      service: script.tado_virtual_device_set_away

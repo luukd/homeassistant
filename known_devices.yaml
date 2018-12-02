@@ -50,3 +50,11 @@ phone_sanne:
   name: Windows Phone Sanne
   picture:
   track: true
+
+home_assistant_virtual_device:
+  hide_if_away: false
+  icon:
+  mac: '706075'
+  name: Home Assistant Virtual Device
+  picture:
+  track: true
