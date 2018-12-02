@@ -568,18 +568,22 @@
     from: 'off'
     to: 'on'
   action:
+    - service: notify.ios_iphone_van_luuk
+      data:
+        title: "⚠️ ROOK GEDETECTEERD ⚠️"
+        message: '{{ trigger.from_state.name }} heeft rook gedetecteerd.'
+        data:
+          push:
+            sound: "US-EN-Alexa-Smoke-Detected-Generic.wav"
     - service: light.turn_on
       data:
         entity_id: group.lights_home
         brightness: 255
         kelvin: 3000
-    - service: notify.ios_iphone_van_luuk
+    - service: input_select.select_option
       data:
-        title: "⚠️ ROOK GEDETECTEERD ⚠️"
-        message: '{{ trigger.from_state.attributes.friendly_name }} heeft rook gedetecteerd met een dichtheid van {{ trigger.from_state.attributes.Density }}.'
-        data:
-          push:
-            sound: US-EN-Alexa-Smoke-Detected-Generic.wav
+        entity_id: input_select.ventilation_mode
+        option: Laag
 
 - id: zwave_heal
   alias: heal at 2:32am

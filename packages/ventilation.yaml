@@ -47,9 +47,9 @@ binary_sensor:
     sensors:
       natural_ventilation_bathroom:
         value_template: >-
-          {{ is_state('binary_sensor.0x00158d0001e481df', 'on') and is_state('binary_sensor.0x00158d0001e48a17', 'on') }}
+          {{ is_state('binary_sensor.0x00158d0001e481df', 'on') }}
         delay_on:
-          seconds: 5
+          seconds: 10
       high_humidity_bathroom:
         friendly_name: "Hoge luchtvochtigheid badkamer"
         value_template: >-
