@@ -118,6 +118,8 @@ automation:
         entity_id: group.all_plants
         from: "ok"
         to: "problem"
+        for:
+          hours: 24
       - platform: state
         entity_id: device_tracker.iphone_van_luuk
         to: "home"
@@ -127,6 +129,8 @@ automation:
         - condition: state
           entity_id: group.all_plants
           state: "problem"
+          for:
+            hours: 24
         - condition: state
           entity_id: device_tracker.iphone_van_luuk
           state: "home"
