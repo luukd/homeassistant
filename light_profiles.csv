@@ -1,6 +1,7 @@
 id,x,y,brightness
-default,0.490,0.398,255
+default,0.44,0.44,255
 night,0.490,0.398,7
+movie,0.15,0.058,2
 relax,0.5119,0.4147,144
 concentrate,0.5119,0.4147,219
 energize,0.368,0.3686,203
