@@ -52,6 +52,7 @@ sensor:
     name: Vacuum map
     resource: http://10.0.0.74/api/remote/map?scale=5&border=0
     value_template: 'http://10.0.0.74{{value_json.mapsrc}}'
+    scan_interval: 300
 
 camera:
   - platform: generic
@@ -136,6 +137,25 @@ automation:
             push:
               category: camera
             entity_id: camera.vacuum_map
+
+  - alias: Vacuum map refresh
+    id: vacuum_map_refresh
+    initial_state: 'on'
+    trigger:
+      platform: time
+      seconds: '/5'
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: vacuum.stofzuiger_boven
+          state: 'cleaning'
+        - condition: state
+          entity_id: vacuum.stofzuiger_boven
+          state: 'returning'
+    action:
+      - service: homeassistant.update_entity
+        entity_id: sensor.vacuum_map
 
 script:
   move_vacuum_cleaner_for_service:

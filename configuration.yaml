@@ -85,10 +85,27 @@ history:
 logbook:
   exclude:
     entities:
-      - group.system_group
-      - switch.cpu_fan
       - automation.cpu_fan_on
       - automation.cpu_fan_off
+      - automation.vacuum_map_refresh
+      - group.system_group
+      - sensor.mqtt_plant_druivenstruik_battery
+      - sensor.mqtt_plant_druivenstruik_brightness
+      - sensor.mqtt_plant_druivenstruik_conductivity
+      - sensor.mqtt_plant_druivenstruik_moisture
+      - sensor.mqtt_plant_druivenstruik_temperature
+      - sensor.mqtt_plant_koelkast_battery
+      - sensor.mqtt_plant_koelkast_brightness
+      - sensor.mqtt_plant_koelkast_conductivity
+      - sensor.mqtt_plant_koelkast_moisture
+      - sensor.mqtt_plant_koelkast_temperature
+      - sensor.mqtt_plant_woonkamer_hoek_battery
+      - sensor.mqtt_plant_woonkamer_hoek_brightness
+      - sensor.mqtt_plant_woonkamer_hoek_conductivity
+      - sensor.mqtt_plant_woonkamer_hoek_moisture
+      - sensor.mqtt_plant_woonkamer_hoek_temperature
+      - sensor.vacuum_map
+      - switch.cpu_fan
 
 panel_iframe:
   sonarr:
