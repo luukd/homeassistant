@@ -522,47 +522,6 @@
         entity_id: climate.woonkamer
         temperature: 20
 
-- id: battery_low_notification
-  alias: "Batterij bijna leeg notificatie"
-  initial_state: 'on'
-  hide_entity: True
-  trigger:
-    - platform: numeric_state
-      entity_id:
-#       - binary_sensor.0x00158d0001b147ce
-#       - binary_sensor.0x00158d0001e481df
-#       - binary_sensor.0x00158d0001e48a17
-#       - binary_sensor.0x00158d0001b7930d
-#       - binary_sensor.0x00158d0001db9792
-      - sensor.0x00158d00015766fb
-      - sensor.0x00158d000157670b
-      - sensor.0x00158d00015f2255
-      - sensor.0x00158d00016c22e6
-      - sensor.0x00158d000183f47d
-        - sensor.0x00158d0001ab31bc_illuminance
-        - sensor.0x00158d0001ad6a52_illuminance
-      - sensor.0x00158d0001b91ff4_temperature
-        - sensor.0x00158d0001b95352_temperature
-        - sensor.0x00158d0001d62bf9
-        - sensor.0x00158d0001d645d5
-        - sensor.0x00158d0001e470dc_illuminance
-        - sensor.0x00158d000224fbf6_illuminance
-        - sensor.0x00158d0002af965a
-      value_template: '{{ state.attributes.battery | int }}'
-      above: 0
-      below: 10
-      for:
-        hours: 12
-  action:
-    - service: notify.ios_iphone_van_luuk
-      data:
-        title: "Batterij bijna leeg"
-        message: 'De batterij van {{ trigger.from_state.name }} is bijna leeg ({{ trigger.from_state.attributes.battery | int }})'
-    - service: persistent_notification.create
-      data:
-        title: "Batterij bijna leeg"
-        message: 'De batterij van {{ trigger.from_state.name }} is bijna leeg ({{ trigger.from_state.attributes.battery | int }})'
-
 - id: smoke_alarm
   alias: Rook gedetecteerd
   initial_state: 'on'
