@@ -85,9 +85,9 @@ sensor.0x00158d0001ad6a52_illuminance:
   friendly_name: Lichtsterkte hal achter
 sensor.0x00158d0001e470dc_illuminance:
   friendly_name: Lichtsterkte overloop
-light.0x000b57fffed76d51:
+light.0x000b57fffed76d51_light:
   friendly_name: Overloop
-light.0x000b57fffed4c43e:
+light.0x000b57fffed4c43e_light:
   friendly_name: Trapkast
   
 sensor.br_temperature:

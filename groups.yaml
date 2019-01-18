@@ -62,7 +62,7 @@ lights_home:
   - group.lights_keuken
   - light.lamp_hal_achter
   - light.lamp_hal_voordeur
-  - light.0x000b57fffed76d51
+  - light.0x000b57fffed76d51_light
   - light.slaapkamer
 climate_woonkamer:
   name: Climate

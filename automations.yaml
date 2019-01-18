@@ -245,7 +245,7 @@
       to: 'on'
   action:
     - service: light.turn_on
-      entity_id: light.0x000b57fffed4c43e
+      entity_id: light.0x000b57fffed4c43e_light
 
 - alias: Lamp trapkast uit
   initial_state: 'on'
@@ -255,7 +255,7 @@
       to: 'off'
   action:
     - service: light.turn_off
-      entity_id: light.0x000b57fffed4c43e
+      entity_id: light.0x000b57fffed4c43e_light
 
 - alias: Lamp hal voordeur aan
   id: hall_front_door_lights_on
@@ -412,7 +412,7 @@
         minutes: 2
   action:
     - service: light.turn_off
-      entity_id: light.0x000b57fffed76d51
+      entity_id: light.0x000b57fffed76d51_light
 
 - alias: Lamp slaapkamer schakelaar
   id: bedroom_lights_switch
