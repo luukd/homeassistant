@@ -29,7 +29,8 @@ cover.zonnescherm_zolder:
 cover.cover_kitchen_level:
   device_class: window
   friendly_name: Zonnescherm keuken
-
+binary_sensor.0x00158d0001e544b9_occupancy:
+  friendly_name: Bewegingssensor slaapkamer
 binary_sensor.0x00158d000224fbf6_occupancy:
   friendly_name: Bewegingssensor keuken
 binary_sensor.0x00158d0001ad6a52_occupancy:

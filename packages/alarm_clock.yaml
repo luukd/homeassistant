@@ -145,7 +145,7 @@ automation:
         entity_id: light.slaapkamer
         profile: "default"
         transition: "{{ states.input_number.morning_lights_fadein.state|int * 60 }}"
-        brightness: 255
+        brightness: 170
 
   - id: alarm_clock_activated
     alias: Alarm Clock Activated

@@ -204,9 +204,6 @@
   condition:
     condition: and
     conditions:
-      - condition: state
-        entity_id: group.lights_keuken
-        state: 'off'
       - condition: numeric_state
         entity_id: sensor.0x00158d000224fbf6_illuminance
         below: 20
@@ -284,6 +281,8 @@
     - platform: state
       entity_id: binary_sensor.0x00158d0001ab31bc_occupancy
       to: 'off'
+      for:
+        minutes: 2
     - platform: state
       entity_id: binary_sensor.doorbell_ringing
       to: 'off'
@@ -305,19 +304,10 @@
     - platform: state
       entity_id: binary_sensor.0x00158d0001ad6a52_occupancy
       to: 'on'
-    - platform: state
-      entity_id: binary_sensor.iemand_thuis
-      to: 'on'
   condition:
-    - condition: state
-      entity_id: binary_sensor.0x00158d0001ad6a52_occupancy
-      state: 'on'
     - condition: numeric_state
       entity_id: sensor.0x00158d0001ad6a52_illuminance
       below: 20
-    - condition: state
-      entity_id: binary_sensor.iemand_thuis
-      state: 'on'
   action:
     - service: light.turn_on
       entity_id: light.lamp_hal_achter
@@ -346,10 +336,6 @@
       to: 'on'
     - platform: state
       entity_id: input_boolean.slapen
-      to: 'off'
-    - platform: state
-      entity_id: binary_sensor.iemand_thuis
-      to: 'on'
   condition:
     condition: and
     conditions:
@@ -359,46 +345,11 @@
       - condition: numeric_state
         entity_id: sensor.0x00158d0001e470dc_illuminance
         below: 10
-      - condition: state
-        entity_id: input_boolean.slapen
-        state: 'off'
-      - condition: state
-        entity_id: binary_sensor.iemand_thuis
-        state: 'on'
   action:
     - service: light.turn_on
-      data:
-        entity_id: light.0x000b57fffed76d51
-        brightness: 255
-      
-- alias: Lampen overloop aan s'nachts
-  id: overloop_lights_on_night
-  initial_state: 'on'
-  hide_entity: True
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.0x00158d0001e470dc_occupancy
-      to: 'on'
-    - platform: state
-      entity_id: input_boolean.slapen
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: binary_sensor.0x00158d0001e470dc_occupancy
-        state: 'on'
-      - condition: numeric_state
-        entity_id: sensor.0x00158d0001e470dc_illuminance
-        below: 10
-      - condition: state
-        entity_id: input_boolean.slapen
-        state: 'on'
-  action:
-    - service: light.turn_on
-      data:
-        entity_id: light.0x000b57fffed76d51
-        brightness: 5
+      entity_id: light.0x000b57fffed76d51_light
+      data_template:
+        brightness: "{{ 5 if is_state('input_boolean.slapen', 'on') else 255 }}"
 
 - alias: Lampen overloop uit
   id: overloop_lights_off
@@ -414,8 +365,8 @@
     - service: light.turn_off
       entity_id: light.0x000b57fffed76d51_light
 
-- alias: Lamp slaapkamer schakelaar
-  id: bedroom_lights_switch
+- alias: Lamp slaapkamer aan
+  id: bedroom_lights_switch_on
   initial_state: 'on'
   trigger:
     - platform: mqtt
@@ -423,8 +374,61 @@
   condition:
     - condition: template
       value_template: "{{ 'single' == trigger.payload_json.click }}"
+    - condition: state
+      entity_id: light.slaapkamer
+      state: 'off'
   action:
-    service: light.toggle
+    service: light.turn_on
+    entity_id: light.slaapkamer
+    data_template:
+      brightness: "{{ 20 if is_state('input_boolean.slapen', 'on') else 200 }}"
+
+- alias: Lamp slaapkamer uit
+  id: bedroom_lights_switch_off
+  initial_state: 'on'
+  trigger:
+    - platform: mqtt
+      topic: 'zigbee2mqtt/0x00158d000157670b'
+  condition:
+    - condition: template
+      value_template: "{{ 'single' == trigger.payload_json.click }}"
+    - condition: state
+      entity_id: light.slaapkamer
+      state: 'on'
+  action:
+    service: light.turn_off
+    entity_id: light.slaapkamer
+
+- alias: Lamp slaapkamer aan bij beweging
+  id: bedroom_lights_on_motion
+  initial_state: 'on'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d0001e544b9_occupancy
+      to: 'on'
+  action:
+    service: light.turn_on
+    entity_id: light.slaapkamer
+    data_template:
+      brightness: "{{ 20 if is_state('input_boolean.slapen', 'on') else 200 }}"
+
+- alias: Lamp slaapkamer uit bij geen beweging
+  id: bedroom_lights_off_motion
+  initial_state: 'on'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d0001e544b9_occupancy
+      to: 'off'
+      for:
+        minutes: 4
+  condition:
+    - condition: state
+      entity_id: input_boolean.slapen
+      state: 'off'
+  action:
+    service: light.turn_off
     entity_id: light.slaapkamer
 
 - alias: Activeer slapen met knop
