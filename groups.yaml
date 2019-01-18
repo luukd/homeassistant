@@ -101,6 +101,7 @@ climate_home:
   - climate.slaapkamer
   - climate.werkkamer
   - climate.warm_water
+  - sensor.mhz19_co2
   - input_select.ventilation_mode
   - cover.zonnescherm_zolder
 weather:
