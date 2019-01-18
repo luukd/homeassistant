@@ -89,6 +89,7 @@ automation:
               content-type: "png"
             push:
               category: camera
+              thread-id: "huishoudelijk"
             entity_id: camera.vacuum_map
   
   - alias: Stofzuigen klaar notificatie
@@ -117,6 +118,7 @@ automation:
               content-type: "png"
             push:
               category: camera
+              thread-id: "huishoudelijk"
             entity_id: camera.vacuum_map
   
   - alias: Stofzuigen fout notificatie
@@ -136,6 +138,7 @@ automation:
               content-type: "png"
             push:
               category: camera
+              thread-id: "huishoudelijk"
             entity_id: camera.vacuum_map
 
   - alias: Vacuum map refresh

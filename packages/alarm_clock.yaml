@@ -200,6 +200,7 @@ automation:
         data:
           push:
             category: "enable_alarm_clock"
+            thread-id: "alarm_clock"
 
   - id: handle_notification_enable_alarm_clock
     alias: Wekker inschakelen notificatie afhandelen

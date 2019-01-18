@@ -72,3 +72,6 @@ automation:
         data:
           title: "Deurbel:"
           message: "Er wordt aangebeld!"
+          data:
+            push:
+              thread-id: "front_door"

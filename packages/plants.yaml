@@ -139,3 +139,6 @@ automation:
         data:
           title: "Planten water geven"
           message: "De planten drogen uit!"
+          data:
+            push:
+              thread-id: "huishoudelijk"

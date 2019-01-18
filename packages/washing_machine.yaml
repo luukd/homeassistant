@@ -65,3 +65,6 @@ automation:
         data:
           title: "Wasmachine: "
           message: "Ik ben klaar!"
+          data:
+            push:
+              thread-id: "huishoudelijk"

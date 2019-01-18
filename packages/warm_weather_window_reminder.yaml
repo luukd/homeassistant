@@ -37,3 +37,6 @@ automation:
         data:
           title: "Zet de ramen open"
           message: "Het is {{ states('sensor.slaapkamer_temperature') }}°C in de slaapkamer en {{ states('sensor.br_temperature') }}°C buiten."
+          data:
+            push:
+              thread-id: "climate"

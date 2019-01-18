@@ -83,3 +83,6 @@ automation:
       - service: notify.ios_iphone_van_luuk
         data:
           message: "Nieuw Zigbee apparaat verbonden"
+          data:
+            push:
+              thread-id: "system"

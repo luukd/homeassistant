@@ -501,6 +501,7 @@
       data:
         push:
           category: "start_heating"
+          thread-id: "climate"
 
 - id: handle_notification_start_heating
   alias: Verwarming inschakelen notificatie afhandelen
@@ -576,6 +577,7 @@
         data:
           push:
             sound: "US-EN-Alexa-Smoke-Detected-Generic.wav"
+            thread-id: "emergency"
     - service: light.turn_on
       data:
         entity_id: group.lights_home
@@ -611,6 +613,9 @@
       data:
         title: "SSL certificaten verlopen binnenkort"
         message: "De LetsEncrypt SSL certificaten verlopen binnen {{ states('sensor.ssl_certificate_expiry') }} dagen."
+        data:
+          push:
+            thread-id: "system"
     - service: persistent_notification.create
       data:
         title: "SSL certificaten verlopen binnenkort"
