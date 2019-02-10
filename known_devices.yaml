@@ -10,7 +10,7 @@ iphone_van_luuk:
 iphone_van_luuk_nmap:
   hide_if_away: false
   icon:
-  mac: 2C:F0:A2:7B:A9:A5
+  mac: 80:82:23:31:27:D0
   name: iPhone-van-Luuk
   picture:
   track: true
@@ -37,7 +37,7 @@ phone_hans:
 iphonevanelly:
   hide_if_away: false
   icon:
-  mac: 24:AB:81:7B:7D:93
+  mac: 2C:F0:A2:7B:A9:A5
   name: iPhone-van-Elly
   picture:
   track: true
