@@ -549,7 +549,7 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.ventilation_mode
-        option: Laag
+        option: Uit
 
 - id: zwave_heal
   alias: heal at 2:32am

@@ -161,7 +161,6 @@ zwave_group:
   entities:
   - zwave.zwaveme_zme_uzb1_usb_stick
   - zwave.cover_kitchen
-  - zwave.qubino_zmnhbdx_flush_2_relays
 internet_group:
   name: Internet
   entities:

@@ -3,6 +3,7 @@ input_select:
     name: Ventilatie
     options:
        - Auto
+       - Uit
        - Laag
        - Midden
        - Hoog
@@ -14,15 +15,17 @@ sensor:
       ventilation_demand_bathroom:
         value_template: >
           {% if (is_state('binary_sensor.natural_ventilation_bathroom', 'on')) %}
-            1
+            0
           {% elif (is_state('binary_sensor.high_humidity_bathroom', 'off')) %}
-            1
+            0
           {% else %}
             3
           {% endif %}
       ventilation_demand_living_room_co2:
         value_template: >
-          {% if (states('sensor.mhz19_co2') | int < 800) %}
+          {% if (states('sensor.mhz19_co2') | int < 500) %}
+            0
+          {% elif (states('sensor.mhz19_co2') | int < 900) %}
             1
           {% elif (states('sensor.mhz19_co2') | int < 1500) %}
             2
@@ -31,7 +34,9 @@ sensor:
           {% endif %}
       ventilation_demand:
         value_template: >
-          {% if (is_state('input_select.ventilation_mode', 'Laag')) %}
+          {% if (is_state('input_select.ventilation_mode', 'Uit')) %}
+            0
+          {% elif (is_state('input_select.ventilation_mode', 'Laag')) %}
             1
           {% elif (is_state('input_select.ventilation_mode', 'Midden')) %}
             2
@@ -43,12 +48,14 @@ sensor:
       
       ventilation_current_mode:
         value_template: >
-          {% if (is_state('switch.qubino_zmnhbdx_flush_2_relays_switch_2', 'on')) %}
+          {% if (is_state('switch.sonoff_ventilation_3', 'on')) %}
             3
-          {% elif (is_state('switch.qubino_zmnhbdx_flush_2_relays_switch_3', 'on')) %}
+          {% elif (is_state('switch.sonoff_ventilation_2', 'on')) %}
             2
-          {% else %} 
+          {% elif (is_state('switch.sonoff_ventilation_1', 'on')) %}
             1
+          {% else %} 
+            0
           {% endif %}
 
 binary_sensor:
@@ -69,6 +76,24 @@ binary_sensor:
           seconds: 5
 
 automation:
+  - id: ventilation_switches_0
+    alias: Ventilatie switches 0
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: sensor.ventilation_demand
+        to: "0"
+    condition:
+      condition: template
+      value_template: '{{ states.sensor.ventilation_demand.state|int != states.sensor.ventilation_current_mode.state|int }}'
+    action:
+      - service: switch.turn_off
+        entity_id: switch.sonoff_ventilation_3
+      - service: switch.turn_off
+        entity_id: switch.sonoff_ventilation_2
+      - service: switch.turn_off
+        entity_id: switch.sonoff_ventilation_1
+
   - id: ventilation_switches_1
     alias: Ventilatie switches 1
     initial_state: 'on'
@@ -81,9 +106,11 @@ automation:
       value_template: '{{ states.sensor.ventilation_demand.state|int != states.sensor.ventilation_current_mode.state|int }}'
     action:
       - service: switch.turn_off
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
+        entity_id: switch.sonoff_ventilation_2
       - service: switch.turn_off
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3
+        entity_id: switch.sonoff_ventilation_3
+      - service: switch.turn_on
+        entity_id: switch.sonoff_ventilation_1
 
   - id: ventilation_switches_2
     alias: Ventilatie switches 2
@@ -97,9 +124,11 @@ automation:
       value_template: '{{ states.sensor.ventilation_demand.state|int != states.sensor.ventilation_current_mode.state|int }}'
     action:
       - service: switch.turn_off
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
+        entity_id: switch.sonoff_ventilation_3
       - service: switch.turn_on
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3
+        entity_id: switch.sonoff_ventilation_1
+      - service: switch.turn_on
+        entity_id: switch.sonoff_ventilation_2
 
   - id: ventilation_switches_3
     alias: Ventilatie switches 3
@@ -112,7 +141,9 @@ automation:
       condition: template
       value_template: '{{ states.sensor.ventilation_demand.state|int != states.sensor.ventilation_current_mode.state|int }}'
     action:
-      - service: switch.turn_on
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
       - service: switch.turn_off
-        entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3
+        entity_id: switch.sonoff_ventilation_2
+      - service: switch.turn_on
+        entity_id: switch.sonoff_ventilation_1
+      - service: switch.turn_on
+        entity_id: switch.sonoff_ventilation_3
