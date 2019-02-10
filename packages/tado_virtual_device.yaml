@@ -49,7 +49,7 @@ automation:
       - platform: state
         entity_id: binary_sensor.iemand_thuis
         to: 'on'
-      - platform: time
+      - platform: time_pattern
         minutes: '/10'
     condition:
       condition: and
@@ -69,7 +69,7 @@ automation:
       - platform: state
         entity_id: binary_sensor.iemand_thuis
         to: 'off'
-      - platform: time
+      - platform: time_pattern
         minutes: '/10'
     condition:
       condition: and

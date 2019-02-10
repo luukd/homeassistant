@@ -145,7 +145,7 @@ automation:
     id: vacuum_map_refresh
     initial_state: 'on'
     trigger:
-      platform: time
+      platform: time_pattern
       seconds: '/5'
     condition:
       condition: or
