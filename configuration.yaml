@@ -25,6 +25,10 @@ media_player:
     client_id: !secret spotify_client_id
     client_secret: !secret spotify_client_secret
 
+system_health:
+
+speedtestdotnet:
+
 frontend:
 
 ios: !include ios.yaml
@@ -38,6 +42,7 @@ http:
 discovery:
   ignore:
     - harmony
+    - igd
     - yeelight
 
 zwave:
@@ -104,6 +109,8 @@ sun:
 # Text to speech
 # tts:
 #   platform: google
+
+person:
 
 device_tracker:
   - platform: nmap_tracker
