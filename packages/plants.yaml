@@ -92,6 +92,7 @@ plant:
       conductivity: sensor.mqtt_plant_woonkamer_hoek_conductivity
       brightness: sensor.mqtt_plant_woonkamer_hoek_brightness
     min_moisture: 25
+    min_conductivity: 0
   koelkast:
     sensors:
       moisture: sensor.mqtt_plant_koelkast_moisture
@@ -100,6 +101,7 @@ plant:
       conductivity: sensor.mqtt_plant_koelkast_conductivity
       brightness: sensor.mqtt_plant_koelkast_brightness
     min_moisture: 25
+    min_conductivity: 0
   druivenstruik:
     sensors:
       moisture: sensor.mqtt_plant_druivenstruik_moisture
@@ -107,7 +109,8 @@ plant:
       temperature: sensor.mqtt_plant_druivenstruik_temperature
       conductivity: sensor.mqtt_plant_druivenstruik_conductivity
       brightness: sensor.mqtt_plant_druivenstruik_brightness
-    min_moisture: 25
+    min_moisture: 15
+    min_conductivity: 0
 
 automation:
   - id: plants_notification
