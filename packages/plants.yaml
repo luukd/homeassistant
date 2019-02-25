@@ -124,7 +124,7 @@ automation:
         for:
           hours: 24
       - platform: state
-        entity_id: device_tracker.iphone_van_luuk
+        entity_id: person.luuk
         to: "home"
     condition:
       condition: and
@@ -135,7 +135,7 @@ automation:
           for:
             hours: 24
         - condition: state
-          entity_id: device_tracker.iphone_van_luuk
+          entity_id: person.luuk
           state: "home"
     action:
       - service: notify.ios_iphone_van_luuk

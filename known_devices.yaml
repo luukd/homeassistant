@@ -2,16 +2,16 @@ iphone_van_luuk:
   hide_if_away: false
   icon:
   mac:
-  name: iphone van luuk
+  name: iPhone Luuk (app)
   picture:
   track: true
   vendor:
   
-iphone_van_luuk_nmap:
+iphone_van_luuk_router:
   hide_if_away: false
   icon:
   mac: 80:82:23:31:27:D0
-  name: iPhone-van-Luuk
+  name: iPhone Luuk (router)
   picture:
   track: true
   vendor: Apple, Inc.
@@ -38,7 +38,7 @@ iphonevanelly:
   hide_if_away: false
   icon:
   mac: 2C:F0:A2:7B:A9:A5
-  name: iPhone-van-Elly
+  name: iPhone Elly
   picture:
   track: true
   vendor: Apple, Inc.

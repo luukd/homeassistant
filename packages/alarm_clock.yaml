@@ -137,8 +137,8 @@ automation:
         entity_id: input_boolean.alarm_clock_status
         state: 'on'
       - condition: state
-        entity_id: binary_sensor.luuk_home
-        state: 'on'
+        entity_id: person.luuk
+        state: 'home'
     action:
     - service: light.turn_on
       data_template:
@@ -161,8 +161,8 @@ automation:
         entity_id: input_boolean.alarm_clock_status
         state: 'on'
       - condition: state
-        entity_id: binary_sensor.luuk_home
-        state: 'on'
+        entity_id: person.luuk
+        state: 'home'
       - condition: state
         entity_id: input_boolean.alarm_clock_play_news
         state: 'on'
