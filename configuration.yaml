@@ -75,7 +75,6 @@ logbook:
       - automation.cpu_fan_on
       - automation.cpu_fan_off
       - automation.vacuum_map_refresh
-      - group.system_group
       - sensor.mqtt_plant_druivenstruik_battery
       - sensor.mqtt_plant_druivenstruik_brightness
       - sensor.mqtt_plant_druivenstruik_conductivity
