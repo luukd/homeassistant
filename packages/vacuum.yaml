@@ -19,6 +19,12 @@ vacuum:
     vacuums:
       stofzuiger_woonkamer:
         friendly_name: Stofzuiger woonkamer
+        value_template: >-
+          {%- if states('binary_sensor.vacuum_moving') == 'on' -%}
+            cleaning
+          {%- else -%}
+            idle
+          {%- endif %}
         start:
           # Wake up the vacuum
           - service: remote.send_command
@@ -53,6 +59,13 @@ sensor:
     resource: http://10.0.0.74/api/remote/map?scale=5&border=0
     value_template: 'http://10.0.0.74{{value_json.mapsrc}}'
     scan_interval: 300
+binary_sensor:
+  - platform: template
+    sensors:
+      vacuum_moving:
+        value_template: '{{states("sensor.0x00158d0002af965a") not in ("unknown", "") }}'
+        delay_off:
+          seconds: 90
 
 camera:
   - platform: generic
