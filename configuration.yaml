@@ -25,6 +25,23 @@ media_player:
     client_id: !secret spotify_client_id
     client_secret: !secret spotify_client_secret
 
+yeelight:
+  devices:
+    10.0.0.45:
+      name: Zithoek
+    10.0.0.72:
+      name: Keuken
+    10.0.0.242:
+      name: Eettafel
+    10.0.0.108:
+      name: Woonkamer plant
+    10.0.0.80:
+      name: Woonkamer schemerlamp
+    10.0.0.59:
+      name: Lamp kledingkast
+    10.0.0.120:
+      name: Slaapkamer
+
 system_health:
 
 speedtestdotnet:
@@ -32,6 +49,8 @@ speedtestdotnet:
 frontend:
 
 ios: !include ios.yaml
+
+mobile_app:
 
 config:
 
@@ -117,7 +136,7 @@ device_tracker:
     username: !secret synology_router_username
     password: !secret synology_router_password
     new_device_defaults:
-    track_new_devices: false
+      track_new_devices: false
   - platform: tado
     username: !secret tado_username
     password: !secret tado_password

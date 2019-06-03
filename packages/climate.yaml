@@ -39,7 +39,7 @@ automation:
         state: 'on'
       - condition: state
         entity_id: climate.woonkamer
-        state: 'Off'
+        state: 'off'
     action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.climate_turned_off_by_ha
