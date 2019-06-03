@@ -9,10 +9,21 @@
     - windforce_1d
     - temperature_1d
 
+- platform: openweathermap
+  api_key: !secret openweathermap_api_key
+  monitored_conditions:
+    - temperature
+    - wind_speed
+    - clouds
+
 - platform: darksky
   api_key: !secret darksky_api_key
   monitored_conditions:
     - cloud_cover
+    - temperature
+    - apparent_temperature
+    - wind_speed
+    - uv_index
 
 - platform: mold_indicator
   name: mold_sensor_bathroom

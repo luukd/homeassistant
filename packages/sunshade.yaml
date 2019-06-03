@@ -1,11 +1,11 @@
 cover:
   - platform: mqtt
     name: "Zonnescherm zolder"
-    command_topic: "cmnd/somfy_hub_sonoff/control"
+    command_topic: "cmnd/somfy_hub/control"
     payload_open: "UP"
     payload_close: "DOWN"
     payload_stop: "STOP"
-    availability_topic: "tele/somfy_hub_sonoff/LWT"
+    availability_topic: "tele/somfy_hub/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
@@ -13,7 +13,9 @@ binary_sensor:
   - platform: template
     sensors:
       sunshade_strong_wind:
-        value_template: "{{ states('sensor.br_wind_speed')|float > 15 or states('sensor.br_wind_gust')|float > 15 or states('sensor.br_wind_force_1d')|int > 5 }}"
+        value_template: "{{ states('sensor.br_wind_speed')|float > 10 or states('sensor.owm_wind_speed')|float > 10 }}"
+      sunshade_strong_wind_predicted:
+        value_template: "{{ states('sensor.br_wind_force_1d') | int > 5 }}"
       sunshade_sun_on_window_kitchen:
         value_template: "{{ state_attr('sun.sun', 'elevation')|float > 0 and state_attr('sun.sun', 'azimuth')|int > 250 }}"
       sunshade_sun_on_window_attic:
@@ -38,6 +40,11 @@ automation:
       - platform: state
         entity_id: binary_sensor.sunshade_sun_on_window_kitchen
         to: 'on'
+      - platform: numeric_state
+        entity_id: sensor.br_irradiance
+        above: 450
+        for:
+          minutes: 15
     condition:
       condition: and
       conditions:
@@ -47,11 +54,14 @@ automation:
         - condition: state
           entity_id: binary_sensor.sunshade_strong_wind
           state: 'off'
+        - condition: numeric_state
+          entity_id: sensor.br_irradiance
+          above: 450
     action:
       - service: cover.set_cover_position
         entity_id: cover.cover_kitchen_level
         data:
-          position: 35
+          position: 40
   
   - id: sunshade_attic_up
     alias: Zonnescherm zolder omhoog
@@ -75,14 +85,15 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: binary_sensor.sunshade_sun_on_window_attic
-          state: 'on'
         - condition: state
           entity_id: binary_sensor.sunshade_strong_wind
           state: 'off'
+        - condition: state
+          entity_id: binary_sensor.sunshade_strong_wind_predicted
+          state: 'off'
         - condition: numeric_state
           entity_id: sensor.br_temperature_1d
-          above: 24
+          above: 22
     action:
       - service: cover.close_cover
         entity_id: cover.zonnescherm_zolder
@@ -94,8 +105,21 @@ automation:
       - platform: state
         entity_id: binary_sensor.sunshade_strong_wind
         to: 'on'
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: cover.cover_kitchen_level
+          state: 'closed'
+        - condition: state
+          entity_id: cover.zonnescherm_zolder
+          state: 'closed'
     action:
       - service: cover.open_cover
         entity_id: cover.cover_kitchen_level
       - service: cover.open_cover
         entity_id: cover.zonnescherm_zolder
+      - service: notify.ios_iphone_van_luuk
+        data:
+          title: "Zonneschermen geopend"
+          message: 'De zonneschermen zijn geopend vanwege harde wind.'
