@@ -92,7 +92,9 @@ plant:
       conductivity: sensor.mqtt_plant_woonkamer_hoek_conductivity
       brightness: sensor.mqtt_plant_woonkamer_hoek_brightness
     min_moisture: 25
+    max_moisture: 100
     min_conductivity: 0
+    max_conductivity: 10000
   koelkast:
     sensors:
       moisture: sensor.mqtt_plant_koelkast_moisture
@@ -101,7 +103,9 @@ plant:
       conductivity: sensor.mqtt_plant_koelkast_conductivity
       brightness: sensor.mqtt_plant_koelkast_brightness
     min_moisture: 25
+    max_moisture: 100
     min_conductivity: 0
+    max_conductivity: 10000
   druivenstruik:
     sensors:
       moisture: sensor.mqtt_plant_druivenstruik_moisture
@@ -110,7 +114,9 @@ plant:
       conductivity: sensor.mqtt_plant_druivenstruik_conductivity
       brightness: sensor.mqtt_plant_druivenstruik_brightness
     min_moisture: 15
+    max_moisture: 100
     min_conductivity: 0
+    max_conductivity: 10000
 
 automation:
   - id: plants_notification
@@ -139,9 +145,14 @@ automation:
           state: "home"
     action:
       - service: notify.ios_iphone_van_luuk
-        data:
+        data_template:
           title: "Planten water geven"
-          message: "De planten drogen uit!"
+          message: >
+            {% for plant in states.plant %}
+            {%- if plant.state != 'ok' -%}
+                  {{ plant.name | capitalize }}: {{ '\uD83D\uDCA7' }}{{ plant.attributes.moisture }}% ⚡️{{ plant.attributes.battery }}%
+            {% endif -%}
+            {%- endfor -%}
           data:
             push:
               thread-id: "huishoudelijk"
