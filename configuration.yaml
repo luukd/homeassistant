@@ -54,6 +54,10 @@ mobile_app:
 
 config:
 
+webhook:
+
+zigbee2mqtt_networkmap:
+
 http:
   ip_ban_enabled: true
   login_attempts_threshold: !secret http_login_attempts_threshold
@@ -121,6 +125,10 @@ panel_iframe:
     title: "tado⁠°"
     icon: mdi:thermometer
     url: "https://my.tado.com/"
+  networkmap:
+    title: 'Zigbee Map'
+    url: '/local/zigbee2mqtt_networkmap/map.html'
+    icon: 'mdi:graphql'
 
 sun:
 
