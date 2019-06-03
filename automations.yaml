@@ -365,6 +365,64 @@
     - service: light.turn_off
       entity_id: light.0x000b57fffed76d51_light
 
+- alias: Lamp kledingkast aan
+  id: wardrobe_light_on
+  initial_state: 'on'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d0002e9873b_occupancy
+      to: 'on'
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.0x00158d0002e9873b_illuminance
+      below: 10
+  action:
+    - service: light.turn_on
+      entity_id: light.lamp_kledingkast
+
+- alias: Lamp kledingkast uit
+  id: wardrobe_light_off
+  initial_state: 'on'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d0002e9873b_occupancy
+      to: 'off'
+      for:
+        minutes: 2
+  action:
+    - service: light.turn_off
+      entity_id: light.lamp_kledingkast
+
+- alias: Lamp werkkamer aan
+  initial_state: 'on'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d0003021728_occupancy
+      to: 'on'
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.0x00158d0003021728_illuminance
+      below: 100
+  action:
+    - service: light.turn_on
+      entity_id: light.werkkamer
+
+- alias: Lamp werkkamer uit
+  initial_state: 'on'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d0003021728_occupancy
+      to: 'off'
+      for:
+        minutes: 10
+  action:
+    - service: light.turn_off
+      entity_id: light.werkkamer
+
 - alias: Lamp slaapkamer aan
   id: bedroom_lights_switch_on
   initial_state: 'on'
@@ -407,11 +465,13 @@
     - platform: state
       entity_id: binary_sensor.0x00158d0001e544b9_occupancy
       to: 'on'
+  condition:
+    - condition: state
+      entity_id: input_boolean.slapen
+      state: 'off'
   action:
     service: light.turn_on
     entity_id: light.slaapkamer
-    data_template:
-      brightness: "{{ 20 if is_state('input_boolean.slapen', 'on') else 200 }}"
 
 - alias: Lamp slaapkamer uit bij geen beweging
   id: bedroom_lights_off_motion
@@ -430,6 +490,32 @@
   action:
     service: light.turn_off
     entity_id: light.slaapkamer
+
+- alias: Ledstrip slaapkamer aan bij beweging
+  id: bed_led_strip_on_motion
+  initial_state: 'on'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d0001e544b9_occupancy
+      to: 'on'
+  action:
+    service: light.turn_on
+    entity_id: light.led_strip
+
+- alias: Ledstrip slaapkamer uit bij geen beweging
+  id: bed_led_strip_off_motion
+  initial_state: 'on'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d0001e544b9_occupancy
+      to: 'off'
+      for:
+        seconds: 30
+  action:
+    service: light.turn_off
+    entity_id: light.led_strip
 
 - alias: Activeer slapen met knop
   id: slapen_switch

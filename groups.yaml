@@ -20,3 +20,8 @@ lights_home:
   - light.lamp_hal_voordeur
   - light.0x000b57fffed76d51_light
   - light.slaapkamer
+lights_bedroom:
+  name: Lampen slaapkamer
+  entities:
+  - light.slaapkamer
+  - light.led_strip
