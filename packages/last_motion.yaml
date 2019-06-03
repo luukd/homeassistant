@@ -1,0 +1,34 @@
+variable:  
+  last_motion:
+    name: "Laatste beweging"
+    value: 'Unknown'
+    restore: true
+    attributes:
+      icon: mdi:map-marker
+
+automation:
+  - alias: "Laatste beweging bijwerken"
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.0x00158d0001ab31bc_occupancy
+          - binary_sensor.0x00158d0001ad6a52_occupancy
+          - binary_sensor.0x00158d0001e470dc_occupancy
+          - binary_sensor.0x00158d0001e544b9_occupancy
+          - binary_sensor.0x00158d000224fbf6_occupancy
+          - binary_sensor.0x00158d0002e9873b_occupancy
+          - binary_sensor.0x00158d0003021728_occupancy
+          - binary_sensor.0x00158d00030aa32c_occupancy
+        to: 'on'
+    action:
+      - service: variable.set_variable
+        data:
+          variable: last_motion
+          attributes_template: >
+            {
+              "history_1": "{{ variable.state }}",
+              "history_2": "{{ variable.attributes.history_1 }}",
+              "history_3": "{{ variable.attributes.history_2 }}"
+            }
+        data_template:
+          value: "{{ trigger.to_state.attributes.friendly_name }}"
