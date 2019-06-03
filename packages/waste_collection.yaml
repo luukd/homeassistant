@@ -1,0 +1,26 @@
+sensor:
+  - platform: rest
+    name: Waste collection
+    json_attributes:
+      - GFT
+      - PMD
+      - REST
+      - DROCODEV
+    value_template: "{{ value_json | length }}"
+    resource: !secret waste_collection_url
+    scan_interval: 86400
+    
+  - platform: template
+    sensors:
+      waste_collection_gft:
+        friendly_name_template: '{{ state_attr("sensor.waste_collection", "GFT")["name"] | default("Unknown") }}'
+        value_template: '{{ state_attr("sensor.waste_collection", "GFT")["nextPickup"] | default("unknown") }}'
+      waste_collection_pmd:
+        friendly_name_template: '{{ state_attr("sensor.waste_collection", "PMD")["name"] | default("Unknown") }}'
+        value_template: '{{ state_attr("sensor.waste_collection", "PMD")["nextPickup"] | default("unknown") }}'
+      waste_collection_rest:
+        friendly_name_template: '{{ state_attr("sensor.waste_collection", "REST")["name"] | default("Unknown") }}'
+        value_template: '{{ state_attr("sensor.waste_collection", "REST")["nextPickup"] | default("unknown") }}'
+      waste_collection_drocodev:
+        friendly_name_template: '{{ state_attr("sensor.waste_collection", "DROCODEV")["name"] | default("Unknown") }}'
+        value_template: '{{ state_attr("sensor.waste_collection", "DROCODEV")["nextPickup"] | default("unknown") }}'
