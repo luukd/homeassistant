@@ -61,6 +61,9 @@ zigbee2mqtt_networkmap:
 http:
   ip_ban_enabled: true
   login_attempts_threshold: !secret http_login_attempts_threshold
+  base_url: !secret http_base_url
+  use_x_forwarded_for: true
+  trusted_proxies: !secret http_trusted_proxies
 
 discovery:
   ignore:
@@ -69,7 +72,7 @@ discovery:
     - yeelight
 
 zwave:
-  usb_path: /dev/serial/by-id/usb-0658_0200-if00
+  usb_path: /dev/ttyACM0
   network_key: !secret zwave_network_key
 
 emulated_hue:
@@ -82,21 +85,25 @@ emulated_hue:
 recorder:
   db_url: !secret db_url
   purge_interval: 1
-  purge_keep_days: 14
+  purge_keep_days: 7
 
 history:
   exclude:
+    entities:
+      - sensor.time
+      - sensor.memory_free
+      - sensor.memory_use
+      - sensor.processor_use
     domains:
       - automation
       - updater
       - script
       - group
+      - sun
 
 logbook:
   exclude:
     entities:
-      - automation.cpu_fan_on
-      - automation.cpu_fan_off
       - automation.vacuum_map_refresh
       - sensor.mqtt_plant_druivenstruik_battery
       - sensor.mqtt_plant_druivenstruik_brightness
@@ -114,7 +121,6 @@ logbook:
       - sensor.mqtt_plant_woonkamer_hoek_moisture
       - sensor.mqtt_plant_woonkamer_hoek_temperature
       - sensor.vacuum_map
-      - switch.cpu_fan
 
 panel_iframe:
   sonarr:
@@ -165,6 +171,7 @@ remote:
 
 influxdb:
   host: !secret influxdb_host
+  max_retries: 5
 
 input_boolean: !include input_booleans.yaml
 binary_sensor: !include binary_sensors.yaml
