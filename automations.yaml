@@ -238,7 +238,7 @@
   initial_state: 'on'
   trigger:
     - platform: state
-      entity_id: binary_sensor.0x00158d000248ef10
+      entity_id: binary_sensor.0x00158d000248ef10_contact
       to: 'on'
   action:
     - service: light.turn_on
@@ -248,7 +248,7 @@
   initial_state: 'on'
   trigger:
     - platform: state
-      entity_id: binary_sensor.0x00158d000248ef10
+      entity_id: binary_sensor.0x00158d000248ef10_contact
       to: 'off'
   action:
     - service: light.turn_off
@@ -614,8 +614,8 @@
   trigger:
     platform: state
     entity_id:
-      - binary_sensor.0x00158d0001b7930d
-      - binary_sensor.0x00158d0001db9792
+      - binary_sensor.0x00158d0001b7930d_smoke
+      - binary_sensor.0x00158d0001db9792_smoke
     from: 'off'
     to: 'on'
   action:
