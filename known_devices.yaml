@@ -28,11 +28,11 @@ iphone_luuk_tado:
 phone_hans:
   hide_if_away: false
   icon:
-  mac: 14:9A:10:58:29:E8
-  name: Windows Phone Hans
+  mac: C0:8C:71:77:29:A5
+  name: Android Hans
   picture:
   track: true
-  vendor: Microsoft
+  vendor: Motorola
 
 iphonevanelly:
   hide_if_away: false
