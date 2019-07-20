@@ -15,6 +15,9 @@ homeassistant:
     "sensor.iphone_*":
       hidden: true
 
+hacs:
+  token: !secret hacs_github_token
+  
 tado:
   username: !secret tado_username
   password: !secret tado_password
@@ -133,7 +136,7 @@ panel_iframe:
     url: "https://my.tado.com/"
   networkmap:
     title: 'Zigbee Map'
-    url: '/local/zigbee2mqtt_networkmap/map.html'
+    url: '/local/community/zigbee2mqtt_networkmap/map.html'
     icon: 'mdi:graphql'
 
 sun:

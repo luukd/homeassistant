@@ -1,3 +1,4 @@
 secrets.yaml
 homebridge/config.json
 deps
+custom_components/hacs
