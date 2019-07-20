@@ -2,18 +2,12 @@ homeassistant:
   customize:
     sensor.mqtt_plant_woonkamer_hoek_moisture:
       friendly_name: "Woonkamer hoek"
+    sensor.mqtt_plant_woonkamer_tv_moisture:
+      friendly_name: "Woonkamer TV"
     sensor.mqtt_plant_koelkast_moisture:
       friendly_name: "Koelkast"
     sensor.mqtt_plant_druivenstruik_moisture:
       friendly_name: "Druivenstruik"
-
-group:
-  plants:
-    name: Planten
-    entities:
-      - sensor.mqtt_plant_woonkamer_hoek_moisture
-      - sensor.mqtt_plant_koelkast_moisture
-      - sensor.mqtt_plant_druivenstruik_moisture
 
 sensor:
   # plant_woonkamer_hoek (C4:7C:8D:63:75:0A)
@@ -37,6 +31,28 @@ sensor:
   - platform: mqtt
     name: mqtt_plant_woonkamer_hoek_brightness
     state_topic: "plantgateway/plants/plant_woonkamer_hoek"
+    value_template: '{{ value_json.brightness }}'
+  # plant_woonkamer_tv (C4:7C:8D:6B:1D:20)
+  - platform: mqtt
+    name: mqtt_plant_woonkamer_tv_moisture
+    unit_of_measurement: "%"
+    state_topic: "plantgateway/plants/plant_woonkamer_tv"
+    value_template: '{{ value_json.moisture }}'
+  - platform: mqtt
+    name: mqtt_plant_woonkamer_tv_battery
+    state_topic: "plantgateway/plants/plant_woonkamer_tv"
+    value_template: '{{ value_json.battery }}'
+  - platform: mqtt
+    name: mqtt_plant_woonkamer_tv_temperature
+    state_topic: "plantgateway/plants/plant_woonkamer_tv"
+    value_template: '{{ value_json.temperature }}'
+  - platform: mqtt
+    name: mqtt_plant_woonkamer_tv_conductivity
+    state_topic: "plantgateway/plants/plant_woonkamer_tv"
+    value_template: '{{ value_json.conductivity }}'
+  - platform: mqtt
+    name: mqtt_plant_woonkamer_tv_brightness
+    state_topic: "plantgateway/plants/plant_woonkamer_tv"
     value_template: '{{ value_json.brightness }}'
   # plant_koelkast (C4:7C:8D:65:D5:FE)
   - platform: mqtt
@@ -91,6 +107,19 @@ plant:
       temperature: sensor.mqtt_plant_woonkamer_hoek_temperature
       conductivity: sensor.mqtt_plant_woonkamer_hoek_conductivity
       brightness: sensor.mqtt_plant_woonkamer_hoek_brightness
+    min_battery: 10
+    min_moisture: 25
+    max_moisture: 100
+    min_conductivity: 0
+    max_conductivity: 10000
+  woonkamer_tv:
+    sensors:
+      moisture: sensor.mqtt_plant_woonkamer_tv_moisture
+      battery: sensor.mqtt_plant_woonkamer_tv_battery
+      temperature: sensor.mqtt_plant_woonkamer_tv_temperature
+      conductivity: sensor.mqtt_plant_woonkamer_tv_conductivity
+      brightness: sensor.mqtt_plant_woonkamer_tv_brightness
+    min_battery: 10
     min_moisture: 25
     max_moisture: 100
     min_conductivity: 0
@@ -102,6 +131,7 @@ plant:
       temperature: sensor.mqtt_plant_koelkast_temperature
       conductivity: sensor.mqtt_plant_koelkast_conductivity
       brightness: sensor.mqtt_plant_koelkast_brightness
+    min_battery: 10
     min_moisture: 25
     max_moisture: 100
     min_conductivity: 0
@@ -113,7 +143,8 @@ plant:
       temperature: sensor.mqtt_plant_druivenstruik_temperature
       conductivity: sensor.mqtt_plant_druivenstruik_conductivity
       brightness: sensor.mqtt_plant_druivenstruik_brightness
-    min_moisture: 15
+    min_battery: 10
+    min_moisture: 25
     max_moisture: 100
     min_conductivity: 0
     max_conductivity: 10000
