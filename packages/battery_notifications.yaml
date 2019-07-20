@@ -15,57 +15,43 @@ script:
           notification_id: "{{ device_name}}"
 
 automation:
-  - id: battery_low_notification_attributes
-    alias: "Batterij bijna leeg notificatie (attributes)"
+  - id: battery_low_notification
+    alias: "Batterij bijna leeg notificatie"
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: numeric_state
         entity_id:
-          - sensor.0x00158d00015766fb
-          - sensor.0x00158d000157670b
-          - sensor.0x00158d00015f2255
-          - sensor.0x00158d00016c22e6
-          - sensor.0x00158d000183f47d
-          - sensor.0x00158d0001ab31bc_illuminance
-          - sensor.0x00158d0001ad6a52_illuminance
-          - sensor.0x00158d0001b91ff4_temperature
-          - sensor.0x00158d0001b95352_temperature
-          - sensor.0x00158d0001d62bf9
-          - sensor.0x00158d0001d645d5
-          - sensor.0x00158d0001e470dc_illuminance
-          - sensor.0x00158d0001e544b9_illuminance
-          - sensor.0x00158d000224fbf6_illuminance
-          - sensor.0x00158d0002af965a
-        value_template: "{{ state.attributes.battery | int }}"
-        above: 0
-        below: 20
-        for:
-          hours: 12
-    action:
-      - service: script.send_battery_low_notification
-        data_template:
-          device_name: "{{ trigger.from_state.name }}"
-          battery_left: "{{ trigger.from_state.attributes.battery }}"
-
-  - id: battery_low_notification_states
-    alias: "Batterij bijna leeg notificatie (states)"
-    initial_state: 'on'
-    hide_entity: True
-    trigger:
-      - platform: numeric_state
-        entity_id:
+          - sensor.0x00158d00015766fb_battery
+          - sensor.0x00158d000157670b_battery
+          - sensor.0x00158d00015f2255_battery
+          - sensor.0x00158d00016c22e6_battery
+          - sensor.0x00158d000183f47d_battery
+          - sensor.0x00158d0001ab31bc_battery
+          - sensor.0x00158d0001ad6a52_battery
           - sensor.0x00158d0001b147ce_battery
           - sensor.0x00158d0001b7930d_battery
+          - sensor.0x00158d0001b91ff4_battery
+          - sensor.0x00158d0001b95352_battery
           - sensor.0x00158d0001bf46e8_battery
+          - sensor.0x00158d0001d62bf9_battery
+          - sensor.0x00158d0001d645d5_battery
           - sensor.0x00158d0001db9792_battery
+          - sensor.0x00158d0001e470dc_battery
           - sensor.0x00158d0001e481df_battery
           - sensor.0x00158d0001e48a17_battery
+          - sensor.0x00158d0001e544b9_battery
+          - sensor.0x00158d000224fbf6_battery
           - sensor.0x00158d000248cc5a_battery
           - sensor.0x00158d000248ef10_battery
+          - sensor.0x00158d0002af965a_battery
+          - sensor.0x00158d0002e9873b_battery
+          - sensor.0x00158d00030aa32c_battery
+          - sensor.0x00158d0003021728_battery
           - sensor.mqtt_plant_druivenstruik_battery
           - sensor.mqtt_plant_koelkast_battery
           - sensor.mqtt_plant_woonkamer_hoek_battery
+          - sensor.mqtt_plant_woonkamer_tv_battery
         above: 0
         below: 20
         for:

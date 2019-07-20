@@ -63,7 +63,7 @@ binary_sensor:
   - platform: template
     sensors:
       vacuum_moving:
-        value_template: '{{states("sensor.0x00158d0002af965a") not in ("unknown", "") }}'
+        value_template: '{{states("sensor.0x00158d0002af965a_action") not in ("unknown", "") }}'
         delay_off:
           seconds: 90
 

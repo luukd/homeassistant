@@ -44,15 +44,15 @@ binary_sensor.0x00158d0001b7930d_smoke:
   friendly_name: Rookmelder woonkamer
 binary_sensor.0x00158d0001db9792_smoke:
   friendly_name: Rookmelder
-sensor.0x00158d00016c22e6:
+sensor.0x00158d00016c22e6_click:
   friendly_name: Knop slaapkamer
-sensor.0x00158d000157670b:
+sensor.0x00158d000157670b_click:
   friendly_name: Schakelaar slaapkamer
-sensor.0x00158d00015f2255:
+sensor.0x00158d00015f2255_click:
   friendly_name: Schakelaar woonkamer achter
-sensor.0x00158d00015766fb:
+sensor.0x00158d00015766fb_click:
   friendly_name: Schakelaar woonkamer voor
-sensor.0x00158d000183f47d:
+sensor.0x00158d000183f47d_click:
   friendly_name: Schakelaar woonkamer/keuken
 sensor.0x00158d0001b91ff4_humidity:
   friendly_name: Luchtvochtigheid badkamer
