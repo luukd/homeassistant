@@ -1,16 +1,3 @@
-homeassistant:
-  customize:
-    sensor.light_fade_time:
-      hidden: true
-    sensor.light_fade_time_hour:
-      hidden: true
-    sensor.light_fade_time_minute:
-      hidden: true
-    sensor.time:
-      hidden: true
-    sensor.laatste_journaal:
-      hidden: true
-
 input_boolean:
   alarm_clock_status:
     name: Wekker
@@ -103,11 +90,19 @@ sensor:
             0
           {%- endif -%}
             {{ states.sensor.light_fade_time_minute.state }}
-  - platform: scrape
-    name: Laatste journaal
-    resource: https://nos.nl/uitzending/nos-journaal.html
-    select: 'video source[data-label*="720p"]'
-    attribute: src
+
+feedreader:
+  urls:
+    - http://feeds.nos.nl/journaal?format=xml
+  scan_interval:
+    minutes: 3
+  max_entries: 1
+
+variable:
+  laatste_journaal:
+    name: "Laatste journaal"
+    value: 'Unknown'
+    restore: true
 
 group:
   alarm_clock:
@@ -175,7 +170,7 @@ automation:
     - service: media_player.play_media
       data_template:
         entity_id: media_player.slaapkamer
-        media_content_id: "{{ states.sensor.laatste_journaal.state }}"
+        media_content_id: "{{ states.variable.laatste_journaal.state }}"
         media_content_type: "video/mp4"
 
   - id: alarm_clock_disabled_reminder
@@ -215,3 +210,13 @@ automation:
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.alarm_clock_status
+  
+  - alias: Set variable when NOS RSS feed is updated
+    trigger:
+      platform: event
+      event_type: feedreader
+    action:
+      - service: variable.set_variable
+        data:
+          variable: laatste_journaal
+          value_template: "{{ trigger.event.data.feedburner_origenclosurelink }}"
