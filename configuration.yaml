@@ -30,19 +30,26 @@ media_player:
 
 yeelight:
   devices:
-    10.0.0.45:
-      name: Zithoek
-    10.0.0.72:
+    192.168.2.8:
+      # 28-6C-07-F2-3D-87
       name: Keuken
-    10.0.0.242:
-      name: Eettafel
-    10.0.0.108:
-      name: Woonkamer plant
-    10.0.0.80:
-      name: Woonkamer schemerlamp
-    10.0.0.59:
+    192.168.2.9:
+      # 34-CE-00-8E-80-15
       name: Lamp kledingkast
-    10.0.0.120:
+    192.168.2.29:
+      # 34-CE-00-84-79-D9
+      name: Woonkamer schemerlamp
+    192.168.2.11:
+      # 34-CE-00-8B-42-F3
+      name: Eettafel
+    192.168.2.12:
+      # 34-CE-00-84-AB-BB
+      name: Woonkamer plant
+    192.168.2.13:
+      # 28-6C-07-10-EA-B4
+      name: Zithoek
+    192.168.2.6:
+      # 78-11-DC-A7-CC-48
       name: Slaapkamer
 
 system_health:
@@ -148,10 +155,11 @@ sun:
 person:
 
 device_tracker:
-  - platform: synology_srm
-    host: 10.0.0.1
-    username: !secret synology_router_username
-    password: !secret synology_router_password
+  - platform: experiaboxv10
+    host: !secret experiaboxv10_ip
+    username: !secret experiaboxv10_username
+    password: !secret experiaboxv10_password
+    consider_home: 300
     new_device_defaults:
       track_new_devices: false
   - platform: tado
@@ -169,7 +177,7 @@ zone:
 remote:
   - platform: harmony
     name: "Harmony Hub"
-    host: 10.0.0.71
+    host: 192.168.2.24
     scan_interval: 10
 
 influxdb:
