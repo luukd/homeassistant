@@ -11,17 +11,25 @@ lights_keuken:
   - light.keuken
   - light.spotjes_keuken_links
   - light.spotjes_keuken_rechts
-lights_home:
-  name: Lampen
-  entities:
-  - group.lights_woonkamer
-  - group.lights_keuken
-  - light.lamp_hal_achter
-  - light.lamp_hal_voordeur
-  - light.0x000b57fffed76d51_light
-  - light.slaapkamer
 lights_bedroom:
   name: Lampen slaapkamer
   entities:
   - light.slaapkamer
   - light.led_strip
+lights_badkamer:
+  name: Lampen badkamer
+  entities:
+  - light.plafondlamp_badkamer
+  - light.wastafellamp_badkamer
+lights_home:
+  name: Lampen
+  entities:
+  - group.lights_woonkamer
+  - group.lights_keuken
+  - group.lights_bedroom
+  - group.lights_badkamer
+  - light.lamp_hal_achter
+  - light.lamp_hal_voordeur
+  - light.0x000b57fffed76d51_light
+  - light.lamp_kledingkast
+  - light.werkkamer

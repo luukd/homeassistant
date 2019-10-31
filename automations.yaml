@@ -365,6 +365,42 @@
     - service: light.turn_off
       entity_id: light.0x000b57fffed76d51_light
 
+- alias: Lamp badkamer aan
+  id: bathroom_light_on
+  initial_state: 'on'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d00030aa32c_occupancy
+      to: 'on'
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.0x00158d00030aa32c_illuminance
+      below: 50
+  action:
+    - service: light.turn_on
+      data_template:
+        entity_id: >
+          {% if is_state('input_boolean.slapen', 'on') %}
+            light.wastafellamp_badkamer
+          {% else %}
+            light.plafondlamp_badkamer
+          {% endif %}
+
+- alias: Lamp badkamer uit
+  id: bathroom_light_off
+  initial_state: 'on'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.0x00158d00030aa32c_occupancy
+      to: 'off'
+      for:
+        minutes: 4
+  action:
+    - service: light.turn_off
+      entity_id: group.lights_badkamer
+
 - alias: Lamp kledingkast aan
   id: wardrobe_light_on
   initial_state: 'on'

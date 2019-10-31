@@ -26,6 +26,7 @@
   entities:
     group.lights_woonkamer: off
     group.lights_keuken: off
+    group.lights_badkamer: off
     light.werkkamer: off
     light.lamp_kledingkast: off
     light.lamp_hal_voordeur: off
@@ -39,6 +40,7 @@
   entities:
     group.lights_woonkamer: off
     group.lights_keuken: off
+    group.lights_badkamer: off
     light.werkkamer: off
     light.lamp_kledingkast: off
     light.lamp_hal_voordeur: off
