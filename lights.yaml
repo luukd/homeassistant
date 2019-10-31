@@ -42,3 +42,10 @@
   payload_available: "Online"
   payload_not_available: "Offline"
   retain: false
+
+- platform: switch
+  name: Plafondlamp badkamer
+  entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_2
+- platform: switch
+  name: Wastafellamp badkamer
+  entity_id: switch.qubino_zmnhbdx_flush_2_relays_switch_3
