@@ -25,13 +25,6 @@
     - wind_speed
     - uv_index
 
-- platform: mold_indicator
-  name: mold_sensor_bathroom
-  indoor_temp_sensor: sensor.0x00158d0001b91ff4_temperature
-  indoor_humidity_sensor: sensor.0x00158d0001b91ff4_humidity
-  outdoor_temp_sensor: sensor.0x00158d0001b95352_temperature
-  calibration_factor: 3.0
-
 - platform: systemmonitor
   resources:
     - type: processor_use

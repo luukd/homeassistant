@@ -10,6 +10,12 @@ input_select:
     icon: mdi:fan
 
 sensor:
+  - platform: mold_indicator
+    name: mold_sensor_bathroom
+    indoor_temp_sensor: sensor.0x00158d0001b91ff4_temperature
+    indoor_humidity_sensor: sensor.0x00158d0001b91ff4_humidity
+    outdoor_temp_sensor: sensor.0x00158d0001b95352_temperature
+    calibration_factor: 1.0
   - platform: template
     sensors:
       ventilation_demand_bathroom:
@@ -23,11 +29,13 @@ sensor:
           {% endif %}
       ventilation_demand_living_room_co2:
         value_template: >
-          {% if (states('sensor.mhz19_co2') | int < 500) %}
+          {% if is_state('binary_sensor.iemand_thuis', 'off')
+              or is_state('input_boolean.slapen', 'on')
+              or states('sensor.mh_z19_co2') | int < 600 %}
             0
-          {% elif (states('sensor.mhz19_co2') | int < 900) %}
+          {% elif (states('sensor.mh_z19_co2') | int < 1000) %}
             1
-          {% elif (states('sensor.mhz19_co2') | int < 1500) %}
+          {% elif (states('sensor.mh_z19_co2') | int < 1700) %}
             2
           {% else %}
             3
@@ -69,11 +77,9 @@ binary_sensor:
       high_humidity_bathroom:
         friendly_name: "Hoge luchtvochtigheid badkamer"
         value_template: >-
-          {{ states('sensor.mold_sensor_bathroom')|int > 80 }}
+          {{ states('sensor.mold_sensor_bathroom')|int > 85 }}
         delay_off:
-          minutes: 1
-        delay_on:
-          seconds: 5
+          seconds: 20
 
 automation:
   - id: ventilation_switches_0
