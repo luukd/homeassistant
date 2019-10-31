@@ -94,7 +94,7 @@ automation:
         entity_id: vacuum.stofzuiger_woonkamer
       - service: vacuum.start
         entity_id: vacuum.stofzuiger_boven
-      - service: notify.ios_iphone_van_luuk
+      - service: notify.mobile_app_iphone_van_luuk
         data:
           message: "Stofzuigers gestart"
           data:
@@ -104,6 +104,8 @@ automation:
               category: camera
               thread-id: "huishoudelijk"
             entity_id: camera.vacuum_map
+            apns_headers:
+              'apns-collapse-id': 'vacuum-notification'
   
   - alias: Stofzuigen klaar notificatie
     id: vacuum_done_notification
@@ -123,7 +125,7 @@ automation:
         - condition: template
           value_template: '{{ states.vacuum.stofzuiger_boven.attributes.cleaning_time | int > 5 }}'
     action:
-      - service: notify.ios_iphone_van_luuk
+      - service: notify.mobile_app_iphone_van_luuk
         data:
           message: "Stofzuigen klaar!"
           data:
@@ -133,6 +135,8 @@ automation:
               category: camera
               thread-id: "huishoudelijk"
             entity_id: camera.vacuum_map
+            apns_headers:
+              'apns-collapse-id': 'vacuum-notification'
   
   - alias: Stofzuigen fout notificatie
     id: vacuum_error_notification

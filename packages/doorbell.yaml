@@ -68,10 +68,12 @@ automation:
         entity_id: input_boolean.doorbell_state
         to: "on"
     action:
-      - service: notify.ios_iphone_van_luuk
+      - service: notify.mobile_app_iphone_van_luuk
         data:
           title: "Deurbel:"
           message: "Er wordt aangebeld!"
           data:
             push:
               thread-id: "front_door"
+            apns_headers:
+              'apns-collapse-id': 'doorbell-notification'

@@ -119,7 +119,7 @@ automation:
         entity_id: cover.cover_kitchen_level
       - service: cover.open_cover
         entity_id: cover.zonnescherm_zolder
-      - service: notify.ios_iphone_van_luuk
+      - service: notify.mobile_app_iphone_van_luuk
         data:
           title: "Zonneschermen geopend"
           message: 'De zonneschermen zijn geopend vanwege harde wind.'

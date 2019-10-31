@@ -175,7 +175,7 @@ automation:
           entity_id: person.luuk
           state: "home"
     action:
-      - service: notify.ios_iphone_van_luuk
+      - service: notify.mobile_app_iphone_van_luuk
         data_template:
           title: "Planten water geven"
           message: >
@@ -187,3 +187,5 @@ automation:
           data:
             push:
               thread-id: "huishoudelijk"
+            apns_headers:
+              'apns-collapse-id': 'plants'

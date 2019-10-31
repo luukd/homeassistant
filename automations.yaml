@@ -620,8 +620,8 @@
           - thu
           - fri
   action:
-    service: notify.ios_iphone_van_luuk
-    data:
+    service: notify.mobile_app_iphone_van_luuk
+    data_template:
       title: "Alvast huis opwarmen?"
       message: "Het is thuis {{ states('sensor.woonkamer_temperature') }}°C. Verwarming alvast aanzetten?"
       data:
@@ -655,14 +655,6 @@
     from: 'off'
     to: 'on'
   action:
-    - service: notify.ios_iphone_van_luuk
-      data:
-        title: "⚠️ ROOK GEDETECTEERD ⚠️"
-        message: '{{ trigger.from_state.name }} heeft rook gedetecteerd.'
-        data:
-          push:
-            sound: "US-EN-Alexa-Smoke-Detected-Generic.wav"
-            thread-id: "emergency"
     - service: light.turn_on
       data:
         entity_id: group.lights_home
@@ -672,6 +664,19 @@
       data:
         entity_id: input_select.ventilation_mode
         option: Uit
+    - service: notify.mobile_app_iphone_van_luuk
+      data_template:
+        title: "⚠️ ROOK GEDETECTEERD ⚠️"
+        message: "{{ trigger.to_state.name if trigger is defined else 'Rookmelder' }} heeft rook gedetecteerd."
+        data:
+          push:
+            sound:
+              name: "US-EN-Alexa-Smoke-Detected-Generic.wav"
+              thread-id: "emergency"
+              critical: 1
+              volume: 0.5
+          apns_headers:
+            'apns-collapse-id': 'smoke-notification'
 
 - id: zwave_heal
   alias: heal at 2:32am
@@ -694,13 +699,15 @@
     for:
       hours: 18
   action:
-    - service: notify.ios_iphone_van_luuk
-      data:
+    - service: notify.mobile_app_iphone_van_luuk
+      data_template:
         title: "SSL certificaten verlopen binnenkort"
         message: "De LetsEncrypt SSL certificaten verlopen binnen {{ states('sensor.ssl_certificate_expiry') }} dagen."
         data:
           push:
             thread-id: "system"
+          apns_headers:
+            'apns-collapse-id': 'ssl-certificate-notification'
     - service: persistent_notification.create
       data:
         title: "SSL certificaten verlopen binnenkort"

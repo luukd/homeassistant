@@ -33,10 +33,12 @@ automation:
         - condition: template
           value_template: '{{ (as_timestamp(now()) - as_timestamp(states.automation.herinnering_slaapkamerraam_open_bij_warm_weer.last_updated)) > 21600 }}'
     action:
-      - service: notify.ios_iphone_van_luuk
-        data:
+      - service: notify.mobile_app_iphone_van_luuk
+        data_template:
           title: "Zet de ramen open"
           message: "Het is {{ states('sensor.slaapkamer_temperature') }}°C in de slaapkamer en {{ states('sensor.br_temperature') }}°C buiten."
           data:
             push:
               thread-id: "climate"
+            apns_headers:
+              'apns-collapse-id': 'warm-weather-notification'

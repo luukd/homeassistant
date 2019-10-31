@@ -80,7 +80,7 @@ automation:
       condition: template
       value_template: '{{ trigger.payload_json.type == "device_connected" }}'
     action:
-      - service: notify.ios_iphone_van_luuk
+      - service: notify.mobile_app_iphone_van_luuk
         data:
           message: "Nieuw Zigbee apparaat verbonden"
           data:

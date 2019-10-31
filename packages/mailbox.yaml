@@ -19,10 +19,12 @@ automation:
         entity_id: binary_sensor.mailbox
         to: "on"
     action:
-      - service: notify.ios_iphone_van_luuk
+      - service: notify.mobile_app_iphone_van_luuk
         data:
           title: "Brievenbus:"
           message: "Er is post!"
           data:
             push:
               thread-id: "front_door"
+            apns_headers:
+              'apns-collapse-id': 'mailbox-notification'

@@ -61,10 +61,14 @@ automation:
         from: 'on'
         to: 'off'
     action:
-      - service: notify.ios_iphone_van_luuk
+      - service: switch.turn_off
+        entity_id: switch.wasmachine
+      - service: notify.mobile_app_iphone_van_luuk
         data:
           title: "Wasmachine: "
           message: "Ik ben klaar!"
           data:
             push:
               thread-id: "huishoudelijk"
+            apns_headers:
+              'apns-collapse-id': 'washing-machine-notification'

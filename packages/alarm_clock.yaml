@@ -188,10 +188,10 @@ automation:
         entity_id: input_boolean.alarm_clock_status
         state: 'off'
     action:
-      service: notify.ios_iphone_van_luuk
-      data:
-        title: "⏰ Wekker staat uit"
-        message: "Wil je de wekker inschakelen?"
+      service: notify.mobile_app_iphone_van_luuk
+      data_template:
+        title: "⏰ Wekker staat uit. Inschakelen?"
+        message: "Werkdagen: {{ states('input_datetime.alarm_clock_time_workdays') }}, vrije dagen: {{ states('input_datetime.alarm_clock_time_days_off') }}"
         data:
           push:
             category: "enable_alarm_clock"
