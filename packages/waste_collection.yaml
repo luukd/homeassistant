@@ -1,26 +1,78 @@
 sensor:
-  - platform: rest
-    name: Waste collection
-    json_attributes:
-      - GFT
-      - PMD
-      - REST
-      - DROCODEV
-    value_template: "{{ value_json | length }}"
-    resource: !secret waste_collection_url
-    scan_interval: 86400
-    
-  - platform: template
-    sensors:
-      waste_collection_gft:
-        friendly_name_template: '{{ state_attr("sensor.waste_collection", "GFT")["name"] | default("Unknown") }}'
-        value_template: '{{ state_attr("sensor.waste_collection", "GFT")["nextPickup"] | default("unknown") }}'
-      waste_collection_pmd:
-        friendly_name_template: '{{ state_attr("sensor.waste_collection", "PMD")["name"] | default("Unknown") }}'
-        value_template: '{{ state_attr("sensor.waste_collection", "PMD")["nextPickup"] | default("unknown") }}'
-      waste_collection_rest:
-        friendly_name_template: '{{ state_attr("sensor.waste_collection", "REST")["name"] | default("Unknown") }}'
-        value_template: '{{ state_attr("sensor.waste_collection", "REST")["nextPickup"] | default("unknown") }}'
-      waste_collection_drocodev:
-        friendly_name_template: '{{ state_attr("sensor.waste_collection", "DROCODEV")["name"] | default("Unknown") }}'
-        value_template: '{{ state_attr("sensor.waste_collection", "DROCODEV")["nextPickup"] | default("unknown") }}'
+  - platform: afvalbeheer
+    wastecollector: !secret afvalbeheer_wastecollector
+    resources:
+        - restafval
+        - gft
+        - papier
+        - pmd
+    postcode: !secret afvalbeheer_postcode
+    streetnumber: !secret afvalbeheer_streetnumber
+    upcomingsensor: 2
+    dutch: 1
+    scan_interval: 3600
+
+automation:
+  - alias: Afval herinnering restafval
+    id: waste_reminder_restafval
+    trigger:
+      - platform: time
+        at: "21:00:00"
+    condition:
+      condition: template
+      value_template: "{{ 'restafval' in states('sensor.circulus_berkel_morgen') | lower }}"
+    action:
+      service: script.notify_waste_collection
+      data:
+        waste_type: 'restafval'
+  - alias: Afval herinnering GFT
+    id: waste_reminder_gft
+    trigger:
+      - platform: time
+        at: "21:00:00"
+    condition:
+      condition: template
+      value_template: "{{ 'gft' in states('sensor.circulus_berkel_morgen') | lower }}"
+    action:
+      service: script.notify_waste_collection
+      data:
+        waste_type: 'gft'
+  - alias: Afval herinnering papier
+    id: waste_reminder_papier
+    trigger:
+      - platform: time
+        at: "21:00:00"
+    condition:
+      condition: template
+      value_template: "{{ 'papier' in states('sensor.circulus_berkel_morgen') | lower }}"
+    action:
+      service: script.notify_waste_collection
+      data:
+        waste_type: 'papier'
+  - alias: Afval herinnering PMD
+    id: waste_reminder_pmd
+    trigger:
+      - platform: time
+        at: "21:00:00"
+    condition:
+      condition: template
+      value_template: "{{ 'pmd' in states('sensor.circulus_berkel_morgen') | lower }}"
+    action:
+      service: script.notify_waste_collection
+      data:
+        waste_type: 'pmd'
+
+script:
+  notify_waste_collection:
+    alias: Afval notificatie
+    sequence:
+      - service: notify.mobile_app_iphone_van_luuk
+        data_template:
+          title: "Afval aan de weg zetten"
+          message: "{{ state_attr('sensor.circulus_berkel_' + waste_type, 'Official name')}} wordt morgen opgehaald."
+          data:
+            apns_headers:
+              'apns-collapse-id': 'waste-collection-notification'
+      - service: automation.turn_off
+        data_template:
+          entity_id: "{{ 'automation.afval_herinnering_' + waste_type }}"
